@@ -1,0 +1,586 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="PR_95_2015_MagacinModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="izvestaj">
+    <Key>
+      <PropertyRef Name="izvestajid" />
+    </Key>
+    <Property Name="izvestajid" Type="varchar" MaxLength="4000" Nullable="false" />
+    <Property Name="napomena" Type="varchar" MaxLength="4000" />
+    <Property Name="datumizv" Type="date" />
+    <Property Name="pregledano" Type="char" MaxLength="1" />
+    <Property Name="magacioner_radnikid" Type="varchar" MaxLength="4000" Nullable="false" />
+    <Property Name="poslovodja_radnikid" Type="varchar" MaxLength="4000" />
+  </EntityType>
+  <EntityType Name="magacin">
+    <Key>
+      <PropertyRef Name="mid" />
+    </Key>
+    <Property Name="mid" Type="varchar" MaxLength="4000" Nullable="false" />
+    <Property Name="madresa" Type="varchar" MaxLength="4000" />
+    <Property Name="poslovodja_radnikid" Type="varchar" MaxLength="4000" />
+  </EntityType>
+  <EntityType Name="magacioner">
+    <Key>
+      <PropertyRef Name="radnikid" />
+    </Key>
+    <Property Name="radnikid" Type="varchar" MaxLength="4000" Nullable="false" />
+  </EntityType>
+  <EntityType Name="otpremnica">
+    <Key>
+      <PropertyRef Name="izvestajid" />
+    </Key>
+    <Property Name="izvestajid" Type="varchar" MaxLength="4000" Nullable="false" />
+    <Property Name="primalac" Type="varchar" MaxLength="4000" />
+    <Property Name="racun_brojrac" Type="int" />
+    <Property Name="se_utovara_se_utovara_id" Type="float" />
+  </EntityType>
+  <EntityType Name="pakuje">
+    <Key>
+      <PropertyRef Name="magacioner_radnikid" />
+      <PropertyRef Name="roba_robaid" />
+    </Key>
+    <Property Name="magacioner_radnikid" Type="varchar" MaxLength="4000" Nullable="false" />
+    <Property Name="roba_robaid" Type="varchar" MaxLength="4000" Nullable="false" />
+  </EntityType>
+  <EntityType Name="polica">
+    <Key>
+      <PropertyRef Name="pbr" />
+    </Key>
+    <Property Name="pbr" Type="int" Nullable="false" />
+    <Property Name="magacin_mid" Type="varchar" MaxLength="4000" Nullable="false" />
+  </EntityType>
+  <EntityType Name="poslovodja">
+    <Key>
+      <PropertyRef Name="radnikid" />
+    </Key>
+    <Property Name="radnikid" Type="varchar" MaxLength="4000" Nullable="false" />
+    <Property Name="magacin_mid" Type="varchar" MaxLength="4000" />
+  </EntityType>
+  <EntityType Name="prijemnica">
+    <Key>
+      <PropertyRef Name="izvestajid" />
+    </Key>
+    <Property Name="izvestajid" Type="varchar" MaxLength="4000" Nullable="false" />
+    <Property Name="posiljaoc" Type="varchar" MaxLength="4000" />
+  </EntityType>
+  <EntityType Name="pristaje">
+    <Key>
+      <PropertyRef Name="rampa_rampaid" />
+      <PropertyRef Name="rampa_vreme" />
+      <PropertyRef Name="vozilo_reg" />
+    </Key>
+    <Property Name="rampa_rampaid" Type="varchar" MaxLength="4000" Nullable="false" />
+    <Property Name="rampa_vreme" Type="date" Nullable="false" />
+    <Property Name="vozilo_reg" Type="varchar" MaxLength="4000" Nullable="false" />
+  </EntityType>
+  <EntityType Name="racun">
+    <Key>
+      <PropertyRef Name="brojrac" />
+    </Key>
+    <Property Name="brojrac" Type="int" Nullable="false" />
+    <Property Name="iznosrac" Type="float" />
+    <Property Name="primalacrac" Type="varchar" MaxLength="4000" />
+    <Property Name="datumrac" Type="date" />
+    <Property Name="racunovodja_radnikid" Type="varchar" MaxLength="4000" Nullable="false" />
+    <Property Name="ziroracun" Type="int" />
+  </EntityType>
+  <EntityType Name="racunovodja">
+    <Key>
+      <PropertyRef Name="radnikid" />
+    </Key>
+    <Property Name="radnikid" Type="varchar" MaxLength="4000" Nullable="false" />
+  </EntityType>
+  <EntityType Name="radnik">
+    <Key>
+      <PropertyRef Name="radnikid" />
+    </Key>
+    <Property Name="radnikid" Type="varchar" MaxLength="4000" Nullable="false" />
+    <Property Name="imerad" Type="varchar" MaxLength="4000" />
+    <Property Name="prezimerad" Type="varchar" MaxLength="4000" />
+    <Property Name="sifrarad" Type="varchar" MaxLength="4000" />
+    <Property Name="datrodjrad" Type="varchar" MaxLength="4000" />
+    <Property Name="emailrad" Type="varchar" MaxLength="4000" />
+    <Property Name="plata" Type="float" />
+  </EntityType>
+  <EntityType Name="rampa">
+    <Key>
+      <PropertyRef Name="rampaid" />
+      <PropertyRef Name="vreme" />
+    </Key>
+    <Property Name="rampaid" Type="varchar" MaxLength="4000" Nullable="false" />
+    <Property Name="zauzeto" Type="char" MaxLength="1" />
+    <Property Name="magacin_mid" Type="varchar" MaxLength="4000" Nullable="false" />
+    <Property Name="vreme" Type="date" Nullable="false" />
+    <Property Name="ulaz/izlaz" Type="varchar" MaxLength="4000" />
+  </EntityType>
+  <EntityType Name="roba">
+    <Key>
+      <PropertyRef Name="robaid" />
+    </Key>
+    <Property Name="tiprobe" Type="varchar" MaxLength="4000" />
+    <Property Name="robaid" Type="varchar" MaxLength="4000" Nullable="false" />
+    <Property Name="nazrobe" Type="varchar" MaxLength="4000" />
+    <Property Name="kolrobe" Type="int" />
+    <Property Name="polica_pbr" Type="int" />
+    <Property Name="prijemnica_izvestajid" Type="varchar" MaxLength="4000" />
+  </EntityType>
+  <EntityType Name="se_utovara">
+    <Key>
+      <PropertyRef Name="se_utovara_id" />
+    </Key>
+    <Property Name="vozilo_reg" Type="varchar" MaxLength="4000" Nullable="false" />
+    <Property Name="pakuje_magacioner_radnikid" Type="varchar" MaxLength="4000" Nullable="false" />
+    <Property Name="pakuje_roba_robaid" Type="varchar" MaxLength="4000" Nullable="false" />
+    <Property Name="se_utovara_id" Type="float" Nullable="false" />
+  </EntityType>
+  <EntityType Name="vozac">
+    <Key>
+      <PropertyRef Name="radnikid" />
+    </Key>
+    <Property Name="radnikid" Type="varchar" MaxLength="4000" Nullable="false" />
+  </EntityType>
+  <EntityType Name="vozi">
+    <Key>
+      <PropertyRef Name="vozac_radnikid" />
+      <PropertyRef Name="vozilo_reg" />
+    </Key>
+    <Property Name="vozac_radnikid" Type="varchar" MaxLength="4000" Nullable="false" />
+    <Property Name="vozilo_reg" Type="varchar" MaxLength="4000" Nullable="false" />
+  </EntityType>
+  <EntityType Name="vozilo">
+    <Key>
+      <PropertyRef Name="reg" />
+    </Key>
+    <Property Name="reg" Type="varchar" MaxLength="4000" Nullable="false" />
+    <Property Name="nosivostkg" Type="int" />
+    <Property Name="marka" Type="varchar" MaxLength="4000" />
+    <Property Name="god" Type="varchar" MaxLength="4000" />
+    <Property Name="km" Type="float" />
+    <Property Name="servis" Type="date" />
+    <Property Name="tipvozila" Type="varchar" MaxLength="4000" />
+  </EntityType>
+  <Association Name="izvestaj_magacioner_fk">
+    <End Role="magacioner" Type="Self.magacioner" Multiplicity="1" />
+    <End Role="izvestaj" Type="Self.izvestaj" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="magacioner">
+        <PropertyRef Name="radnikid" />
+      </Principal>
+      <Dependent Role="izvestaj">
+        <PropertyRef Name="magacioner_radnikid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="izvestaj_poslovodja_fk">
+    <End Role="poslovodja" Type="Self.poslovodja" Multiplicity="0..1" />
+    <End Role="izvestaj" Type="Self.izvestaj" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="poslovodja">
+        <PropertyRef Name="radnikid" />
+      </Principal>
+      <Dependent Role="izvestaj">
+        <PropertyRef Name="poslovodja_radnikid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="magacin_poslovodja_fk">
+    <End Role="poslovodja" Type="Self.poslovodja" Multiplicity="0..1" />
+    <End Role="magacin" Type="Self.magacin" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="poslovodja">
+        <PropertyRef Name="radnikid" />
+      </Principal>
+      <Dependent Role="magacin">
+        <PropertyRef Name="poslovodja_radnikid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="magacioner_radnik_fk">
+    <End Role="radnik" Type="Self.radnik" Multiplicity="1" />
+    <End Role="magacioner" Type="Self.magacioner" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="radnik">
+        <PropertyRef Name="radnikid" />
+      </Principal>
+      <Dependent Role="magacioner">
+        <PropertyRef Name="radnikid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="otpremnica_izvestaj_fk">
+    <End Role="izvestaj" Type="Self.izvestaj" Multiplicity="1" />
+    <End Role="otpremnica" Type="Self.otpremnica" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="izvestaj">
+        <PropertyRef Name="izvestajid" />
+      </Principal>
+      <Dependent Role="otpremnica">
+        <PropertyRef Name="izvestajid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="otpremnica_racun_fk">
+    <End Role="racun" Type="Self.racun" Multiplicity="0..1" />
+    <End Role="otpremnica" Type="Self.otpremnica" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="racun">
+        <PropertyRef Name="brojrac" />
+      </Principal>
+      <Dependent Role="otpremnica">
+        <PropertyRef Name="racun_brojrac" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="otpremnica_se_utovara_fk">
+    <End Role="se_utovara" Type="Self.se_utovara" Multiplicity="0..1" />
+    <End Role="otpremnica" Type="Self.otpremnica" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="se_utovara">
+        <PropertyRef Name="se_utovara_id" />
+      </Principal>
+      <Dependent Role="otpremnica">
+        <PropertyRef Name="se_utovara_se_utovara_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="pakuje_magacioner_fk">
+    <End Role="magacioner" Type="Self.magacioner" Multiplicity="1" />
+    <End Role="pakuje" Type="Self.pakuje" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="magacioner">
+        <PropertyRef Name="radnikid" />
+      </Principal>
+      <Dependent Role="pakuje">
+        <PropertyRef Name="magacioner_radnikid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="pakuje_roba_fk">
+    <End Role="roba" Type="Self.roba" Multiplicity="1" />
+    <End Role="pakuje" Type="Self.pakuje" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="roba">
+        <PropertyRef Name="robaid" />
+      </Principal>
+      <Dependent Role="pakuje">
+        <PropertyRef Name="roba_robaid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="polica_magacin_fk">
+    <End Role="magacin" Type="Self.magacin" Multiplicity="1" />
+    <End Role="polica" Type="Self.polica" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="magacin">
+        <PropertyRef Name="mid" />
+      </Principal>
+      <Dependent Role="polica">
+        <PropertyRef Name="magacin_mid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="poslovodja_magacin_fk">
+    <End Role="magacin" Type="Self.magacin" Multiplicity="0..1" />
+    <End Role="poslovodja" Type="Self.poslovodja" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="magacin">
+        <PropertyRef Name="mid" />
+      </Principal>
+      <Dependent Role="poslovodja">
+        <PropertyRef Name="magacin_mid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="poslovodja_radnik_fk">
+    <End Role="radnik" Type="Self.radnik" Multiplicity="1" />
+    <End Role="poslovodja" Type="Self.poslovodja" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="radnik">
+        <PropertyRef Name="radnikid" />
+      </Principal>
+      <Dependent Role="poslovodja">
+        <PropertyRef Name="radnikid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="prijemnica_izvestaj_fk">
+    <End Role="izvestaj" Type="Self.izvestaj" Multiplicity="1" />
+    <End Role="prijemnica" Type="Self.prijemnica" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="izvestaj">
+        <PropertyRef Name="izvestajid" />
+      </Principal>
+      <Dependent Role="prijemnica">
+        <PropertyRef Name="izvestajid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="pristaje_rampa_fk">
+    <End Role="rampa" Type="Self.rampa" Multiplicity="1" />
+    <End Role="pristaje" Type="Self.pristaje" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="rampa">
+        <PropertyRef Name="rampaid" />
+        <PropertyRef Name="vreme" />
+      </Principal>
+      <Dependent Role="pristaje">
+        <PropertyRef Name="rampa_rampaid" />
+        <PropertyRef Name="rampa_vreme" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="pristaje_vozilo_fk">
+    <End Role="vozilo" Type="Self.vozilo" Multiplicity="1" />
+    <End Role="pristaje" Type="Self.pristaje" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="vozilo">
+        <PropertyRef Name="reg" />
+      </Principal>
+      <Dependent Role="pristaje">
+        <PropertyRef Name="vozilo_reg" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="racun_racunovodja_fk">
+    <End Role="racunovodja" Type="Self.racunovodja" Multiplicity="1" />
+    <End Role="racun" Type="Self.racun" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="racunovodja">
+        <PropertyRef Name="radnikid" />
+      </Principal>
+      <Dependent Role="racun">
+        <PropertyRef Name="racunovodja_radnikid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="racunovodja_radnik_fk">
+    <End Role="radnik" Type="Self.radnik" Multiplicity="1" />
+    <End Role="racunovodja" Type="Self.racunovodja" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="radnik">
+        <PropertyRef Name="radnikid" />
+      </Principal>
+      <Dependent Role="racunovodja">
+        <PropertyRef Name="radnikid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="rampa_magacin_fk">
+    <End Role="magacin" Type="Self.magacin" Multiplicity="1" />
+    <End Role="rampa" Type="Self.rampa" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="magacin">
+        <PropertyRef Name="mid" />
+      </Principal>
+      <Dependent Role="rampa">
+        <PropertyRef Name="magacin_mid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="roba_polica_fk">
+    <End Role="polica" Type="Self.polica" Multiplicity="0..1" />
+    <End Role="roba" Type="Self.roba" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="polica">
+        <PropertyRef Name="pbr" />
+      </Principal>
+      <Dependent Role="roba">
+        <PropertyRef Name="polica_pbr" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="roba_prijemnica_fk">
+    <End Role="prijemnica" Type="Self.prijemnica" Multiplicity="0..1" />
+    <End Role="roba" Type="Self.roba" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="prijemnica">
+        <PropertyRef Name="izvestajid" />
+      </Principal>
+      <Dependent Role="roba">
+        <PropertyRef Name="prijemnica_izvestajid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="se_utovara_pakuje_fk">
+    <End Role="pakuje" Type="Self.pakuje" Multiplicity="1" />
+    <End Role="se_utovara" Type="Self.se_utovara" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="pakuje">
+        <PropertyRef Name="magacioner_radnikid" />
+        <PropertyRef Name="roba_robaid" />
+      </Principal>
+      <Dependent Role="se_utovara">
+        <PropertyRef Name="pakuje_magacioner_radnikid" />
+        <PropertyRef Name="pakuje_roba_robaid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="se_utovara_vozilo_fk">
+    <End Role="vozilo" Type="Self.vozilo" Multiplicity="1" />
+    <End Role="se_utovara" Type="Self.se_utovara" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="vozilo">
+        <PropertyRef Name="reg" />
+      </Principal>
+      <Dependent Role="se_utovara">
+        <PropertyRef Name="vozilo_reg" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="vozac_radnik_fk">
+    <End Role="radnik" Type="Self.radnik" Multiplicity="1" />
+    <End Role="vozac" Type="Self.vozac" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="radnik">
+        <PropertyRef Name="radnikid" />
+      </Principal>
+      <Dependent Role="vozac">
+        <PropertyRef Name="radnikid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="vozi_vozac_fk">
+    <End Role="vozac" Type="Self.vozac" Multiplicity="1" />
+    <End Role="vozi" Type="Self.vozi" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="vozac">
+        <PropertyRef Name="radnikid" />
+      </Principal>
+      <Dependent Role="vozi">
+        <PropertyRef Name="vozac_radnikid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="vozi_vozilo_fk">
+    <End Role="vozilo" Type="Self.vozilo" Multiplicity="1" />
+    <End Role="vozi" Type="Self.vozi" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="vozilo">
+        <PropertyRef Name="reg" />
+      </Principal>
+      <Dependent Role="vozi">
+        <PropertyRef Name="vozilo_reg" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="PR_95_2015_MagacinModelStoreContainer">
+    <EntitySet Name="izvestaj" EntityType="Self.izvestaj" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="magacin" EntityType="Self.magacin" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="magacioner" EntityType="Self.magacioner" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="otpremnica" EntityType="Self.otpremnica" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="pakuje" EntityType="Self.pakuje" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="polica" EntityType="Self.polica" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="poslovodja" EntityType="Self.poslovodja" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="prijemnica" EntityType="Self.prijemnica" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="pristaje" EntityType="Self.pristaje" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="racun" EntityType="Self.racun" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="racunovodja" EntityType="Self.racunovodja" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="radnik" EntityType="Self.radnik" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="rampa" EntityType="Self.rampa" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="roba" EntityType="Self.roba" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="se_utovara" EntityType="Self.se_utovara" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="vozac" EntityType="Self.vozac" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="vozi" EntityType="Self.vozi" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="vozilo" EntityType="Self.vozilo" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="izvestaj_magacioner_fk" Association="Self.izvestaj_magacioner_fk">
+      <End Role="magacioner" EntitySet="magacioner" />
+      <End Role="izvestaj" EntitySet="izvestaj" />
+    </AssociationSet>
+    <AssociationSet Name="izvestaj_poslovodja_fk" Association="Self.izvestaj_poslovodja_fk">
+      <End Role="poslovodja" EntitySet="poslovodja" />
+      <End Role="izvestaj" EntitySet="izvestaj" />
+    </AssociationSet>
+    <AssociationSet Name="magacin_poslovodja_fk" Association="Self.magacin_poslovodja_fk">
+      <End Role="poslovodja" EntitySet="poslovodja" />
+      <End Role="magacin" EntitySet="magacin" />
+    </AssociationSet>
+    <AssociationSet Name="magacioner_radnik_fk" Association="Self.magacioner_radnik_fk">
+      <End Role="radnik" EntitySet="radnik" />
+      <End Role="magacioner" EntitySet="magacioner" />
+    </AssociationSet>
+    <AssociationSet Name="otpremnica_izvestaj_fk" Association="Self.otpremnica_izvestaj_fk">
+      <End Role="izvestaj" EntitySet="izvestaj" />
+      <End Role="otpremnica" EntitySet="otpremnica" />
+    </AssociationSet>
+    <AssociationSet Name="otpremnica_racun_fk" Association="Self.otpremnica_racun_fk">
+      <End Role="racun" EntitySet="racun" />
+      <End Role="otpremnica" EntitySet="otpremnica" />
+    </AssociationSet>
+    <AssociationSet Name="otpremnica_se_utovara_fk" Association="Self.otpremnica_se_utovara_fk">
+      <End Role="se_utovara" EntitySet="se_utovara" />
+      <End Role="otpremnica" EntitySet="otpremnica" />
+    </AssociationSet>
+    <AssociationSet Name="pakuje_magacioner_fk" Association="Self.pakuje_magacioner_fk">
+      <End Role="magacioner" EntitySet="magacioner" />
+      <End Role="pakuje" EntitySet="pakuje" />
+    </AssociationSet>
+    <AssociationSet Name="pakuje_roba_fk" Association="Self.pakuje_roba_fk">
+      <End Role="roba" EntitySet="roba" />
+      <End Role="pakuje" EntitySet="pakuje" />
+    </AssociationSet>
+    <AssociationSet Name="polica_magacin_fk" Association="Self.polica_magacin_fk">
+      <End Role="magacin" EntitySet="magacin" />
+      <End Role="polica" EntitySet="polica" />
+    </AssociationSet>
+    <AssociationSet Name="poslovodja_magacin_fk" Association="Self.poslovodja_magacin_fk">
+      <End Role="magacin" EntitySet="magacin" />
+      <End Role="poslovodja" EntitySet="poslovodja" />
+    </AssociationSet>
+    <AssociationSet Name="poslovodja_radnik_fk" Association="Self.poslovodja_radnik_fk">
+      <End Role="radnik" EntitySet="radnik" />
+      <End Role="poslovodja" EntitySet="poslovodja" />
+    </AssociationSet>
+    <AssociationSet Name="prijemnica_izvestaj_fk" Association="Self.prijemnica_izvestaj_fk">
+      <End Role="izvestaj" EntitySet="izvestaj" />
+      <End Role="prijemnica" EntitySet="prijemnica" />
+    </AssociationSet>
+    <AssociationSet Name="pristaje_rampa_fk" Association="Self.pristaje_rampa_fk">
+      <End Role="rampa" EntitySet="rampa" />
+      <End Role="pristaje" EntitySet="pristaje" />
+    </AssociationSet>
+    <AssociationSet Name="pristaje_vozilo_fk" Association="Self.pristaje_vozilo_fk">
+      <End Role="vozilo" EntitySet="vozilo" />
+      <End Role="pristaje" EntitySet="pristaje" />
+    </AssociationSet>
+    <AssociationSet Name="racun_racunovodja_fk" Association="Self.racun_racunovodja_fk">
+      <End Role="racunovodja" EntitySet="racunovodja" />
+      <End Role="racun" EntitySet="racun" />
+    </AssociationSet>
+    <AssociationSet Name="racunovodja_radnik_fk" Association="Self.racunovodja_radnik_fk">
+      <End Role="radnik" EntitySet="radnik" />
+      <End Role="racunovodja" EntitySet="racunovodja" />
+    </AssociationSet>
+    <AssociationSet Name="rampa_magacin_fk" Association="Self.rampa_magacin_fk">
+      <End Role="magacin" EntitySet="magacin" />
+      <End Role="rampa" EntitySet="rampa" />
+    </AssociationSet>
+    <AssociationSet Name="roba_polica_fk" Association="Self.roba_polica_fk">
+      <End Role="polica" EntitySet="polica" />
+      <End Role="roba" EntitySet="roba" />
+    </AssociationSet>
+    <AssociationSet Name="roba_prijemnica_fk" Association="Self.roba_prijemnica_fk">
+      <End Role="prijemnica" EntitySet="prijemnica" />
+      <End Role="roba" EntitySet="roba" />
+    </AssociationSet>
+    <AssociationSet Name="se_utovara_pakuje_fk" Association="Self.se_utovara_pakuje_fk">
+      <End Role="pakuje" EntitySet="pakuje" />
+      <End Role="se_utovara" EntitySet="se_utovara" />
+    </AssociationSet>
+    <AssociationSet Name="se_utovara_vozilo_fk" Association="Self.se_utovara_vozilo_fk">
+      <End Role="vozilo" EntitySet="vozilo" />
+      <End Role="se_utovara" EntitySet="se_utovara" />
+    </AssociationSet>
+    <AssociationSet Name="vozac_radnik_fk" Association="Self.vozac_radnik_fk">
+      <End Role="radnik" EntitySet="radnik" />
+      <End Role="vozac" EntitySet="vozac" />
+    </AssociationSet>
+    <AssociationSet Name="vozi_vozac_fk" Association="Self.vozi_vozac_fk">
+      <End Role="vozac" EntitySet="vozac" />
+      <End Role="vozi" EntitySet="vozi" />
+    </AssociationSet>
+    <AssociationSet Name="vozi_vozilo_fk" Association="Self.vozi_vozilo_fk">
+      <End Role="vozilo" EntitySet="vozilo" />
+      <End Role="vozi" EntitySet="vozi" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

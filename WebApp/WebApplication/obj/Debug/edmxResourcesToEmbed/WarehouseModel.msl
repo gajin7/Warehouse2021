@@ -1,0 +1,177 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="PR_95_2015_MagacinModelStoreContainer" CdmEntityContainer="PR_95_2015_MagacinEntities">
+    <EntitySetMapping Name="izvestajs">
+      <EntityTypeMapping TypeName="PR_95_2015_MagacinModel.izvestaj">
+        <MappingFragment StoreEntitySet="izvestaj">
+          <ScalarProperty Name="izvestajid" ColumnName="izvestajid" />
+          <ScalarProperty Name="napomena" ColumnName="napomena" />
+          <ScalarProperty Name="datumizv" ColumnName="datumizv" />
+          <ScalarProperty Name="pregledano" ColumnName="pregledano" />
+          <ScalarProperty Name="magacioner_radnikid" ColumnName="magacioner_radnikid" />
+          <ScalarProperty Name="poslovodja_radnikid" ColumnName="poslovodja_radnikid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="magacins">
+      <EntityTypeMapping TypeName="PR_95_2015_MagacinModel.magacin">
+        <MappingFragment StoreEntitySet="magacin">
+          <ScalarProperty Name="mid" ColumnName="mid" />
+          <ScalarProperty Name="madresa" ColumnName="madresa" />
+          <ScalarProperty Name="poslovodja_radnikid" ColumnName="poslovodja_radnikid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="magacioners">
+      <EntityTypeMapping TypeName="PR_95_2015_MagacinModel.magacioner">
+        <MappingFragment StoreEntitySet="magacioner">
+          <ScalarProperty Name="radnikid" ColumnName="radnikid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="otpremnicas">
+      <EntityTypeMapping TypeName="PR_95_2015_MagacinModel.otpremnica">
+        <MappingFragment StoreEntitySet="otpremnica">
+          <ScalarProperty Name="izvestajid" ColumnName="izvestajid" />
+          <ScalarProperty Name="primalac" ColumnName="primalac" />
+          <ScalarProperty Name="racun_brojrac" ColumnName="racun_brojrac" />
+          <ScalarProperty Name="se_utovara_se_utovara_id" ColumnName="se_utovara_se_utovara_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="pakujes">
+      <EntityTypeMapping TypeName="PR_95_2015_MagacinModel.pakuje">
+        <MappingFragment StoreEntitySet="pakuje">
+          <ScalarProperty Name="magacioner_radnikid" ColumnName="magacioner_radnikid" />
+          <ScalarProperty Name="roba_robaid" ColumnName="roba_robaid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="policas">
+      <EntityTypeMapping TypeName="PR_95_2015_MagacinModel.polica">
+        <MappingFragment StoreEntitySet="polica">
+          <ScalarProperty Name="pbr" ColumnName="pbr" />
+          <ScalarProperty Name="magacin_mid" ColumnName="magacin_mid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="poslovodjas">
+      <EntityTypeMapping TypeName="PR_95_2015_MagacinModel.poslovodja">
+        <MappingFragment StoreEntitySet="poslovodja">
+          <ScalarProperty Name="radnikid" ColumnName="radnikid" />
+          <ScalarProperty Name="magacin_mid" ColumnName="magacin_mid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="prijemnicas">
+      <EntityTypeMapping TypeName="PR_95_2015_MagacinModel.prijemnica">
+        <MappingFragment StoreEntitySet="prijemnica">
+          <ScalarProperty Name="izvestajid" ColumnName="izvestajid" />
+          <ScalarProperty Name="posiljaoc" ColumnName="posiljaoc" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="racuns">
+      <EntityTypeMapping TypeName="PR_95_2015_MagacinModel.racun">
+        <MappingFragment StoreEntitySet="racun">
+          <ScalarProperty Name="brojrac" ColumnName="brojrac" />
+          <ScalarProperty Name="iznosrac" ColumnName="iznosrac" />
+          <ScalarProperty Name="primalacrac" ColumnName="primalacrac" />
+          <ScalarProperty Name="datumrac" ColumnName="datumrac" />
+          <ScalarProperty Name="racunovodja_radnikid" ColumnName="racunovodja_radnikid" />
+          <ScalarProperty Name="ziroracun" ColumnName="ziroracun" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="racunovodjas">
+      <EntityTypeMapping TypeName="PR_95_2015_MagacinModel.racunovodja">
+        <MappingFragment StoreEntitySet="racunovodja">
+          <ScalarProperty Name="radnikid" ColumnName="radnikid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="radniks">
+      <EntityTypeMapping TypeName="PR_95_2015_MagacinModel.radnik">
+        <MappingFragment StoreEntitySet="radnik">
+          <ScalarProperty Name="radnikid" ColumnName="radnikid" />
+          <ScalarProperty Name="imerad" ColumnName="imerad" />
+          <ScalarProperty Name="prezimerad" ColumnName="prezimerad" />
+          <ScalarProperty Name="sifrarad" ColumnName="sifrarad" />
+          <ScalarProperty Name="datrodjrad" ColumnName="datrodjrad" />
+          <ScalarProperty Name="emailrad" ColumnName="emailrad" />
+          <ScalarProperty Name="plata" ColumnName="plata" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="rampas">
+      <EntityTypeMapping TypeName="PR_95_2015_MagacinModel.rampa">
+        <MappingFragment StoreEntitySet="rampa">
+          <ScalarProperty Name="rampaid" ColumnName="rampaid" />
+          <ScalarProperty Name="zauzeto" ColumnName="zauzeto" />
+          <ScalarProperty Name="magacin_mid" ColumnName="magacin_mid" />
+          <ScalarProperty Name="vreme" ColumnName="vreme" />
+          <ScalarProperty Name="ulaz_izlaz" ColumnName="ulaz/izlaz" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="robas">
+      <EntityTypeMapping TypeName="PR_95_2015_MagacinModel.roba">
+        <MappingFragment StoreEntitySet="roba">
+          <ScalarProperty Name="tiprobe" ColumnName="tiprobe" />
+          <ScalarProperty Name="robaid" ColumnName="robaid" />
+          <ScalarProperty Name="nazrobe" ColumnName="nazrobe" />
+          <ScalarProperty Name="kolrobe" ColumnName="kolrobe" />
+          <ScalarProperty Name="polica_pbr" ColumnName="polica_pbr" />
+          <ScalarProperty Name="prijemnica_izvestajid" ColumnName="prijemnica_izvestajid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="se_utovara">
+      <EntityTypeMapping TypeName="PR_95_2015_MagacinModel.se_utovara">
+        <MappingFragment StoreEntitySet="se_utovara">
+          <ScalarProperty Name="vozilo_reg" ColumnName="vozilo_reg" />
+          <ScalarProperty Name="pakuje_magacioner_radnikid" ColumnName="pakuje_magacioner_radnikid" />
+          <ScalarProperty Name="pakuje_roba_robaid" ColumnName="pakuje_roba_robaid" />
+          <ScalarProperty Name="se_utovara_id" ColumnName="se_utovara_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vozacs">
+      <EntityTypeMapping TypeName="PR_95_2015_MagacinModel.vozac">
+        <MappingFragment StoreEntitySet="vozac">
+          <ScalarProperty Name="radnikid" ColumnName="radnikid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="voziloes">
+      <EntityTypeMapping TypeName="PR_95_2015_MagacinModel.vozilo">
+        <MappingFragment StoreEntitySet="vozilo">
+          <ScalarProperty Name="reg" ColumnName="reg" />
+          <ScalarProperty Name="nosivostkg" ColumnName="nosivostkg" />
+          <ScalarProperty Name="marka" ColumnName="marka" />
+          <ScalarProperty Name="god" ColumnName="god" />
+          <ScalarProperty Name="km" ColumnName="km" />
+          <ScalarProperty Name="servis" ColumnName="servis" />
+          <ScalarProperty Name="tipvozila" ColumnName="tipvozila" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="pristaje" TypeName="PR_95_2015_MagacinModel.pristaje" StoreEntitySet="pristaje">
+      <EndProperty Name="rampa">
+        <ScalarProperty Name="rampaid" ColumnName="rampa_rampaid" />
+        <ScalarProperty Name="vreme" ColumnName="rampa_vreme" />
+      </EndProperty>
+      <EndProperty Name="vozilo">
+        <ScalarProperty Name="reg" ColumnName="vozilo_reg" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="vozi" TypeName="PR_95_2015_MagacinModel.vozi" StoreEntitySet="vozi">
+      <EndProperty Name="vozac">
+        <ScalarProperty Name="radnikid" ColumnName="vozac_radnikid" />
+      </EndProperty>
+      <EndProperty Name="vozilo">
+        <ScalarProperty Name="reg" ColumnName="vozilo_reg" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping>
