@@ -212,12 +212,14 @@
     </Compile>
     <Compile Include="Models\OperationResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Providers\MyAuthorizationServerProvider.cs" />
     <Compile Include="Repositories\IEmployeeRepository.cs" />
     <Compile Include="Repositories\EmployeeRepository.cs" />
     <Compile Include="Repositories\IItemRepository.cs" />
     <Compile Include="Repositories\ItemRepository.cs" />
     <Compile Include="Services\HashPasswordService.cs" />
     <Compile Include="Services\IHashPasswordService.cs" />
+    <Compile Include="Startup.cs" />
     <Compile Include="WarehouseDB.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
