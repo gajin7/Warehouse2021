@@ -14,14 +14,11 @@ namespace WebApplication
     
     public partial class Employee
     {
-        public string employeeId { get; set; }
-        public string employeeFirstName { get; set; }
-        public string employeeLastName { get; set; }
-        public string employeeEmail { get; set; }
-        public string employeePassword { get; set; }
-        public string employeeStatus { get; set; }
-        public double employeeSalary { get; set; }
-        public Nullable<System.DateTime> employeeBirthDate { get; set; }
-        public string employeeType { get; set; }
+        public string Id { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Email { get; set; }
+        public string Password { get; set; }
+        public string Type { get; set; }
     }
 }

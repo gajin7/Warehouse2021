@@ -4,70 +4,59 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="WarehouseDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'WarehouseDB.dbo.Employee' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="Employee">
+    <Schema Namespace="WarehouseDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Employees">
           <Key>
-            <PropertyRef Name="employeeId" />
-            <PropertyRef Name="employeeEmail" />
-            <PropertyRef Name="employeePassword" />
-            <PropertyRef Name="employeeStatus" />
-            <PropertyRef Name="employeeSalary" />
-            <PropertyRef Name="employeeType" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="employeeId" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="employeeFirstName" Type="varchar" MaxLength="50" />
-          <Property Name="employeeLastName" Type="varchar" MaxLength="50" />
-          <Property Name="employeeEmail" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="employeePassword" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="employeeStatus" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="employeeSalary" Type="float" Nullable="false" />
-          <Property Name="employeeBirthDate" Type="date" />
-          <Property Name="employeeType" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Id" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="LastName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="Type" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Items">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="Quantity" Type="int" />
+          <Property Name="Type" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityContainer Name="WarehouseDBModelStoreContainer">
-          <EntitySet Name="Employee" EntityType="Self.Employee" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [Employee].[employeeId] AS [employeeId], 
-    [Employee].[employeeFirstName] AS [employeeFirstName], 
-    [Employee].[employeeLastName] AS [employeeLastName], 
-    [Employee].[employeeEmail] AS [employeeEmail], 
-    [Employee].[employeePassword] AS [employeePassword], 
-    [Employee].[employeeStatus] AS [employeeStatus], 
-    [Employee].[employeeSalary] AS [employeeSalary], 
-    [Employee].[employeeBirthDate] AS [employeeBirthDate], 
-    [Employee].[employeeType] AS [employeeType]
-    FROM [dbo].[Employee] AS [Employee]</DefiningQuery>
-          </EntitySet>
+          <EntitySet Name="Employees" EntityType="Self.Employees" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Items" EntityType="Self.Items" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="WarehouseDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="WarehouseDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Employees" EntityType="WarehouseDBModel.Employee" />
+          <EntitySet Name="Items" EntityType="WarehouseDBModel.Item" />
+        </EntityContainer>
         <EntityType Name="Employee">
           <Key>
-            <PropertyRef Name="employeeId" />
-            <PropertyRef Name="employeeEmail" />
-            <PropertyRef Name="employeePassword" />
-            <PropertyRef Name="employeeStatus" />
-            <PropertyRef Name="employeeSalary" />
-            <PropertyRef Name="employeeType" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="employeeId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="employeeFirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="employeeLastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="employeeEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="employeePassword" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="employeeStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="employeeSalary" Type="Double" Nullable="false" />
-          <Property Name="employeeBirthDate" Type="DateTime" Precision="0" />
-          <Property Name="employeeType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Type" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityContainer Name="WarehouseDBEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Employees" EntityType="Self.Employee" />
-        </EntityContainer>
+        <EntityType Name="Item">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Quantity" Type="Int32" />
+          <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -76,16 +65,23 @@ warning 6002: The table/view 'WarehouseDB.dbo.Employee' does not have a primary 
         <EntityContainerMapping StorageEntityContainer="WarehouseDBModelStoreContainer" CdmEntityContainer="WarehouseDBEntities">
           <EntitySetMapping Name="Employees">
             <EntityTypeMapping TypeName="WarehouseDBModel.Employee">
-              <MappingFragment StoreEntitySet="Employee">
-                <ScalarProperty Name="employeeId" ColumnName="employeeId" />
-                <ScalarProperty Name="employeeFirstName" ColumnName="employeeFirstName" />
-                <ScalarProperty Name="employeeLastName" ColumnName="employeeLastName" />
-                <ScalarProperty Name="employeeEmail" ColumnName="employeeEmail" />
-                <ScalarProperty Name="employeePassword" ColumnName="employeePassword" />
-                <ScalarProperty Name="employeeStatus" ColumnName="employeeStatus" />
-                <ScalarProperty Name="employeeSalary" ColumnName="employeeSalary" />
-                <ScalarProperty Name="employeeBirthDate" ColumnName="employeeBirthDate" />
-                <ScalarProperty Name="employeeType" ColumnName="employeeType" />
+              <MappingFragment StoreEntitySet="Employees">
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Items">
+            <EntityTypeMapping TypeName="WarehouseDBModel.Item">
+              <MappingFragment StoreEntitySet="Items">
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

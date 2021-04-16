@@ -1,39 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="WarehouseDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-  <!--Errors Found During Generation:
-warning 6002: The table/view 'WarehouseDB.dbo.Employee' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-  <EntityType Name="Employee">
+  <EntityType Name="Employees">
     <Key>
-      <PropertyRef Name="employeeId" />
-      <PropertyRef Name="employeeEmail" />
-      <PropertyRef Name="employeePassword" />
-      <PropertyRef Name="employeeStatus" />
-      <PropertyRef Name="employeeSalary" />
-      <PropertyRef Name="employeeType" />
+      <PropertyRef Name="Id" />
     </Key>
-    <Property Name="employeeId" Type="varchar" MaxLength="50" Nullable="false" />
-    <Property Name="employeeFirstName" Type="varchar" MaxLength="50" />
-    <Property Name="employeeLastName" Type="varchar" MaxLength="50" />
-    <Property Name="employeeEmail" Type="varchar" MaxLength="50" Nullable="false" />
-    <Property Name="employeePassword" Type="varchar" MaxLength="50" Nullable="false" />
-    <Property Name="employeeStatus" Type="varchar" MaxLength="50" Nullable="false" />
-    <Property Name="employeeSalary" Type="float" Nullable="false" />
-    <Property Name="employeeBirthDate" Type="date" />
-    <Property Name="employeeType" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Id" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="FirstName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="LastName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Password" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="Type" Type="varchar" MaxLength="50" Nullable="false" />
   </EntityType>
   <EntityContainer Name="WarehouseDBModelStoreContainer">
-    <EntitySet Name="Employee" EntityType="Self.Employee" store:Type="Tables" store:Schema="dbo">
-      <DefiningQuery>SELECT 
-    [Employee].[employeeId] AS [employeeId], 
-    [Employee].[employeeFirstName] AS [employeeFirstName], 
-    [Employee].[employeeLastName] AS [employeeLastName], 
-    [Employee].[employeeEmail] AS [employeeEmail], 
-    [Employee].[employeePassword] AS [employeePassword], 
-    [Employee].[employeeStatus] AS [employeeStatus], 
-    [Employee].[employeeSalary] AS [employeeSalary], 
-    [Employee].[employeeBirthDate] AS [employeeBirthDate], 
-    [Employee].[employeeType] AS [employeeType]
-    FROM [dbo].[Employee] AS [Employee]</DefiningQuery>
-    </EntitySet>
+    <EntitySet Name="Employees" EntityType="Self.Employees" Schema="dbo" store:Type="Tables" />
   </EntityContainer>
 </Schema>

@@ -3,11 +3,12 @@
 
 namespace WebApplication
 {
-    public class AccessDB : DbContext
+    public class AccessDb : DbContext
     {
-        public AccessDB() : base("WarehouseDBEntities") { }
+        public AccessDb() : base("WarehouseDBEntities") { }
 
-        public DbSet<Employee> employees { get; set; }
-        
+        public DbSet<Employee> Employees { get; set; }
+        public DbSet<Item> Items { get; set; }
+
     }
 }
