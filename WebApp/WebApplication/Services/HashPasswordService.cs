@@ -1,95 +1,65 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Security.Cryptography;
 
 namespace WebApplication.Services
 {
     public class HashPasswordService : IHashPasswordService
     {
+        public const int SaltByteSize = 24;
+        public const int HashByteSize = 24;
+        public const int Pbkdf2Iterations = 1000;
+
+        public const int IterationIndex = 0;
+        public const int SaltIndex = 1;
+        public const int Pbkdf2Index = 2;
         
-            private const int SaltSize = 16;
-            private const int HashSize = 20;
+       
 
-            public  string Hash(string password, int iterations)
+        public string Hash(string password)
+        {
+            // Generate a random salt
+            var rngCryptoServiceProvider = new RNGCryptoServiceProvider();
+            var salt = new byte[SaltByteSize];
+            rngCryptoServiceProvider.GetBytes(salt);
+
+            // Hash the password and encode the parameters
+            var hash = Pbkdf2(password, salt, Pbkdf2Iterations, HashByteSize);
+            return Pbkdf2Iterations + ":" +
+                   Convert.ToBase64String(salt) + ":" +
+                   Convert.ToBase64String(hash);
+        }
+
+        private static byte[] Pbkdf2(string password, byte[] salt, int iterations, int outputBytes)
+        {
+            var pbkdf2 = new Rfc2898DeriveBytes(password, salt) {IterationCount = iterations};
+            return pbkdf2.GetBytes(outputBytes);
+        }
+
+        public bool Verify(string password, string hashedPassword)
+        {
+            // Extract the parameters from the hash
+            char[] delimiter = { ':' };
+            var split = hashedPassword.Split(delimiter);
+            var iterations = Int32.Parse(split[IterationIndex]);
+            var salt = Convert.FromBase64String(split[SaltIndex]);
+            var hash = Convert.FromBase64String(split[Pbkdf2Index]);
+
+            var testHash = Pbkdf2(password, salt, iterations, hash.Length);
+            return SlowEquals(hash, testHash);
+        }
+
+
+        private static bool SlowEquals(byte[] a, IReadOnlyList<byte> b)
+        {
+            if (a == null) throw new ArgumentNullException(nameof(a));
+            var diff = (uint)a.Length ^ (uint)b.Count;
+            for (var i = 0; i < a.Length && i < b.Count; i++)
             {
-                // Create salt
-                byte[] salt;
-                new RNGCryptoServiceProvider().GetBytes(salt = new byte[SaltSize]);
-
-                // Create hash
-                var pbkdf2 = new Rfc2898DeriveBytes(password, salt, iterations);
-                var hash = pbkdf2.GetBytes(HashSize);
-
-                // Combine salt and hash
-                var hashBytes = new byte[SaltSize + HashSize];
-                Array.Copy(salt, 0, hashBytes, 0, SaltSize);
-                Array.Copy(hash, 0, hashBytes, SaltSize, HashSize);
-
-                // Convert to base64
-                var base64Hash = Convert.ToBase64String(hashBytes);
-
-                // Format hash with extra information
-                return string.Format("$MYHASH$V1${0}${1}", iterations, base64Hash);
+                diff |= (uint)(a[i] ^ b[i]);
             }
 
-            /// <summary>
-            /// Creates a hash from a password with 10000 iterations
-            /// </summary>
-            /// <param name="password">The password.</param>
-            /// <returns>The hash.</returns>
-            public string Hash(string password)
-            {
-                return Hash(password, 10000);
-            }
-
-            /// <summary>
-            /// Checks if hash is supported.
-            /// </summary>
-            /// <param name="hashString">The hash.</param>
-            /// <returns>Is supported?</returns>
-            public bool IsHashSupported(string hashString)
-            {
-                return hashString.Contains("$MYHASH$V1$");
-            }
-
-            /// <summary>
-            /// Verifies a password against a hash.
-            /// </summary>
-            /// <param name="password">The password.</param>
-            /// <param name="hashedPassword">The hash.</param>
-            /// <returns>Could be verified?</returns>
-            public bool Verify(string password, string hashedPassword)
-            {
-                // Check hash
-                if (!IsHashSupported(hashedPassword))
-                {
-                    throw new NotSupportedException("The hashtype is not supported");
-                }
-
-                // Extract iteration and Base64 string
-                var splittedHashString = hashedPassword.Replace("$MYHASH$V1$", "").Split('$');
-                var iterations = int.Parse(splittedHashString[0]);
-                var base64Hash = splittedHashString[1];
-
-                // Get hash bytes
-                var hashBytes = Convert.FromBase64String(base64Hash);
-
-                // Get salt
-                var salt = new byte[SaltSize];
-                Array.Copy(hashBytes, 0, salt, 0, SaltSize);
-
-                // Create hash with given salt
-                var pbkdf2 = new Rfc2898DeriveBytes(password, salt, iterations);
-                byte[] hash = pbkdf2.GetBytes(HashSize);
-
-                // Get result
-                for (var i = 0; i < HashSize; i++)
-                {
-                    if (hashBytes[i + SaltSize] != hash[i])
-                    {
-                        return false;
-                    }
-                }
-                return true;
-            }
+            return diff == 0;
+        }
     }
 }

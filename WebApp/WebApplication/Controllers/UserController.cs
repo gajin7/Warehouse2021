@@ -21,6 +21,7 @@ namespace WebApplication.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "admin")]
         [Route("GetUserInfo")]
         public Employee GetUserInfo([FromUri] string email)
         {
