@@ -91,3 +91,15 @@ C:\Users\JGajin\Documents\GitHub\Warehouse2021\WebApp\WebApplication\bin\EntityF
 C:\Users\JGajin\Documents\GitHub\Warehouse2021\WebApp\WebApplication\bin\EntityFramework.SqlServer.dll
 C:\Users\JGajin\Documents\GitHub\Warehouse2021\WebApp\WebApplication\bin\EntityFramework.xml
 C:\Users\JGajin\Documents\GitHub\Warehouse2021\WebApp\WebApplication\bin\EntityFramework.SqlServer.xml
+C:\Users\JGajin\Documents\GitHub\Warehouse2021\WebApp\WebApplication\bin\Microsoft.Owin.Cors.dll
+C:\Users\JGajin\Documents\GitHub\Warehouse2021\WebApp\WebApplication\bin\Microsoft.Owin.dll
+C:\Users\JGajin\Documents\GitHub\Warehouse2021\WebApp\WebApplication\bin\Microsoft.Owin.Host.SystemWeb.dll
+C:\Users\JGajin\Documents\GitHub\Warehouse2021\WebApp\WebApplication\bin\Microsoft.Owin.Security.dll
+C:\Users\JGajin\Documents\GitHub\Warehouse2021\WebApp\WebApplication\bin\Microsoft.Owin.Security.OAuth.dll
+C:\Users\JGajin\Documents\GitHub\Warehouse2021\WebApp\WebApplication\bin\Owin.dll
+C:\Users\JGajin\Documents\GitHub\Warehouse2021\WebApp\WebApplication\bin\System.Web.Cors.dll
+C:\Users\JGajin\Documents\GitHub\Warehouse2021\WebApp\WebApplication\bin\Microsoft.Owin.xml
+C:\Users\JGajin\Documents\GitHub\Warehouse2021\WebApp\WebApplication\bin\Microsoft.Owin.Cors.xml
+C:\Users\JGajin\Documents\GitHub\Warehouse2021\WebApp\WebApplication\bin\Microsoft.Owin.Host.SystemWeb.xml
+C:\Users\JGajin\Documents\GitHub\Warehouse2021\WebApp\WebApplication\bin\Microsoft.Owin.Security.xml
+C:\Users\JGajin\Documents\GitHub\Warehouse2021\WebApp\WebApplication\bin\Microsoft.Owin.Security.OAuth.xml

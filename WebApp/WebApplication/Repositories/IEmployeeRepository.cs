@@ -1,8 +1,9 @@
-﻿using WebApplication.Models;
+﻿using System;
+using WebApplication.Models;
 
 namespace WebApplication.Repositories
 {
-    public interface IEmployeeRepository
+    public interface IEmployeeRepository : IDisposable
     {
         Employee GetUserInfo(string email);
         OperationResult RegisterNewEmployee(Employee employee);

@@ -7,18 +7,19 @@ namespace WebApplication.Repositories
 {
     public class EmployeeRepository : IEmployeeRepository
     {
-        private readonly AccessDb _accessDb;
         private readonly IHashPasswordService _hashPasswordService;
 
-        public EmployeeRepository(IHashPasswordService hashPasswordService, AccessDb accessDb)
+        public EmployeeRepository(IHashPasswordService hashPasswordService)
         {
             _hashPasswordService = hashPasswordService;
-            _accessDb = accessDb;
         }
 
         public Employee GetUserInfo(string email)
         {
-            return _accessDb.Employees.FirstOrDefault(u => u.Email.Equals(email));
+            using (var accessDb = new AccessDb())
+            {
+                return accessDb.Employees.FirstOrDefault(u => u.Email.Equals(email));
+            }
 
         }
 
@@ -28,37 +29,40 @@ namespace WebApplication.Repositories
             employee.Id = Guid.NewGuid().ToString();
             var result = new OperationResult();
 
-            try
+            using (var accessDb = new AccessDb())
             {
-                if (!_accessDb.Employees.Any(e => e.Email.Equals(employee.Email)))
+                try
                 {
-                    _accessDb.Employees.Add(employee);
-                    var dbResult = _accessDb.SaveChanges();
-                    if (dbResult > 0)
+                    if (!accessDb.Employees.Any(e => e.Email.Equals(employee.Email)))
                     {
-                        result.Message = "Employee registered successfully";
-                        result.Success = true;
+                        accessDb.Employees.Add(employee);
+                        var dbResult = accessDb.SaveChanges();
+                        if (dbResult > 0)
+                        {
+                            result.Message = "Employee registered successfully";
+                            result.Success = true;
+                        }
+                        else
+                        {
+                            result.Message = "Something went wrong. Please try again";
+                            result.Success = false;
+                        }
                     }
                     else
                     {
-                        result.Message = "Something went wrong. Please try again";
+                        result.Message = "Employee with same email already exist";
                         result.Success = false;
                     }
                 }
-                else
+                catch (Exception e)
                 {
-                    result.Message = "Employee with same email already exist";
+                    result.Message = "An error occurred. Check your data and try again";
+                    result.ErrorMessage = e.Message;
                     result.Success = false;
                 }
-            }
-            catch (Exception e)
-            {
-                result.Message = "An error occurred. Check your data and try again";
-                result.ErrorMessage = e.Message;
-                result.Success = false;
-            }
 
-            return result;
+                return result;
+            }
         }
 
 
@@ -66,39 +70,42 @@ namespace WebApplication.Repositories
         {
             var oldPasswordHash = _hashPasswordService.Hash(oldPassword);
             var result = new OperationResult();
-            try
+            using (var accessDb = new AccessDb())
             {
-                if (_accessDb.Employees.Any(e => e.Email.Equals(email)))
+                try
                 {
-                    var employee = _accessDb.Employees.First(u => u.Email == email);
-                    if (employee.Password.Equals(oldPasswordHash))
+                    if (accessDb.Employees.Any(e => e.Email.Equals(email)))
                     {
-                        employee.Password = _hashPasswordService.Hash(newPassword);
-
-                        var dbResult = _accessDb.SaveChanges();
-                        if (dbResult > 0)
+                        var employee = accessDb.Employees.First(u => u.Email == email);
+                        if (employee.Password.Equals(oldPasswordHash))
                         {
-                            result.Message = "Password changed successfully";
-                            result.Success = true;
+                            employee.Password = _hashPasswordService.Hash(newPassword);
+
+                            var dbResult = accessDb.SaveChanges();
+                            if (dbResult > 0)
+                            {
+                                result.Message = "Password changed successfully";
+                                result.Success = true;
+                            }
+                        }
+                        else
+                        {
+                            result.Message = "Something went wrong. Please try again";
+                            result.Success = false;
                         }
                     }
                     else
                     {
-                        result.Message = "Something went wrong. Please try again";
+                        result.Message = "Employee with email " + email + " doesn't exist";
                         result.Success = false;
                     }
                 }
-                else
+                catch (Exception e)
                 {
-                    result.Message = "Employee with email " + email + " doesn't exist";
+                    result.Message = "An error occurred. Check your data and try again";
+                    result.ErrorMessage = e.Message;
                     result.Success = false;
                 }
-            }
-            catch (Exception e)
-            {
-                result.Message = "An error occurred. Check your data and try again";
-                result.ErrorMessage = e.Message;
-                result.Success = false;
             }
 
             return result;
@@ -106,39 +113,49 @@ namespace WebApplication.Repositories
 
         public OperationResult Login(string email, string password)
         {
-            var passwordHash = _hashPasswordService.Hash(password);
             var result = new OperationResult();
-            try
+            using (var accessDb = new AccessDb())
             {
-                if (_accessDb.Employees.Any(e => e.Email.Equals(email)))
+                try
                 {
-                    var employee = _accessDb.Employees.First(u => u.Email == email);
-                    if (employee.Password.Equals(passwordHash))
+                    if (accessDb.Employees.Any(e => e.Email.Equals(email)))
                     {
-                        result.Message = "Success";
-                        result.Success = true;
-                        
+                        var employee = accessDb.Employees.First(u => u.Email == email);
+                        if (_hashPasswordService.Verify(password,employee.Password))
+                        {
+                            result.Message = "Success";
+                            result.Success = true;
+
+                        }
+                        else
+                        {
+                            result.Message = "Please check your password";
+                            result.Success = false;
+                        }
                     }
                     else
                     {
-                        result.Message = "Please check your password";
+                        result.Message = "Employee with email " + email + " doesn't exist";
                         result.Success = false;
                     }
                 }
-                else
+                catch (Exception e)
                 {
-                    result.Message = "Employee with email " + email + " doesn't exist";
+                    result.Message = "An error occurred. Check your data and try again";
+                    result.ErrorMessage = e.Message;
                     result.Success = false;
                 }
-            }
-            catch (Exception e)
-            {
-                result.Message = "An error occurred. Check your data and try again";
-                result.ErrorMessage = e.Message;
-                result.Success = false;
-            }
 
-            return result;
+                return result;
+            }
+        }
+
+        public void Dispose()
+        {
+            using (var accessDb = new AccessDb())
+            {
+                accessDb.Dispose();
+            }
         }
     }
 }
