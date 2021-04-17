@@ -27,5 +27,14 @@ namespace WebApplication
     
         public virtual DbSet<Employee> Employees { get; set; }
         public virtual DbSet<Item> Items { get; set; }
+        public virtual DbSet<EmployeeType> EmployeeTypes { get; set; }
+        public virtual DbSet<Receipt> Receipts { get; set; }
+        public virtual DbSet<Shelf> Shelfs { get; set; }
+        public virtual DbSet<Warehouse> Warehouses { get; set; }
+        public virtual DbSet<Report> Reports { get; set; }
+        public virtual DbSet<Ramp> Ramps { get; set; }
+        public virtual DbSet<ReportType> ReportTypes { get; set; }
+        public virtual DbSet<Vehicle> Vehicles { get; set; }
+        public virtual DbSet<Load> Loads { get; set; }
     }
 }

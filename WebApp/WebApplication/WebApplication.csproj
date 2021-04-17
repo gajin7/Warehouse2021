@@ -204,22 +204,49 @@
     <Compile Include="Employee.cs">
       <DependentUpon>WarehouseDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="EmployeeType.cs">
+      <DependentUpon>WarehouseDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Item.cs">
       <DependentUpon>WarehouseDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Load.cs">
+      <DependentUpon>WarehouseDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\OperationResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\MyAuthorizationServerProvider.cs" />
+    <Compile Include="Ramp.cs">
+      <DependentUpon>WarehouseDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Receipt.cs">
+      <DependentUpon>WarehouseDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Report.cs">
+      <DependentUpon>WarehouseDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ReportType.cs">
+      <DependentUpon>WarehouseDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Repositories\IEmployeeRepository.cs" />
     <Compile Include="Repositories\EmployeeRepository.cs" />
     <Compile Include="Repositories\IItemRepository.cs" />
     <Compile Include="Repositories\ItemRepository.cs" />
     <Compile Include="Services\HashPasswordService.cs" />
     <Compile Include="Services\IHashPasswordService.cs" />
+    <Compile Include="Shelf.cs">
+      <DependentUpon>WarehouseDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Startup.cs" />
+    <Compile Include="Vehicle.cs">
+      <DependentUpon>WarehouseDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Warehouse.cs">
+      <DependentUpon>WarehouseDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="WarehouseDB.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

@@ -14,9 +14,22 @@ namespace WebApplication
     
     public partial class Item
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Item()
+        {
+            this.Receipts = new HashSet<Receipt>();
+        }
+    
         public string Id { get; set; }
         public string Name { get; set; }
         public Nullable<int> Quantity { get; set; }
         public string Type { get; set; }
+        public string ShelfId { get; set; }
+        public string ReciveReportId { get; set; }
+    
+        public virtual Report Report { get; set; }
+        public virtual Shelf Shelf { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Receipt> Receipts { get; set; }
     }
 }

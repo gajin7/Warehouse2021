@@ -4,9 +4,38 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="b9a9860c77bc49cb85e853eb5c7b7c8b" Name="Diagram1">
-        <EntityTypeShape EntityType="WarehouseDBModel.Employee" Width="1.5" PointX="0.75" PointY="0.75" />
-        <EntityTypeShape EntityType="WarehouseDBModel.Item" Width="1.5" PointX="3.375" PointY="0.75" />
+      <Diagram DiagramId="b9a9860c77bc49cb85e853eb5c7b7c8b" Name="Diagram1" ZoomLevel="76">
+        <EntityTypeShape EntityType="WarehouseDBModel.Employee" Width="1.5" PointX="2.5" PointY="3" />
+        <EntityTypeShape EntityType="WarehouseDBModel.Item" Width="1.5" PointX="4.375" PointY="3" />
+        <EntityTypeShape EntityType="WarehouseDBModel.EmployeeType" Width="1.5" PointX="0.625" PointY="3" />
+        <EntityTypeShape EntityType="WarehouseDBModel.Receipt" Width="1.5" PointX="7.625" PointY="6.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="WarehouseDBModel.Shelf" Width="1.5" PointX="3.125" PointY="7.25" />
+        <AssociationConnector Association="WarehouseDBModel.EmployeeType1" />
+        <EntityTypeShape EntityType="WarehouseDBModel.Warehouse" Width="1.5" PointX="0.5" PointY="5" />
+        <EntityTypeShape EntityType="WarehouseDBModel.Report" Width="1.5" PointX="6.5" PointY="3" />
+        <EntityTypeShape EntityType="WarehouseDBModel.Ramp" Width="1.5" PointX="1" PointY="7.625" />
+        <AssociationConnector Association="WarehouseDBModel.FK__Items__ReciveRep__6383C8BA" />
+        <AssociationConnector Association="WarehouseDBModel.FK__Items__ShelfId__628FA481" />
+        <AssociationConnector Association="WarehouseDBModel.FK__Shelfs__Warehous__5CD6CB2B" />
+        <AssociationConnector Association="WarehouseDBModel.FK__Warehouse__Manag__68487DD7" />
+        <AssociationConnector Association="WarehouseDBModel.FK__Ramps__Warehouse__66603565" />
+        <EntityTypeShape EntityType="WarehouseDBModel.ReportType" Width="1.5" PointX="8.375" PointY="3" />
+        <AssociationConnector Association="WarehouseDBModel.FK__Reports__Type__6E01572D" />
+        <AssociationConnector ManuallyRouted="false" Association="WarehouseDBModel.ItemReceipt">
+          <ConnectorPoint PointX="9.5208333333333339" PointY="3.74974609375" />
+          <ConnectorPoint PointX="9.875" PointY="3.74974609375" />
+          <ConnectorPoint PointX="9.875" PointY="3.810413866405407" />
+          <ConnectorPoint PointX="11.125" PointY="3.810413866405407" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="WarehouseDBModel.Vehicle" Width="1.5" PointX="9.5" PointY="4.625" />
+        <AssociationConnector Association="WarehouseDBModel.FK__Vehicles__Driver__7A672E12" />
+        <EntityTypeShape EntityType="WarehouseDBModel.Load" Width="1.5" PointX="5.25" PointY="6.5" />
+        <AssociationConnector Association="WarehouseDBModel.FK__Load__Storekeepe__03F0984C" />
+        <AssociationConnector Association="WarehouseDBModel.FK__Load__RampId__7E37BEF6" />
+        <AssociationConnector Association="WarehouseDBModel.FK__Load__RecepitId__7D439ABD" />
+        <AssociationConnector Association="WarehouseDBModel.FK__Load__ReportId__02FC7413" />
+        <AssociationConnector Association="WarehouseDBModel.FK__Load__VehicleId__00200768" ManuallyRouted="false" >
+        </AssociationConnector>
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

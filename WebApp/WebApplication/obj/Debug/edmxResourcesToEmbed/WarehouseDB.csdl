@@ -3,6 +3,71 @@
   <EntityContainer Name="WarehouseDBEntities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="Employees" EntityType="WarehouseDBModel.Employee" />
     <EntitySet Name="Items" EntityType="WarehouseDBModel.Item" />
+    <EntitySet Name="EmployeeTypes" EntityType="WarehouseDBModel.EmployeeType" />
+    <EntitySet Name="Receipts" EntityType="WarehouseDBModel.Receipt" />
+    <EntitySet Name="Shelfs" EntityType="WarehouseDBModel.Shelf" />
+    <AssociationSet Name="EmployeeType1" Association="WarehouseDBModel.EmployeeType1">
+      <End Role="EmployeeType" EntitySet="EmployeeTypes" />
+      <End Role="Employee" EntitySet="Employees" />
+    </AssociationSet>
+    <EntitySet Name="Warehouses" EntityType="WarehouseDBModel.Warehouse" />
+    <EntitySet Name="Reports" EntityType="WarehouseDBModel.Report" />
+    <EntitySet Name="Ramps" EntityType="WarehouseDBModel.Ramp" />
+    <AssociationSet Name="FK__Items__ReciveRep__6383C8BA" Association="WarehouseDBModel.FK__Items__ReciveRep__6383C8BA">
+      <End Role="Report" EntitySet="Reports" />
+      <End Role="Item" EntitySet="Items" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Items__ShelfId__628FA481" Association="WarehouseDBModel.FK__Items__ShelfId__628FA481">
+      <End Role="Shelf" EntitySet="Shelfs" />
+      <End Role="Item" EntitySet="Items" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Shelfs__Warehous__5CD6CB2B" Association="WarehouseDBModel.FK__Shelfs__Warehous__5CD6CB2B">
+      <End Role="Warehouse" EntitySet="Warehouses" />
+      <End Role="Shelf" EntitySet="Shelfs" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Warehouse__Manag__68487DD7" Association="WarehouseDBModel.FK__Warehouse__Manag__68487DD7">
+      <End Role="Employee" EntitySet="Employees" />
+      <End Role="Warehouse" EntitySet="Warehouses" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Ramps__Warehouse__66603565" Association="WarehouseDBModel.FK__Ramps__Warehouse__66603565">
+      <End Role="Warehouse" EntitySet="Warehouses" />
+      <End Role="Ramp" EntitySet="Ramps" />
+    </AssociationSet>
+    <EntitySet Name="ReportTypes" EntityType="WarehouseDBModel.ReportType" />
+    <AssociationSet Name="FK__Reports__Type__6E01572D" Association="WarehouseDBModel.FK__Reports__Type__6E01572D">
+      <End Role="ReportType" EntitySet="ReportTypes" />
+      <End Role="Report" EntitySet="Reports" />
+    </AssociationSet>
+    <AssociationSet Name="ItemReceipt" Association="WarehouseDBModel.ItemReceipt">
+      <End Role="Item" EntitySet="Items" />
+      <End Role="Receipt" EntitySet="Receipts" />
+    </AssociationSet>
+    <EntitySet Name="Vehicles" EntityType="WarehouseDBModel.Vehicle" />
+    <AssociationSet Name="FK__Vehicles__Driver__7A672E12" Association="WarehouseDBModel.FK__Vehicles__Driver__7A672E12">
+      <End Role="Employee" EntitySet="Employees" />
+      <End Role="Vehicle" EntitySet="Vehicles" />
+    </AssociationSet>
+    <EntitySet Name="Loads" EntityType="WarehouseDBModel.Load" />
+    <AssociationSet Name="FK__Load__Storekeepe__03F0984C" Association="WarehouseDBModel.FK__Load__Storekeepe__03F0984C">
+      <End Role="Employee" EntitySet="Employees" />
+      <End Role="Load" EntitySet="Loads" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Load__RampId__7E37BEF6" Association="WarehouseDBModel.FK__Load__RampId__7E37BEF6">
+      <End Role="Ramp" EntitySet="Ramps" />
+      <End Role="Load" EntitySet="Loads" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Load__RecepitId__7D439ABD" Association="WarehouseDBModel.FK__Load__RecepitId__7D439ABD">
+      <End Role="Receipt" EntitySet="Receipts" />
+      <End Role="Load" EntitySet="Loads" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Load__ReportId__02FC7413" Association="WarehouseDBModel.FK__Load__ReportId__02FC7413">
+      <End Role="Report" EntitySet="Reports" />
+      <End Role="Load" EntitySet="Loads" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Load__VehicleId__00200768" Association="WarehouseDBModel.FK__Load__VehicleId__00200768">
+      <End Role="Vehicle" EntitySet="Vehicles" />
+      <End Role="Load" EntitySet="Loads" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="Employee">
     <Key>
@@ -13,7 +78,11 @@
     <Property Name="LastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="Email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="Password" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
-    <Property Name="Type" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Type" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="EmployeeType" Relationship="WarehouseDBModel.EmployeeType1" FromRole="Employee" ToRole="EmployeeType" />
+    <NavigationProperty Name="Warehouses" Relationship="WarehouseDBModel.FK__Warehouse__Manag__68487DD7" FromRole="Employee" ToRole="Warehouse" />
+    <NavigationProperty Name="Vehicles" Relationship="WarehouseDBModel.FK__Vehicles__Driver__7A672E12" FromRole="Employee" ToRole="Vehicle" />
+    <NavigationProperty Name="Loads" Relationship="WarehouseDBModel.FK__Load__Storekeepe__03F0984C" FromRole="Employee" ToRole="Load" />
   </EntityType>
   <EntityType Name="Item">
     <Key>
@@ -23,5 +92,269 @@
     <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="Quantity" Type="Int32" />
     <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ShelfId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ReciveReportId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Report" Relationship="WarehouseDBModel.FK__Items__ReciveRep__6383C8BA" FromRole="Item" ToRole="Report" />
+    <NavigationProperty Name="Shelf" Relationship="WarehouseDBModel.FK__Items__ShelfId__628FA481" FromRole="Item" ToRole="Shelf" />
+    <NavigationProperty Name="Receipts" Relationship="WarehouseDBModel.ItemReceipt" FromRole="Item" ToRole="Receipt" />
   </EntityType>
+  <EntityType Name="EmployeeType">
+    <Key>
+      <PropertyRef Name="name" />
+    </Key>
+    <Property Name="name" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Employees" Relationship="WarehouseDBModel.EmployeeType1" FromRole="EmployeeType" ToRole="Employee" />
+  </EntityType>
+  <EntityType Name="Receipt">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Amount" Type="Double" />
+    <Property Name="Date" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="AccountNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Items" Relationship="WarehouseDBModel.ItemReceipt" FromRole="Receipt" ToRole="Item" />
+    <NavigationProperty Name="Loads" Relationship="WarehouseDBModel.FK__Load__RecepitId__7D439ABD" FromRole="Receipt" ToRole="Load" />
+  </EntityType>
+  <EntityType Name="Shelf">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="WarehouseId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Items" Relationship="WarehouseDBModel.FK__Items__ShelfId__628FA481" FromRole="Shelf" ToRole="Item" />
+    <NavigationProperty Name="Warehouse" Relationship="WarehouseDBModel.FK__Shelfs__Warehous__5CD6CB2B" FromRole="Shelf" ToRole="Warehouse" />
+  </EntityType>
+  <Association Name="EmployeeType1">
+    <End Type="WarehouseDBModel.EmployeeType" Role="EmployeeType" Multiplicity="1" />
+    <End Type="WarehouseDBModel.Employee" Role="Employee" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EmployeeType">
+        <PropertyRef Name="name" />
+      </Principal>
+      <Dependent Role="Employee">
+        <PropertyRef Name="Type" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Warehouse">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Address" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Shelfs" Relationship="WarehouseDBModel.FK__Shelfs__Warehous__5CD6CB2B" FromRole="Warehouse" ToRole="Shelf" />
+    <Property Name="ManagerId" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Employee" Relationship="WarehouseDBModel.FK__Warehouse__Manag__68487DD7" FromRole="Warehouse" ToRole="Employee" />
+    <NavigationProperty Name="Ramps" Relationship="WarehouseDBModel.FK__Ramps__Warehouse__66603565" FromRole="Warehouse" ToRole="Ramp" />
+  </EntityType>
+  <EntityType Name="Report">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Note" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Date" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Reviewed" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Items" Relationship="WarehouseDBModel.FK__Items__ReciveRep__6383C8BA" FromRole="Report" ToRole="Item" />
+    <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="ReportType" Relationship="WarehouseDBModel.FK__Reports__Type__6E01572D" FromRole="Report" ToRole="ReportType" />
+    <NavigationProperty Name="Loads" Relationship="WarehouseDBModel.FK__Load__ReportId__02FC7413" FromRole="Report" ToRole="Load" />
+  </EntityType>
+  <EntityType Name="Ramp">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Free" Type="Boolean" Nullable="false" />
+    <Property Name="WarehouseId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Warehouse" Relationship="WarehouseDBModel.FK__Ramps__Warehouse__66603565" FromRole="Ramp" ToRole="Warehouse" />
+    <NavigationProperty Name="Loads" Relationship="WarehouseDBModel.FK__Load__RampId__7E37BEF6" FromRole="Ramp" ToRole="Load" />
+  </EntityType>
+  <Association Name="FK__Items__ReciveRep__6383C8BA">
+    <End Type="WarehouseDBModel.Report" Role="Report" Multiplicity="0..1" />
+    <End Type="WarehouseDBModel.Item" Role="Item" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Report">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Item">
+        <PropertyRef Name="ReciveReportId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Items__ShelfId__628FA481">
+    <End Type="WarehouseDBModel.Shelf" Role="Shelf" Multiplicity="0..1" />
+    <End Type="WarehouseDBModel.Item" Role="Item" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Shelf">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Item">
+        <PropertyRef Name="ShelfId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Shelfs__Warehous__5CD6CB2B">
+    <End Type="WarehouseDBModel.Warehouse" Role="Warehouse" Multiplicity="1" />
+    <End Type="WarehouseDBModel.Shelf" Role="Shelf" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Warehouse">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Shelf">
+        <PropertyRef Name="WarehouseId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Warehouse__Manag__68487DD7">
+    <End Type="WarehouseDBModel.Employee" Role="Employee" Multiplicity="0..1" />
+    <End Type="WarehouseDBModel.Warehouse" Role="Warehouse" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Warehouse">
+        <PropertyRef Name="ManagerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Ramps__Warehouse__66603565">
+    <End Type="WarehouseDBModel.Warehouse" Role="Warehouse" Multiplicity="1" />
+    <End Type="WarehouseDBModel.Ramp" Role="Ramp" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Warehouse">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Ramp">
+        <PropertyRef Name="WarehouseId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="ReportType">
+    <Key>
+      <PropertyRef Name="Name" />
+    </Key>
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Reports" Relationship="WarehouseDBModel.FK__Reports__Type__6E01572D" FromRole="ReportType" ToRole="Report" />
+  </EntityType>
+  <Association Name="FK__Reports__Type__6E01572D">
+    <End Type="WarehouseDBModel.ReportType" Role="ReportType" Multiplicity="0..1" />
+    <End Type="WarehouseDBModel.Report" Role="Report" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ReportType">
+        <PropertyRef Name="Name" />
+      </Principal>
+      <Dependent Role="Report">
+        <PropertyRef Name="Type" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ItemReceipt">
+    <End Type="WarehouseDBModel.Item" Role="Item" Multiplicity="*" />
+    <End Type="WarehouseDBModel.Receipt" Role="Receipt" Multiplicity="*" />
+  </Association>
+  <EntityType Name="Vehicle">
+    <Key>
+      <PropertyRef Name="Registration" />
+    </Key>
+    <Property Name="Registration" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="LoadCapacity" Type="Int32" />
+    <Property Name="Mileage" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ProductionYear" Type="Int32" />
+    <Property Name="Brand" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="DriverId" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Employee" Relationship="WarehouseDBModel.FK__Vehicles__Driver__7A672E12" FromRole="Vehicle" ToRole="Employee" />
+    <NavigationProperty Name="Loads" Relationship="WarehouseDBModel.FK__Load__VehicleId__00200768" FromRole="Vehicle" ToRole="Load" />
+  </EntityType>
+  <Association Name="FK__Vehicles__Driver__7A672E12">
+    <End Type="WarehouseDBModel.Employee" Role="Employee" Multiplicity="0..1" />
+    <End Type="WarehouseDBModel.Vehicle" Role="Vehicle" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Vehicle">
+        <PropertyRef Name="DriverId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Load">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="RecepitId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="RampId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="VehicleId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="StorekeeperId" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Loaded" Type="Boolean" Nullable="false" />
+    <Property Name="ReportId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Employee" Relationship="WarehouseDBModel.FK__Load__Storekeepe__03F0984C" FromRole="Load" ToRole="Employee" />
+    <NavigationProperty Name="Ramp" Relationship="WarehouseDBModel.FK__Load__RampId__7E37BEF6" FromRole="Load" ToRole="Ramp" />
+    <NavigationProperty Name="Receipt" Relationship="WarehouseDBModel.FK__Load__RecepitId__7D439ABD" FromRole="Load" ToRole="Receipt" />
+    <NavigationProperty Name="Report" Relationship="WarehouseDBModel.FK__Load__ReportId__02FC7413" FromRole="Load" ToRole="Report" />
+    <NavigationProperty Name="Vehicle" Relationship="WarehouseDBModel.FK__Load__VehicleId__00200768" FromRole="Load" ToRole="Vehicle" />
+  </EntityType>
+  <Association Name="FK__Load__Storekeepe__03F0984C">
+    <End Type="WarehouseDBModel.Employee" Role="Employee" Multiplicity="0..1" />
+    <End Type="WarehouseDBModel.Load" Role="Load" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Load">
+        <PropertyRef Name="StorekeeperId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Load__RampId__7E37BEF6">
+    <End Type="WarehouseDBModel.Ramp" Role="Ramp" Multiplicity="0..1" />
+    <End Type="WarehouseDBModel.Load" Role="Load" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Ramp">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Load">
+        <PropertyRef Name="RampId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Load__RecepitId__7D439ABD">
+    <End Type="WarehouseDBModel.Receipt" Role="Receipt" Multiplicity="0..1" />
+    <End Type="WarehouseDBModel.Load" Role="Load" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Receipt">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Load">
+        <PropertyRef Name="RecepitId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Load__ReportId__02FC7413">
+    <End Type="WarehouseDBModel.Report" Role="Report" Multiplicity="0..1" />
+    <End Type="WarehouseDBModel.Load" Role="Load" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Report">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Load">
+        <PropertyRef Name="ReportId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Load__VehicleId__00200768">
+    <End Type="WarehouseDBModel.Vehicle" Role="Vehicle" Multiplicity="0..1" />
+    <End Type="WarehouseDBModel.Load" Role="Load" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Vehicle">
+        <PropertyRef Name="Registration" />
+      </Principal>
+      <Dependent Role="Load">
+        <PropertyRef Name="VehicleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>
