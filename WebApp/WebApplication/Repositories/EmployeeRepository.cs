@@ -23,6 +23,14 @@ namespace WebApplication.Repositories
 
         }
 
+        public Employee GetUserById(string id)
+        {
+            using (var accessDb = new AccessDb())
+            {
+                return accessDb.Employees.FirstOrDefault(u => u.Id.Equals(id));
+            }
+        }
+
         public OperationResult RegisterNewEmployee(Employee employee)
         {
             employee.Password = _hashPasswordService.Hash(employee.Password);
