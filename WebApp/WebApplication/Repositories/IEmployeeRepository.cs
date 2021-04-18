@@ -9,6 +9,6 @@ namespace WebApplication.Repositories
         Employee GetUserById(string id);
         OperationResult RegisterNewEmployee(Employee employee);
         OperationResult ChangePassword(string email, string oldPassword, string newPassword);
-        OperationResult Login(string email, string password);
+        LoginResult Login(string email, string password);
     }
 }

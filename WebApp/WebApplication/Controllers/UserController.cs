@@ -42,7 +42,8 @@ namespace WebApplication.Controllers
             return _userRepository.ChangePassword(parameters.Email, parameters.OldPassword, parameters.NewPassword);
         }
 
-        [HttpGet]
+        [HttpPost]
+        [Authorize]
         [Route("Login")]
         public OperationResult Login([FromUri] LoginParameters parameters)
         {

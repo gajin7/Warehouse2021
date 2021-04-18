@@ -1,6 +1,12 @@
 ﻿using System;
+using System.IdentityModel.Tokens;
 using System.Web.Http;
 using Microsoft.Owin;
+using Microsoft.Owin.Cors;
+using Microsoft.Owin.Security;
+using Microsoft.Owin.Security.DataHandler;
+using Microsoft.Owin.Security.DataProtection;
+using Microsoft.Owin.Security.Jwt;
 using Microsoft.Owin.Security.OAuth;
 using Owin;
 using WebApplication;
@@ -10,29 +16,12 @@ using WebApplication.Providers;
 namespace WebApplication
 {
     // In this class we will Configure the OAuth Authorization Server.
-    public class Startup
+    public partial class Startup
     {
         public void Configuration(IAppBuilder app)
         {
-            // Enable CORS (cross origin resource sharing) for making request using browser from different domains
-            app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
-
-            OAuthAuthorizationServerOptions options = new OAuthAuthorizationServerOptions
-            {
-                AllowInsecureHttp = true,
-                //The Path For generating the Toekn
-                TokenEndpointPath = new PathString("/token"),
-                //Setting the Token Expired Time (24 hours)
-                AccessTokenExpireTimeSpan = TimeSpan.FromDays(1),
-                //MyAuthorizationServerProvider class will validate the user credentials
-                Provider = new MyAuthorizationServerProvider()
-            };
-            //Token Generations
-            app.UseOAuthAuthorizationServer(options);
-            app.UseOAuthBearerAuthentication(new OAuthBearerAuthenticationOptions());
-
-            HttpConfiguration config = new HttpConfiguration();
-            WebApiConfig.Register(config);
+            app.UseCors(CorsOptions.AllowAll);
+            ConfigureAuth(app);
         }
     }
 }

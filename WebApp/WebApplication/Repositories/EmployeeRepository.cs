@@ -119,9 +119,9 @@ namespace WebApplication.Repositories
             return result;
         }
 
-        public OperationResult Login(string email, string password)
+        public LoginResult Login(string email, string password)
         {
-            var result = new OperationResult();
+            var result = new LoginResult();
             using (var accessDb = new AccessDb())
             {
                 try
@@ -132,6 +132,7 @@ namespace WebApplication.Repositories
                         if (_hashPasswordService.Verify(password,employee.Password))
                         {
                             result.Message = "Success";
+                            result.Role = employee.Type;
                             result.Success = true;
 
                         }
