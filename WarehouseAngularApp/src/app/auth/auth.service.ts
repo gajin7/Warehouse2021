@@ -1,9 +1,10 @@
-import { Injectable } from '@angular/core';
+import { Host, Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
 import { Observable, pipe, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { User } from './user';
+import { HostInfo } from '../services/hostInfo';
 
 
 @Injectable({
@@ -11,13 +12,12 @@ import { User } from './user';
 })
 export class AuthService {
   isLoggedin = false;
-
-  baseUrl: string = 'http://localhost:64334';
+  hostInfo : HostInfo = new HostInfo();
 
   constructor(private http: HttpClient) { }
 
   getToken(user: User): Observable<any> {
-    return this.http.post<any>(this.baseUrl+'/oauth/token', `username=`+ user.username +`&password=`+ user.password + `&grant_type=password`, { 'headers': { 'Content-type': 'x-www-form-urlencoded' } }).pipe(
+    return this.http.post<any>(this.hostInfo.defaultHostAddress + this.hostInfo.tokenPath, `username=`+ user.username +`&password=`+ user.password + `&grant_type=password`, { 'headers': { 'Content-type': 'x-www-form-urlencoded' } }).pipe(
       map(res => {
         this.isLoggedin = true;
 

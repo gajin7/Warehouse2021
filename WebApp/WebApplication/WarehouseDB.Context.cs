@@ -36,5 +36,6 @@ namespace WebApplication
         public virtual DbSet<ReportType> ReportTypes { get; set; }
         public virtual DbSet<Vehicle> Vehicles { get; set; }
         public virtual DbSet<Load> Loads { get; set; }
+        public virtual DbSet<ItemType> ItemTypes { get; set; }
     }
 }

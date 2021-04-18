@@ -36,6 +36,8 @@
         <AssociationConnector Association="WarehouseDBModel.FK__Load__ReportId__02FC7413" />
         <AssociationConnector Association="WarehouseDBModel.FK__Load__VehicleId__00200768" ManuallyRouted="false" >
         </AssociationConnector>
+        <EntityTypeShape EntityType="WarehouseDBModel.ItemType" Width="1.5" PointX="11.75" PointY="4.5" />
+        <AssociationConnector Association="WarehouseDBModel.FK__Items__Type__08B54D69" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

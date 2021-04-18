@@ -12,8 +12,7 @@ namespace WebApplication
 {
     public partial class Startup
     {
-        private const string ISSUER = "http://localhost:52295"; //TODO: Kad promenis port, menjaj i ovde.
-        public static OAuthAuthorizationServerOptions OAuthOptions { get; private set; }
+        private const string Issuer = "http://localhost:64334";
 
         // For more information on configuring authentication, please visit https://go.microsoft.com/fwlink/?LinkId=301864
         public void ConfigureAuth(IAppBuilder app)
@@ -24,18 +23,18 @@ namespace WebApplication
 
         private void ConfigureOAuthTokenGeneration(IAppBuilder app)
         {
-            OAuthAuthorizationServerOptions OAuthServerOptions = new OAuthAuthorizationServerOptions()
+            OAuthAuthorizationServerOptions oAuthServerOptions = new OAuthAuthorizationServerOptions()
             {
                 //For Dev enviroment only (on production should be AllowInsecureHttp = false)
                 AllowInsecureHttp = true,
                 TokenEndpointPath = new PathString("/oauth/token"),
                 AccessTokenExpireTimeSpan = TimeSpan.FromDays(1),
                 Provider = new MyAuthorizationServerProvider(),
-                AccessTokenFormat = new CustomJwtFormat(ISSUER)
+                AccessTokenFormat = new CustomJwtFormat(Issuer)
             };
 
             // OAuth 2.0 Bearer Access Token Generation
-            app.UseOAuthAuthorizationServer(OAuthServerOptions);
+            app.UseOAuthAuthorizationServer(oAuthServerOptions);
         }
 
         private void ConfigureOAuthTokenConsumption(IAppBuilder app)
@@ -51,7 +50,7 @@ namespace WebApplication
                     AllowedAudiences = new[] { audienceId },
                     IssuerSecurityTokenProviders = new IIssuerSecurityTokenProvider[]
                     {
-                        new SymmetricKeyIssuerSecurityTokenProvider(ISSUER, audienceSecret)
+                        new SymmetricKeyIssuerSecurityTokenProvider(Issuer, audienceSecret)
                     }
                 });
         }

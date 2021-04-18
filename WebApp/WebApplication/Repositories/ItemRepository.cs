@@ -8,10 +8,12 @@ namespace WebApplication.Repositories
     public class ItemRepository : IItemRepository
     {
         private readonly AccessDb _accessDb;
+
         public ItemRepository(AccessDb accessDb)
         {
             _accessDb = accessDb;
         }
+
         public OperationResult AddItem(Item item)
         {
             var result = new OperationResult();
@@ -57,7 +59,7 @@ namespace WebApplication.Repositories
             {
                 if (_accessDb.Items.Any(e => e.Id.Equals(id)))
                 {
-                    var item =_accessDb.Items.First(e => e.Id.Equals(id));
+                    var item = _accessDb.Items.First(e => e.Id.Equals(id));
                     if (addToQuantity < 0)
                     {
                         if ((item.Quantity - (int) addToQuantity) > 0)
@@ -80,7 +82,7 @@ namespace WebApplication.Repositories
                             result.Message = "Item quantity can't be changed at the moment";
                             result.Success = false;
                         }
-                                                
+
                     }
                     else
                     {
@@ -125,6 +127,11 @@ namespace WebApplication.Repositories
         public Item GetItem(string id)
         {
             return _accessDb.Items.FirstOrDefault(i => i.Id.Equals(id));
+        }
+
+        public IEnumerable<Item> GetItemsOnShelf(string shelfId)
+        {
+            return _accessDb.Items.Where(i => i.ShelfId.Equals(shelfId)).ToList();
         }
     }
 }

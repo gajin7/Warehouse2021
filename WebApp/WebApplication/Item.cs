@@ -7,6 +7,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using Newtonsoft.Json;
+
 namespace WebApplication
 {
     using System;
@@ -31,5 +33,6 @@ namespace WebApplication
         public virtual Shelf Shelf { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Receipt> Receipts { get; set; }
+        public virtual ItemType ItemType { get; set; }
     }
 }

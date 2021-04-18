@@ -41,6 +41,12 @@
           <Property Name="ShelfId" Type="varchar" MaxLength="50" />
           <Property Name="ReciveReportId" Type="varchar" MaxLength="50" />
         </EntityType>
+        <EntityType Name="ItemTypes">
+          <Key>
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <EntityType Name="Load">
           <Key>
             <PropertyRef Name="Id" />
@@ -146,6 +152,18 @@
             </Principal>
             <Dependent Role="Items">
               <PropertyRef Name="ShelfId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Items__Type__08B54D69">
+          <End Role="ItemTypes" Type="Self.ItemTypes" Multiplicity="0..1" />
+          <End Role="Items" Type="Self.Items" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ItemTypes">
+              <PropertyRef Name="Name" />
+            </Principal>
+            <Dependent Role="Items">
+              <PropertyRef Name="Type" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -298,6 +316,7 @@
           <EntitySet Name="EmployeeTypes" EntityType="Self.EmployeeTypes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ItemReceipt" EntityType="Self.ItemReceipt" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Items" EntityType="Self.Items" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ItemTypes" EntityType="Self.ItemTypes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Load" EntityType="Self.Load" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Ramps" EntityType="Self.Ramps" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Receipts" EntityType="Self.Receipts" Schema="dbo" store:Type="Tables" />
@@ -316,6 +335,10 @@
           </AssociationSet>
           <AssociationSet Name="FK__Items__ShelfId__628FA481" Association="Self.FK__Items__ShelfId__628FA481">
             <End Role="Shelfs" EntitySet="Shelfs" />
+            <End Role="Items" EntitySet="Items" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Items__Type__08B54D69" Association="Self.FK__Items__Type__08B54D69">
+            <End Role="ItemTypes" EntitySet="ItemTypes" />
             <End Role="Items" EntitySet="Items" />
           </AssociationSet>
           <AssociationSet Name="FK__Load__RampId__7E37BEF6" Association="Self.FK__Load__RampId__7E37BEF6">
@@ -439,6 +462,11 @@
             <End Role="Vehicle" EntitySet="Vehicles" />
             <End Role="Load" EntitySet="Loads" />
           </AssociationSet>
+          <EntitySet Name="ItemTypes" EntityType="WarehouseDBModel.ItemType" />
+          <AssociationSet Name="FK__Items__Type__08B54D69" Association="WarehouseDBModel.FK__Items__Type__08B54D69">
+            <End Role="ItemType" EntitySet="ItemTypes" />
+            <End Role="Item" EntitySet="Items" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="Employee">
           <Key>
@@ -468,6 +496,7 @@
           <NavigationProperty Name="Report" Relationship="WarehouseDBModel.FK__Items__ReciveRep__6383C8BA" FromRole="Item" ToRole="Report" />
           <NavigationProperty Name="Shelf" Relationship="WarehouseDBModel.FK__Items__ShelfId__628FA481" FromRole="Item" ToRole="Shelf" />
           <NavigationProperty Name="Receipts" Relationship="WarehouseDBModel.ItemReceipt" FromRole="Item" ToRole="Receipt" />
+          <NavigationProperty Name="ItemType" Relationship="WarehouseDBModel.FK__Items__Type__08B54D69" FromRole="Item" ToRole="ItemType" />
         </EntityType>
         <EntityType Name="EmployeeType">
           <Key>
@@ -728,6 +757,25 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="ItemType">
+          <Key>
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Items" Relationship="WarehouseDBModel.FK__Items__Type__08B54D69" FromRole="ItemType" ToRole="Item" />
+        </EntityType>
+        <Association Name="FK__Items__Type__08B54D69">
+          <End Type="WarehouseDBModel.ItemType" Role="ItemType" Multiplicity="0..1" />
+          <End Type="WarehouseDBModel.Item" Role="Item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ItemType">
+              <PropertyRef Name="Name" />
+            </Principal>
+            <Dependent Role="Item">
+              <PropertyRef Name="Type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -850,6 +898,13 @@
                 <ScalarProperty Name="RampId" ColumnName="RampId" />
                 <ScalarProperty Name="RecepitId" ColumnName="RecepitId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ItemTypes">
+            <EntityTypeMapping TypeName="WarehouseDBModel.ItemType">
+              <MappingFragment StoreEntitySet="ItemTypes">
+                <ScalarProperty Name="Name" ColumnName="Name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using WebApplication.Models;
 
 namespace WebApplication.Repositories
@@ -10,6 +9,7 @@ namespace WebApplication.Repositories
         Item GetItem(string id);
         OperationResult ChangeQuantity(string id, double addToQuantity);
         IEnumerable<Item> GetAllItems();
+        IEnumerable<Item> GetItemsOnShelf(string shelfId);
 
     }
 }

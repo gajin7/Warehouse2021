@@ -68,6 +68,11 @@
       <End Role="Vehicle" EntitySet="Vehicles" />
       <End Role="Load" EntitySet="Loads" />
     </AssociationSet>
+    <EntitySet Name="ItemTypes" EntityType="WarehouseDBModel.ItemType" />
+    <AssociationSet Name="FK__Items__Type__08B54D69" Association="WarehouseDBModel.FK__Items__Type__08B54D69">
+      <End Role="ItemType" EntitySet="ItemTypes" />
+      <End Role="Item" EntitySet="Items" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="Employee">
     <Key>
@@ -97,6 +102,7 @@
     <NavigationProperty Name="Report" Relationship="WarehouseDBModel.FK__Items__ReciveRep__6383C8BA" FromRole="Item" ToRole="Report" />
     <NavigationProperty Name="Shelf" Relationship="WarehouseDBModel.FK__Items__ShelfId__628FA481" FromRole="Item" ToRole="Shelf" />
     <NavigationProperty Name="Receipts" Relationship="WarehouseDBModel.ItemReceipt" FromRole="Item" ToRole="Receipt" />
+    <NavigationProperty Name="ItemType" Relationship="WarehouseDBModel.FK__Items__Type__08B54D69" FromRole="Item" ToRole="ItemType" />
   </EntityType>
   <EntityType Name="EmployeeType">
     <Key>
@@ -354,6 +360,25 @@
       </Principal>
       <Dependent Role="Load">
         <PropertyRef Name="VehicleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="ItemType">
+    <Key>
+      <PropertyRef Name="Name" />
+    </Key>
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Items" Relationship="WarehouseDBModel.FK__Items__Type__08B54D69" FromRole="ItemType" ToRole="Item" />
+  </EntityType>
+  <Association Name="FK__Items__Type__08B54D69">
+    <End Type="WarehouseDBModel.ItemType" Role="ItemType" Multiplicity="0..1" />
+    <End Type="WarehouseDBModel.Item" Role="Item" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ItemType">
+        <PropertyRef Name="Name" />
+      </Principal>
+      <Dependent Role="Item">
+        <PropertyRef Name="Type" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

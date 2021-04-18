@@ -26,8 +26,9 @@ namespace WebApplication.Controllers
         public IEnumerable<WarehouseResult> GetWarehouses()
         {
             var warehouses = _warehouseRepository.GetAllWarehouses();
-            return (from item in warehouses let employee = _employeeRepository.GetUserById(item.ManagerId)
+            var retVal = (from item in warehouses let employee = _employeeRepository.GetUserById(item.ManagerId)
                 select new WarehouseResult() {Address = item.Address, StorekeeperName = employee.FirstName + " " + employee.LastName, WarehouseId = item.Id}).ToList();
+            return retVal;
         }
 
     }

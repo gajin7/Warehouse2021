@@ -1,1 +1,26 @@
 /* You can add global styles to this file, and also import other style files */
+#footer {
+    border-top:double rgb(61, 81, 97);
+    text-align: center;
+    padding: 3px;
+    background-color:white;
+    color: white;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    color: rgb(61, 81, 97);
+  }
+
+  header
+  {
+    position: fixed;
+    top: 0;
+  }
+.topnav {
+    background-color: rgb(61, 81, 97);
+    border: 2px solid black;
+    padding: 8px;
+    font-weight: lighter;
+    margin: 8px 0;
+    height: 50px;
+  }
