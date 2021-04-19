@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using WebApplication.Models;
 
 namespace WebApplication.Repositories
 {
@@ -15,8 +14,19 @@ namespace WebApplication.Repositories
         }
         public IEnumerable<Shelf> GetShelvesInWarehouse(string warehouseId)
         {
-            return _accessDb.Shelves.Where(s => s.WarehouseId.Equals(warehouseId));
-            
+            var shelves = _accessDb.Shelves.Where(s => s.WarehouseId.Equals(warehouseId));
+            foreach (var shelf in shelves)
+            {
+                foreach (var item in shelf.Items)
+                {
+                    if (item.Quantity != 0) continue;
+                    shelf.Items.Remove(item);
+                    break;
+                }
+            }
+
+            return shelves;
+
         }
     }
 }

@@ -7,8 +7,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using Newtonsoft.Json;
-
 namespace WebApplication
 {
     using System;
@@ -28,6 +26,7 @@ namespace WebApplication
         public string Type { get; set; }
         public string ShelfId { get; set; }
         public string ReciveReportId { get; set; }
+        public Nullable<double> Amount { get; set; }
     
         public virtual Report Report { get; set; }
         public virtual Shelf Shelf { get; set; }

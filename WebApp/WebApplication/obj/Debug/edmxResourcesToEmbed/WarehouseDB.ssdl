@@ -35,6 +35,7 @@
     <Property Name="Type" Type="varchar" MaxLength="50" />
     <Property Name="ShelfId" Type="varchar" MaxLength="50" />
     <Property Name="ReciveReportId" Type="varchar" MaxLength="50" />
+    <Property Name="Amount" Type="float" />
   </EntityType>
   <EntityType Name="ItemTypes">
     <Key>

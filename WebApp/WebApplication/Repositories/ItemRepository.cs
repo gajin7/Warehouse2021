@@ -64,7 +64,8 @@ namespace WebApplication.Repositories
                     {
                         if ((item.Quantity - (int) addToQuantity) > 0)
                         {
-                            item.Quantity -= (int) addToQuantity;
+                            var addToQuantityAbs = (int) addToQuantity;
+                            item.Quantity += addToQuantityAbs;
                             var dbResult = _accessDb.SaveChanges();
                             if (dbResult > 0)
                             {
@@ -132,6 +133,20 @@ namespace WebApplication.Repositories
         public IEnumerable<Item> GetItemsOnShelf(string shelfId)
         {
             return _accessDb.Items.Where(i => i.ShelfId.Equals(shelfId)).ToList();
+        }
+
+        public int GetQuantityForItem(string id)
+        {
+            var quantity = _accessDb.Items.First(i => i.Id.Equals(id)).Quantity;
+
+            if (quantity != null)
+            {
+                return (int) quantity;
+            }
+            else
+            {
+                return 0;
+            }
         }
     }
 }

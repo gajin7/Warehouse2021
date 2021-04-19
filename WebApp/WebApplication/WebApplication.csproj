@@ -239,6 +239,7 @@
     <Compile Include="Models\ItemResult.cs" />
     <Compile Include="Models\LoginResult.cs" />
     <Compile Include="Models\OperationResult.cs" />
+    <Compile Include="Models\QuantityResult.cs" />
     <Compile Include="Models\ShelfItemsResult.cs" />
     <Compile Include="Models\WarehouseResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -266,6 +267,8 @@
     <Compile Include="Repositories\WarehouseRepository.cs" />
     <Compile Include="Services\HashPasswordService.cs" />
     <Compile Include="Services\IHashPasswordService.cs" />
+    <Compile Include="Services\ISearchService.cs" />
+    <Compile Include="Services\SearchService.cs" />
     <Compile Include="Shelf.cs">
       <DependentUpon>WarehouseDB.tt</DependentUpon>
     </Compile>

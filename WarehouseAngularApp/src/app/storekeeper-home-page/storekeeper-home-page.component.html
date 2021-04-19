@@ -2,9 +2,12 @@
     <p style="text-align:left; color: aliceblue;">
         WHouse Systems - VDG logistic
         <span style="float:right; color: aliceblue;">
-              {{date | date:'MMM dd YYYY'}}
+          &nbsp; | {{date | date:'MMM dd YYYY'}}
             <span style="float:left; color: aliceblue;">
                 {{role}} : &nbsp; {{email}} &nbsp; | &nbsp;
+                <span style="float:right; color: aliceblue;">
+                  <button style="background-color: transparent; border-color: transparent; color: white;" (click)="logOut()">Log out</button>
+                </span>
             </span>
         </span>
     </p>
@@ -26,6 +29,14 @@
   </div>
 
   <div *ngIf="!warehousesTableShow">
+    <div>
+      <div *ngIf = "message" #alert class="alert alert-warning alert-dismissible fade show" style="background-color: rgb(43, 138, 90); color: black;" role="alert">
+        <button type="button" class="close" aria-label="Close" (click)="closeAlert()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <strong> {{message}}</strong>
+      </div>
+  </div>
     <div style="float:right; margin-right: 2%;" >
         <p>Warehouse:</p>
         <select class="custom-select" (change)="changeWarehouse($event)"  required>
@@ -37,8 +48,12 @@
           <li ngbNavItem="Shelves">
             <a ngbNavLink>Shelves</a>
             <ng-template ngbNavContent>
-                
                 <div style="float: left; margin: 30px;">
+                  <div style="float: top;">
+                    <input id="search" [value]="keyWord" (input)="updateSearch($event)" mdbInput>
+                  <button [disabled]="!(keyWord.length >= 3)" (click)="search()">Search</button>
+                  <button (click)="clearSearch()" >Clear</button>
+                  </div>
                     <b>Items</b>
                     <table  class="table">
                         <thead>
@@ -46,6 +61,7 @@
                                 <td>Name</td>
                                 <td>Quantity </td>
                                 <td>Type</td>
+                                <td>Amount</td>
                             </tr>
                         </thead>
                         <tbody *ngFor="let col of dataSource; index as i" id={{dataSource[i].Name}} title={{dataSource[i].Name}}>
@@ -55,6 +71,7 @@
                                 <td>{{dataSource[i].Items[j].Name}}</td>
                                 <td> {{dataSource[i].Items[j].Quantity}}</td>
                                 <td>{{dataSource[i].Items[j].Type}}</td>
+                                <td>{{dataSource[i].Items[j].Amount}}</td>
                       </tr>
                     </tbody>
                   </table>
@@ -67,6 +84,7 @@
                             <td>Name</td>
                             <td>Quantity </td>
                             <td>Type</td>
+                            <td>Amount</td>
                             <td></td>
                             <td></td>
                             <td></td>
@@ -77,25 +95,56 @@
                       <td>{{el.Name}}</td>
                       <td>{{el.Quantity}}</td>
                       <td>{{el.Type}}</td>
+                      <td>{{el.Amount}}</td>
                       <td><button style="background-color: transparent; border: transparent;" (click)="increaseQuantity(el.Id)">+</button></td>
                       <td><button style="background-color: transparent; border: transparent;" (click)="decreseQuantity(el.Id)">-</button></td>
                       <td><button style="background-color: transparent; border: transparent;" (click)="removeItem(el.Id)">x</button></td>
                     </tr>
                     </tbody>
                   </table>
+                  <div>
+                    <p style="float:left;">Total: {{total}} $</p>
+                    <button style="float:right;" (click)="save()">Save</button>
+                  </div>
                 </div>
-                
             </ng-template>
           </li>
-          <li ngbNavItem="Items">
+          <li ngbNavItem="Items" (click)="getAllItems()">
             <a ngbNavLink>Items</a>
+            <!--Items-->
             <ng-template ngbNavContent>
-              <p>Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko
-                farm-to-table craft beer twee. Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts
-                ullamco ad vinyl cillum PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit. Keytar
-                helvetica VHS salvia yr, vero magna velit sapiente labore stumptown. Vegan fanny pack odio cillum wes anderson
-                8-bit, sustainable jean shorts beard ut DIY ethical culpa terry richardson biodiesel. Art party scenester
-                stumptown, tumblr butcher vero sint qui sapiente accusamus tattooed echo park.</p>
+              <div style="float: right; margin: 30px;">
+              <div style="float: top;">
+                <b>Items</b>
+                <br>
+                <input id="search" [value]="allItemsKeyWord" (input)="updateAllItemsSearch($event)" mdbInput>
+              <button [disabled]="!(allItemsKeyWord.length >= 3)" (click)="allItemsSearch()">Search</button>
+              <button (click)="clearAllItemsSearch()">Clear</button>
+              <br>
+              </div>
+              <br>
+                <table class="table">
+                 <thead>
+                     <tr>
+                         <td>Name</td>
+                         <td>Quantity </td>
+                         <td>Type</td>
+                         <td>Amount</td>
+                         <td>Warehouse</td>
+ 
+                     </tr>
+                 </thead>
+                 <tbody>
+                 <tr *ngFor="let el of allItems" >
+                   <td>{{el.Name}}</td>
+                   <td>{{el.Quantity}}</td>
+                   <td>{{el.Type}}</td>
+                   <td>{{el.Amount}}</td>
+                   <td>{{el.Warehouse}}</td>
+                 </tr>
+                 </tbody>
+               </table>
+             </div>
             </ng-template>
           </li>
           <li ngbNavItem="Reports">

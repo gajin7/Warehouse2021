@@ -20,12 +20,11 @@ export class ShelvesService {
     return this.http.get(this.hostInfo.defaultHostAddress + this.hostInfo.apiPrefix + this.hostInfo.shelvesController + '/getShelvesInWarehouse?warehouseId='+warehouseId);
   }
 
-  logout(): void {
-    this.isLoggedin = false;
-    localStorage.removeItem('jwt');
-    localStorage.removeItem('role');
+  getShelvesWithItemsSearch(warehouseId : string |  undefined, keyWord: string | undefined): Observable<any> {
+    return this.http.get(this.hostInfo.defaultHostAddress + this.hostInfo.apiPrefix +
+       this.hostInfo.shelvesController + '/getShelvesInWarehouseSearch?warehouseId='+warehouseId
+       +'&keyWord=' + keyWord);
   }
-
   private handle(error: any) {
     return of (error.message);
   }

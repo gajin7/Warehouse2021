@@ -16,6 +16,7 @@
     <EntitySetMapping Name="Items">
       <EntityTypeMapping TypeName="WarehouseDBModel.Item">
         <MappingFragment StoreEntitySet="Items">
+          <ScalarProperty Name="Amount" ColumnName="Amount" />
           <ScalarProperty Name="ReciveReportId" ColumnName="ReciveReportId" />
           <ScalarProperty Name="ShelfId" ColumnName="ShelfId" />
           <ScalarProperty Name="Type" ColumnName="Type" />

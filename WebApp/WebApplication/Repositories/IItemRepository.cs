@@ -11,5 +11,7 @@ namespace WebApplication.Repositories
         IEnumerable<Item> GetAllItems();
         IEnumerable<Item> GetItemsOnShelf(string shelfId);
 
+        int GetQuantityForItem(string id);
+
     }
 }

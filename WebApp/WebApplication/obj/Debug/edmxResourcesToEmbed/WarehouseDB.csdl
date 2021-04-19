@@ -103,6 +103,7 @@
     <NavigationProperty Name="Shelf" Relationship="WarehouseDBModel.FK__Items__ShelfId__628FA481" FromRole="Item" ToRole="Shelf" />
     <NavigationProperty Name="Receipts" Relationship="WarehouseDBModel.ItemReceipt" FromRole="Item" ToRole="Receipt" />
     <NavigationProperty Name="ItemType" Relationship="WarehouseDBModel.FK__Items__Type__08B54D69" FromRole="Item" ToRole="ItemType" />
+    <Property Name="Amount" Type="Double" />
   </EntityType>
   <EntityType Name="EmployeeType">
     <Key>

@@ -6,6 +6,9 @@ import { ShelvesService } from '../services/shelves.service';
 import { WarehouseService } from '../services/warehouse.service';
 import { DatePipe } from '@angular/common'
 import { ThrowStmt } from '@angular/compiler';
+import { AuthService } from '../auth/auth.service';
+import { Router } from '@angular/router';
+import { ItemsService } from '../services/items.service';
 
 
 @Component({
@@ -13,6 +16,8 @@ import { ThrowStmt } from '@angular/compiler';
   templateUrl: './storekeeper-home-page.component.html',
   styleUrls: ['./storekeeper-home-page.component.css'],
 })
+
+
 export class StorekeeperHomePageComponent implements OnInit {
   colArray: Array<Warehouse>;
   colums : number;
@@ -26,12 +31,21 @@ export class StorekeeperHomePageComponent implements OnInit {
   email : string = localStorage.email;
   warehouseNames : Array<string | undefined>;
   curentWarehouse : string | undefined;
+  total :number = 0;
+  message: string = '';
+  keyWord : string = '';
+  allItemsKeyWord : string = '';
+  quantity : number = 0;
+  allItems : any;
+  
  
-  constructor(private warehouseService : WarehouseService,private shelvesService : ShelvesService) { 
+  constructor(private warehouseService : WarehouseService,private shelvesService : ShelvesService, private authService: 
+    AuthService,public router: Router, private itemsService : ItemsService) { 
     this.colums = 0;
     this.colArray = [];
     this.warehouseNames = [];
     this.OrderDataSource = [];
+    this.allItems = [];
     
   }
 
@@ -64,6 +78,7 @@ export class StorekeeperHomePageComponent implements OnInit {
 
   getShelves(warehouseId: string | undefined) : void
   {
+    
     this.shelvesService.getShelvesWithItems(warehouseId).subscribe((data) => {
       this.dataSource = data;
     });
@@ -76,8 +91,7 @@ export class StorekeeperHomePageComponent implements OnInit {
 
   addToOrder(i: number, j :number)
   {
-    let dataSourceCopy = [...this.dataSource];
-    var item = dataSourceCopy[i].Items[j];
+    let item = this.dataSource[i].Items[j];
     var found = false;
     var index = null;
     for(var k = 0; k < this.OrderDataSource.length; k++) {
@@ -90,21 +104,44 @@ export class StorekeeperHomePageComponent implements OnInit {
     if(found && index !== null)
     {
       this.OrderDataSource[index].Quantity +=1;
+      var amount : number = this.OrderDataSource[index].Amount;
+      this.total += amount;
     }
     else
     {
       item.Quantity = 1;
       this.OrderDataSource.push(item);
+      var amount : number = item.Amount;
+      this.total += amount;
+      this.shelvesService.getShelvesWithItems(this.curentWarehouse).subscribe((data) => {
+        this.dataSource = data;
+      });
     }
 
   }
 
   increaseQuantity(id : string)
   {
+    var that = this;
+    var index = 0;
     for(var k = 0; k < this.OrderDataSource.length; k++) {
-      if (this.OrderDataSource[k].Id === id) {
-        this.OrderDataSource[k].Quantity +=1;
-          break;
+      if (this.OrderDataSource[k].Id === id)  {
+         index = k;
+         this.itemsService.getQuantityById(id).subscribe((data) => {
+          that.quantity = data.quantity;
+
+          console.log( that.quantity);
+
+         if(that.quantity >= (that.OrderDataSource[index].Quantity +1))
+         {
+           console.log("ovde");
+            that.OrderDataSource[index].Quantity +=1;
+            var amount : number = that.OrderDataSource[index].Amount;
+            that.total += amount;
+         }
+    
+        });
+        
       }
     
     }
@@ -115,7 +152,13 @@ export class StorekeeperHomePageComponent implements OnInit {
     for(var k = 0; k < this.OrderDataSource.length; k++) {
       if (this.OrderDataSource[k].Id === id) {
         if(this.OrderDataSource[k].Quantity - 1 > 0)
-            this.OrderDataSource[k].Quantity -=1;
+        {
+          this.OrderDataSource[k].Quantity -=1;
+          var amount : number = this.OrderDataSource[k].Amount;
+          this.total -= amount;
+          break;
+        }
+            
         else
         {
           this.removeItem(id);
@@ -130,10 +173,76 @@ export class StorekeeperHomePageComponent implements OnInit {
   {
     for(var k = 0; k < this.OrderDataSource.length; k++) {
       if (this.OrderDataSource[k].Id === id) {
-          this.OrderDataSource.splice(k, 1);  
+        var quantity : number = this.OrderDataSource[k].Quantity;
+        var amount : number = this.OrderDataSource[k].Amount * quantity;
+        this.total -= amount;
+        this.OrderDataSource.splice(k, 1);  
       }
     
     }
+  }
+
+  logOut()
+  {
+    this.authService.logout();
+    this.router.navigate(['']);
+  }
+
+  save()
+  {
+    this.message = "Order saved. Please go to report for more details";
+    this.OrderDataSource = [];
+    this.total = 0;
+    setTimeout(()=> this.message = '',3000); 
+  }
+
+  closeAlert() {
+    this.message = '';
+  }
+
+  search()
+  {
+    this.shelvesService.getShelvesWithItemsSearch(this.curentWarehouse,this.keyWord).subscribe((data) => {
+      this.dataSource = data;
+    });
+  }
+
+  clearSearch()
+  {
+    this.keyWord = '';
+    this.shelvesService.getShelvesWithItems(this.curentWarehouse).subscribe((data) => {
+      this.dataSource = data;
+    });
+  }
+
+  updateSearch(e : any) {
+    this.keyWord = e.target.value; 
+  }
+
+  getAllItems()
+  {
+    this.itemsService.getAllItems().subscribe((data) => {
+      this.allItems = data;
+    });
+  }
+
+  allItemsSearch()
+  {
+    this.itemsService.getAlltemsSearch(this.curentWarehouse,this.allItemsKeyWord).subscribe((data) => {
+      this.allItems = data;
+    });
+  }
+
+  clearAllItemsSearch()
+  {
+    this.allItemsKeyWord = '';
+    this.itemsService.getAllItems().subscribe((data) => {
+      this.allItems = data;
+    });
+  }
+
+  updateAllItemsSearch(e : any) {
+    this.allItemsKeyWord = e.target.value; 
   }
 
 }
