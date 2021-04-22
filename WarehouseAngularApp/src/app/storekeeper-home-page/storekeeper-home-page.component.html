@@ -1,25 +1,10 @@
-<div class="topnav">
-    <p style="text-align:left; color: aliceblue;">
-        WHouse Systems - VDG logistic
-        <span style="float:right; color: aliceblue;">
-          &nbsp; | {{date | date:'MMM dd YYYY'}}
-            <span style="float:left; color: aliceblue;">
-                {{role}} : &nbsp; {{email}} &nbsp; | &nbsp;
-                <span style="float:right; color: aliceblue;">
-                  <button style="background-color: transparent; border-color: transparent; color: white;" (click)="logOut()">Log out</button>
-                </span>
-            </span>
-        </span>
-    </p>
-  </div>
-
-
-<div *ngIf="warehousesTableShow">
-    <table>
+<div style="margin-top: 200px; margin-left: 100px;" *ngIf="warehousesTableShow">
+    <table style="width: 60%;border-collapse:separate; 
+    border-spacing:2.5em;">
         <thead>
           <tr>
-            <th scope="col" *ngFor="let col of colArray; index as i">
-                <p><input type="button"id="smallBtn" (click)="openWarehouse(colArray[i].WarehouseId)" value={{colArray[i].WarehouseId}}/></p>
+            <th (click)="openWarehouse(colArray[i].WarehouseId)" id="th" scope="col" *ngFor="let col of colArray; index as i">
+                <p>{{colArray[i].WarehouseId}}</p>
                 <p>Manager: {{colArray[i].StorekeeperName}}</p>
                 <p>Address: {{colArray[i].Address}}</p>
             </th>
@@ -28,7 +13,7 @@
       </table>
   </div>
 
-  <div *ngIf="!warehousesTableShow">
+  <div style="margin-top: 70px;" *ngIf="!warehousesTableShow">
     <div>
       <div *ngIf = "message" #alert class="alert alert-warning alert-dismissible fade show" style="background-color: rgb(43, 138, 90); color: black;" role="alert">
         <button type="button" class="close" aria-label="Close" (click)="closeAlert()">
@@ -37,7 +22,7 @@
         <strong> {{message}}</strong>
       </div>
   </div>
-    <div style="float:right; margin-right: 2%;" >
+    <div style="float:right; margin-right: 50px;" >
         <p>Warehouse:</p>
         <select class="custom-select" (change)="changeWarehouse($event)"  required>
             <option *ngFor="let obj of warehouseNames" [value]="obj"  [selected]="obj === curentWarehouse">{{obj}}</option>
@@ -49,12 +34,12 @@
             <a ngbNavLink>Shelves</a>
             <ng-template ngbNavContent>
                 <div style="float: left; margin: 30px;">
+                  <b style="font-size: 50px;">Items</b>
                   <div style="float: top;">
-                    <input id="search" [value]="keyWord" (input)="updateSearch($event)" mdbInput>
-                  <button [disabled]="!(keyWord.length >= 3)" (click)="search()">Search</button>
-                  <button (click)="clearSearch()" >Clear</button>
+                    <input style="width: 75%;" id="search" [value]="keyWord" (input)="updateSearch($event)" mdbInput>
+                    <button style="width: 10%; float: right;" (click)="clearSearch()" >Clear</button>
+                    <button style="width: 15%; float: right;" [disabled]="!(keyWord.length >= 3)" (click)="search()">Search</button>
                   </div>
-                    <b>Items</b>
                     <table  class="table">
                         <thead>
                             <tr>
@@ -71,14 +56,17 @@
                                 <td>{{dataSource[i].Items[j].Name}}</td>
                                 <td> {{dataSource[i].Items[j].Quantity}}</td>
                                 <td>{{dataSource[i].Items[j].Type}}</td>
-                                <td>{{dataSource[i].Items[j].Amount}}</td>
+                                <td>{{dataSource[i].Items[j].Amount}} $</td>
                       </tr>
                     </tbody>
                   </table>
                 </div>
-                <div style="float: right; margin: 30px;">
-                   <b>New Order</b>
-                   <table class="table">
+                <div style="float: right;
+                margin-top: 50px;
+                margin-left: 100px; ">
+                   <b style="font-size: 50px;">New Order</b>
+                   <div id=tableDiv>
+                   <table style="margin-top: 75px; " class="table">
                     <thead>
                         <tr>
                             <td>Name</td>
@@ -95,42 +83,45 @@
                       <td>{{el.Name}}</td>
                       <td>{{el.Quantity}}</td>
                       <td>{{el.Type}}</td>
-                      <td>{{el.Amount}}</td>
-                      <td><button style="background-color: transparent; border: transparent;" (click)="increaseQuantity(el.Id)">+</button></td>
-                      <td><button style="background-color: transparent; border: transparent;" (click)="decreseQuantity(el.Id)">-</button></td>
-                      <td><button style="background-color: transparent; border: transparent;" (click)="removeItem(el.Id)">x</button></td>
+                      <td>{{el.Amount}} $</td>
+                      <td><button style="background-color: transparent; border: transparent; color: green; font-size: large;" (click)="increaseQuantity(el.Id)">+</button></td>
+                      <td><button style="background-color: transparent; border: transparent; color: black; font-size: large;" (click)="decreseQuantity(el.Id)">-</button></td>
+                      <td><button style="background-color: transparent; border: transparent; color: red; font-size: large;" (click)="removeItem(el.Id)">x</button></td>
                     </tr>
                     </tbody>
                   </table>
-                  <div>
-                    <p style="float:left;">Total: {{total}} $</p>
-                    <button style="float:right;" (click)="save()">Save</button>
-                  </div>
                 </div>
+                <div style=" margin-left: 500px;margin-top: 50px;">
+                  <p  style="float:left;font-size: xx-large;"><b>Total:</b> {{total}} $</p>
+                  <button style="float:right;font-size: xx-large;" (click)="save()">Save</button>
+                </div>
+              </div>
             </ng-template>
           </li>
           <li ngbNavItem="Items" (click)="getAllItems()">
             <a ngbNavLink>Items</a>
             <!--Items-->
             <ng-template ngbNavContent>
+              <div style="float: left;">
               <div style="float: right; margin: 30px;">
               <div style="float: top;">
-                <b>Items</b>
+                <b style="font-size: 50px;">Items</b>
                 <br>
-                <input id="search" [value]="allItemsKeyWord" (input)="updateAllItemsSearch($event)" mdbInput>
-              <button [disabled]="!(allItemsKeyWord.length >= 3)" (click)="allItemsSearch()">Search</button>
-              <button (click)="clearAllItemsSearch()">Clear</button>
+                <input style="width: 75%;" id="search" (keyup.enter)="AllItemsSearchEnter()" [value]="allItemsKeyWord" (input)="updateAllItemsSearch($event)" mdbInput>
+                <button style="float: right;width: 10%;" (click)="clearAllItemsSearch()">Clear</button>
+                <button style="float: right;width: 15%;" [disabled]="!(allItemsKeyWord.length >= 3)" (click)="allItemsSearch()">Search</button>
               <br>
               </div>
               <br>
+              <div id="tableAllItems">
                 <table class="table">
                  <thead>
                      <tr>
-                         <td>Name</td>
-                         <td>Quantity </td>
-                         <td>Type</td>
-                         <td>Amount</td>
-                         <td>Warehouse</td>
+                         <td><b>Name</b></td>
+                         <td><b>Quantity</b> </td>
+                         <td><b>Type</b></td>
+                         <td><b>Amount</b></td>
+                         <td><b>Warehouse</b></td>
  
                      </tr>
                  </thead>
@@ -139,12 +130,36 @@
                    <td>{{el.Name}}</td>
                    <td>{{el.Quantity}}</td>
                    <td>{{el.Type}}</td>
-                   <td>{{el.Amount}}</td>
+                   <td>{{el.Amount}} $</td>
                    <td>{{el.Warehouse}}</td>
                  </tr>
                  </tbody>
                </table>
+              </div>
              </div>
+            <div>
+            </div>
+             
+            </div>
+            <button id="newItemBtn"  (click)='showHide()'>Add new item</button>
+            <div  id="newItemSectionHidden" style="float:right; margin-top: 5%; visibility: hidden;">
+              <p>New item</p>
+              <form>
+                <label for="fname">Name:</label><br>
+                <input type="text" id="fname1" name="fname"><br>
+                <label for="lname">Quantity:</label><br>
+                <input type="number" id="lname2" name="lname"><br>
+                <label for="lname">Amount:</label><br>
+                <input type="number" id="lname3" name="lname"><br>
+                <label for="lname">Type:</label><br>
+                <input type="checkbox" id="lname4" name="lname"><br>
+                <label for="lname">Warehouse</label><br>
+                <select class="custom-select" (change)="changeWarehouse($event)"  required>
+                  <option *ngFor="let obj of warehouseNames" [value]="obj"  [selected]="obj === curentWarehouse">{{obj}}</option>
+              </select>
+                <input type="button"  value="Save"><br>
+              </form>
+            </div>
             </ng-template>
           </li>
           <li ngbNavItem="Reports">

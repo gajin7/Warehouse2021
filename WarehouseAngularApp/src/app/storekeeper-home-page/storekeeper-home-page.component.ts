@@ -4,12 +4,10 @@ import { Item } from '../Models/Item';
 import { Warehouse } from '../Models/Warehouse';
 import { ShelvesService } from '../services/shelves.service';
 import { WarehouseService } from '../services/warehouse.service';
-import { DatePipe } from '@angular/common'
-import { ThrowStmt } from '@angular/compiler';
 import { AuthService } from '../auth/auth.service';
 import { Router } from '@angular/router';
 import { ItemsService } from '../services/items.service';
-
+import { ReceiptService } from '../services/receipt.service';
 
 @Component({
   selector: 'app-storekeeper-home-page',
@@ -23,7 +21,7 @@ export class StorekeeperHomePageComponent implements OnInit {
   colums : number;
   warehousesTableShow : boolean = true; 
   dataSource : any;
-  OrderDataSource : Array<any>;
+  OrderDataSource : Array<Item>;
   expandedElement: Item | null | undefined;
   active = 'Shelves';
   date : Date | undefined;
@@ -37,10 +35,12 @@ export class StorekeeperHomePageComponent implements OnInit {
   allItemsKeyWord : string = '';
   quantity : number = 0;
   allItems : any;
+  newItemSectionHidden: any;
+  company : string = "test company";
   
  
   constructor(private warehouseService : WarehouseService,private shelvesService : ShelvesService, private authService: 
-    AuthService,public router: Router, private itemsService : ItemsService) { 
+    AuthService,public router: Router, private itemsService : ItemsService, public receiptService : ReceiptService) { 
     this.colums = 0;
     this.colArray = [];
     this.warehouseNames = [];
@@ -190,10 +190,14 @@ export class StorekeeperHomePageComponent implements OnInit {
 
   save()
   {
-    this.message = "Order saved. Please go to report for more details";
+    this.receiptService.createReceipt(this.OrderDataSource,this.company).subscribe((data) => {
+      console.log(data);
+      this.message = "Order saved. Please go to report for more details";
     this.OrderDataSource = [];
     this.total = 0;
     setTimeout(()=> this.message = '',3000); 
+    });
+    
   }
 
   closeAlert() {
@@ -245,4 +249,19 @@ export class StorekeeperHomePageComponent implements OnInit {
     this.allItemsKeyWord = e.target.value; 
   }
 
+  AllItemsSearchEnter() {
+    if(this.allItemsKeyWord.length >=3)
+    {
+      this.itemsService.getAlltemsSearch(this.curentWarehouse,this.allItemsKeyWord).subscribe((data) => {
+      this.allItems = data;
+      });
+    }
+  }
+
+  showHide() {
+    const nId = "newItemSectionHidden"; 
+    var item = document.getElementById(nId)!;
+    item.style.visibility = 'visible';
+    
+  }
 }

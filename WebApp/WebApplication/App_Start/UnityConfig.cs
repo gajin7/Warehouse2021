@@ -21,6 +21,8 @@ namespace WebApplication
             container.RegisterType<IItemRepository, ItemRepository>(new HierarchicalLifetimeManager());
             container.RegisterType<IWarehouseRepository, WarehouseRepository>(new HierarchicalLifetimeManager());
             container.RegisterType<IShelfRepository, ShelfRepository>(new HierarchicalLifetimeManager());
+            container.RegisterType<IReceiptRepository, ReceiptRepository>(new HierarchicalLifetimeManager());
+            container.RegisterType<IVehicleRepository, VehicleRepository>(new HierarchicalLifetimeManager());
 
             //register services
             container.RegisterType<IHashPasswordService, HashPasswordService>(new HierarchicalLifetimeManager());

@@ -11,6 +11,8 @@ namespace WebApplication
         public DbSet<Item> Items { get; set; }
         public DbSet<Warehouse> Warehouses { get; set; }
         public DbSet<Shelf> Shelves { get; set; }
+        public DbSet<Receipt> Receipts { get; set; }
+        public DbSet<Vehicle> Vehicles { get; set; }
 
     }
 }

@@ -24,7 +24,7 @@ namespace WebApplication
         public string Id { get; set; }
         public Nullable<double> Amount { get; set; }
         public string Date { get; set; }
-        public string AccountNo { get; set; }
+        public string Company { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Item> Items { get; set; }

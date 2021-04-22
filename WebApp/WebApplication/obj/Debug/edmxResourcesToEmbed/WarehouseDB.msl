@@ -36,7 +36,7 @@
     <EntitySetMapping Name="Receipts">
       <EntityTypeMapping TypeName="WarehouseDBModel.Receipt">
         <MappingFragment StoreEntitySet="Receipts">
-          <ScalarProperty Name="AccountNo" ColumnName="AccountNo" />
+          <ScalarProperty Name="Company" ColumnName="Company" />
           <ScalarProperty Name="Date" ColumnName="Date" />
           <ScalarProperty Name="Amount" ColumnName="Amount" />
           <ScalarProperty Name="Id" ColumnName="Id" />

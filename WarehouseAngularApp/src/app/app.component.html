@@ -1,4 +1,24 @@
 <div>
+  <header style="margin-top:0; width: 100%; height: 5%;" class="topnav">
+    <p style="color: aliceblue;">
+        <a style="text-align:left; color: aliceblue;" href="">WHouse Systems - VDG logistic</a>
+        <span style="float:right; color: aliceblue;">
+          &nbsp; {{date | date:'MMM dd YYYY'}}
+        </span>
+        <span *ngIf="getRole()" style="float:right; color: aliceblue;">
+                {{getRole()}} : &nbsp; {{getEmail()}} &nbsp; | &nbsp; 
+        </span>
+        <span style="margin-left: 60%; color: aliceblue;">
+          <button *ngIf="getRole()" style="background-color: transparent; border-color: transparent; color: white; text-align: center;" (click)="logOut()">Log out</button>
+             &nbsp;
+          </span>
+        </p>
+        
+  </header>
   <router-outlet #routerOutlet="outlet"></router-outlet>
+  <footer id="footer">
+    <p style="text-align: center;">&copy; Copyright Jovan Gajin 2021</p>
+    <p style="text-align: center;">For support, please click <a href="mailto:gajinjovan@gmail.com">here</a></p>
+  </footer>
 </div>
 <router-outlet name="popup"></router-outlet>

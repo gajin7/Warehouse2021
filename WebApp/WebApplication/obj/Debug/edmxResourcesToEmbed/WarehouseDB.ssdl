@@ -70,7 +70,7 @@
     <Property Name="Id" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="Amount" Type="float" />
     <Property Name="Date" Type="varchar" MaxLength="50" />
-    <Property Name="AccountNo" Type="varchar" MaxLength="50" />
+    <Property Name="Company" Type="varchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="Reports">
     <Key>

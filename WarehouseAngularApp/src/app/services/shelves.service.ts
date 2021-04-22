@@ -2,7 +2,6 @@ import { Host, Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
 import { Observable, pipe, of } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
 import { HostInfo } from '../services/hostInfo';
 
 

@@ -6,10 +6,16 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./driver-home-page.component.css']
 })
 export class DriverHomePageComponent implements OnInit {
-
+  date : Date | undefined;
   constructor() { }
 
   ngOnInit(): void {
   }
+
+  getDateAndTime() : void
+  {
+    this.date = new Date();
+  }
+   
 
 }

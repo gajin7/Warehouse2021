@@ -1,60 +1,28 @@
-table {
-    width: 100%;
-  }
-  
-  tr.example-detail-row {
-    height: 0;
-  }
-  
-  tr.example-element-row:not(.example-expanded-row):hover {
-    background: whitesmoke;
-  }
-  
-  tr.example-element-row:not(.example-expanded-row):active {
-    background: #efefef;
-  }
-  
-  .example-element-row td {
-    border-bottom-width: 0;
-  }
-  
-  .example-element-detail {
-    overflow: hidden;
-    display: flex;
-  }
-  
-  .example-element-diagram {
-    min-width: 80px;
-    border: 2px solid black;
-    padding: 8px;
-    font-weight: lighter;
-    margin: 8px 0;
-    height: 104px;
-  }
-  
-  .example-element-symbol {
-    font-weight: bold;
-    font-size: 40px;
-    line-height: normal;
-  }
-  
-  .example-element-description {
-    padding: 16px;
-  }
-  
-  .example-element-description-attribution {
-    opacity: 0.5;
+#th{
+    border: double;
+     border-color:  rgb(61, 81, 97); 
+     border-style: solid; 
+     width: 33%; padding-bottom: 33%; height: 0;
   }
 
-  tbody {
-    border: 20px solid rgb(255, 255, 255);
-}
+  #tableDiv
+  {
+      overflow-y: scroll;
+      min-height: 550px; 
+      max-height: 550px; 
+      height: 550px;
+      width: 800px;
+      min-width: 800px;
+      max-width: 800px;
+  }
 
-.topnav {
-    background-color: rgb(61, 81, 97);
-    border: 2px solid black;
-    padding: 8px;
-    font-weight: lighter;
-    margin: 8px 0;
-    height: 50px;
+  #tableAllItems
+  {
+      overflow-y: scroll;
+      min-height: 600px; 
+      max-height: 600px; 
+      height: 600px;
+      width: 800px;
+      max-width: 800px;
+      min-width: 800px;
   }

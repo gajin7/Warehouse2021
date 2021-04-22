@@ -11,7 +11,7 @@ namespace WebApplication.Services
             var filterShelvesItemsBaseOnKeyWord = shelves.ToList();
             foreach (var shelf in filterShelvesItemsBaseOnKeyWord)
             {
-                shelf.Items = shelf.Items.Where(i => i.Name.Contains(keyWord) || i.Type.Contains(keyWord)).ToList();
+                shelf.Items = shelf.Items.Where(i => i.Name.Contains(keyWord) || i.Type.Contains(keyWord) || i.Id.Equals(keyWord)).ToList();
             }
 
             return filterShelvesItemsBaseOnKeyWord;
@@ -21,7 +21,7 @@ namespace WebApplication.Services
         {
             var filterAllItemsBaseOnKeyWord = items.ToList();
 
-            filterAllItemsBaseOnKeyWord = filterAllItemsBaseOnKeyWord.Where(i => i.Name.Contains(keyWord) || i.Type.Contains(keyWord) || i.Warehouse.Contains(keyWord)).ToList();
+            filterAllItemsBaseOnKeyWord = filterAllItemsBaseOnKeyWord.Where(i => i.Name.Contains(keyWord) || i.Type.Contains(keyWord) || i.Warehouse.Contains(keyWord) || i.Id.Equals(keyWord)).ToList();
             
             return filterAllItemsBaseOnKeyWord;
         }

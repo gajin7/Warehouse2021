@@ -12,6 +12,8 @@ import { HostInfo } from '../services/hostInfo';
 })
 export class AuthService {
   isLoggedin = false;
+  email = "";
+  role = "";
   hostInfo : HostInfo = new HostInfo();
 
   constructor(private http: HttpClient) { }
@@ -27,17 +29,17 @@ export class AuthService {
         let decodedJwtJsonData = window.atob(jwtData)
         let decodedJwtData = JSON.parse(decodedJwtJsonData)
 
-        let role = decodedJwtData.role
-        let email = decodedJwtData.email
+        this.role = decodedJwtData.role
+        this.email = decodedJwtData.email
 
         console.log('jwtData: ' + jwtData)
         console.log('decodedJwtJsonData: ' + decodedJwtJsonData)
         console.log('decodedJwtData: ' + decodedJwtData)
-        console.log('Role ' + role)
+        console.log('Role ' + this.role)
 
         localStorage.setItem('jwt', jwt)
-        localStorage.setItem('role', role);
-        localStorage.setItem('email', email);
+        localStorage.setItem('role', this.role);
+        localStorage.setItem('email', this.email);
       }),
 
       catchError(this.handle)

@@ -37,7 +37,17 @@ namespace WebApplication.Controllers
         [Route("getAllItems")]
         public IEnumerable<ItemResult> GetAllItems()
         {
-            return _itemRepository.GetAllItems()
+            var items1 = _itemRepository.GetAllItems();
+            var items2 = _itemRepository.GetAllItems();
+            var items3 = _itemRepository.GetAllItems();
+            var items4 = _itemRepository.GetAllItems();
+            var items5 = _itemRepository.GetAllItems();
+            var items6 = _itemRepository.GetAllItems();
+            var items7 = _itemRepository.GetAllItems();
+
+            var allItems = items1.Concat(items2)
+                .Concat(items2).Concat(items3).Concat(items4).Concat(items5).Concat(items6).Concat(items7).ToList();
+            return allItems
                 .Select(item => new ItemResult()
                 {
                     Amount = item.Amount,

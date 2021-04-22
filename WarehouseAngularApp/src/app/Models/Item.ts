@@ -1,7 +1,10 @@
 export class Item {
-    Id: string | undefined;
-    Name : string | undefined;
-    Quanity: string | undefined;
-    Type: string | undefined;
+    Id!: string
+    Name!: string
+    Quantity!: number
+    Type!: string
+    Amount!: number
+    Warehouse!: string
+    Company!: string
   }
   

@@ -15,7 +15,7 @@ export class LoginGuard implements CanActivate, CanActivateChild {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {    
     if (localStorage.role === 'admin') {
-      this.router.navigate(['']);
+      this.router.navigate(['manager-home']);
       return false;
     }
     if (localStorage.role === 'driver') {
@@ -23,7 +23,7 @@ export class LoginGuard implements CanActivate, CanActivateChild {
       return false;
     }
     if (localStorage.role === 'storekeeper') {
-      this.router.navigate(['']);
+      this.router.navigate(['storekeeper-home']);
       return false;
     }
     // not logged in so redirect to login page

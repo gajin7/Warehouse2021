@@ -215,6 +215,8 @@
     <Compile Include="Controllers\ItemController.cs" />
     <Compile Include="Controllers\Parameters\ChangePasswordParameters.cs" />
     <Compile Include="Controllers\Parameters\LoginParameters.cs" />
+    <Compile Include="Controllers\Parameters\ReceiptParameters.cs" />
+    <Compile Include="Controllers\ReceiptController.cs" />
     <Compile Include="Controllers\ShelvesController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\WarehouseController.cs" />
@@ -236,6 +238,7 @@
     <Compile Include="Load.cs">
       <DependentUpon>WarehouseDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\DriverController.cs" />
     <Compile Include="Models\ItemResult.cs" />
     <Compile Include="Models\LoginResult.cs" />
     <Compile Include="Models\OperationResult.cs" />
@@ -260,10 +263,14 @@
     <Compile Include="Repositories\IEmployeeRepository.cs" />
     <Compile Include="Repositories\EmployeeRepository.cs" />
     <Compile Include="Repositories\IItemRepository.cs" />
+    <Compile Include="Repositories\IReceiptRepository.cs" />
     <Compile Include="Repositories\IShelfRepository.cs" />
     <Compile Include="Repositories\ItemRepository.cs" />
+    <Compile Include="Repositories\IVehicleRepository.cs" />
     <Compile Include="Repositories\IWarehouseRepository.cs" />
+    <Compile Include="Repositories\ReceiptRepository.cs" />
     <Compile Include="Repositories\ShelfRepository.cs" />
+    <Compile Include="Repositories\VehicleRepository.cs" />
     <Compile Include="Repositories\WarehouseRepository.cs" />
     <Compile Include="Services\HashPasswordService.cs" />
     <Compile Include="Services\IHashPasswordService.cs" />
