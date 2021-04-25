@@ -11,9 +11,9 @@
       min-height: 550px; 
       max-height: 550px; 
       height: 550px;
-      width: 800px;
-      min-width: 800px;
-      max-width: 800px;
+      width: 700px;
+      min-width: 700px;
+      max-width: 700px;
   }
 
   #tableAllItems
@@ -22,7 +22,41 @@
       min-height: 600px; 
       max-height: 600px; 
       height: 600px;
-      width: 800px;
-      max-width: 800px;
-      min-width: 800px;
+      width: 1400px;
+      max-width: 1400px;
+      min-width: 1400px;
+  }
+
+  #tableAllItemsShelfs
+  {
+    overflow-y: scroll;
+    min-height: 600px; 
+    max-height: 600px; 
+    height: 600px;
+    width: 700px;
+    max-width: 700px;
+    min-width: 700px;
+  }
+
+  #newItemSectionHidden
+  {
+    min-height: 500px; 
+    max-height: 500px; 
+    height: 500px;
+    width: 500px;
+    max-width: 500px;
+    min-width: 500px;
+    margin-top: 200px;
+    float:right;
+    visibility: hidden;
+  }
+
+  .newItemInput
+  {
+    width: 100%;
+  }
+
+  #newItemBtn
+  {
+    margin-top: 105px;
   }

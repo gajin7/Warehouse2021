@@ -5,28 +5,33 @@ namespace WebApplication.Repositories
 {
     public class ShelfRepository : IShelfRepository
     {
-        private readonly AccessDb _accessDb;
-        private readonly IItemRepository _itemRepository;
-        public ShelfRepository(AccessDb accessDb, IItemRepository itemRepository)
-        {
-            _accessDb = accessDb;
-            _itemRepository = itemRepository;
-        }
         public IEnumerable<Shelf> GetShelvesInWarehouse(string warehouseId)
         {
-            var shelves = _accessDb.Shelves.Where(s => s.WarehouseId.Equals(warehouseId));
-            foreach (var shelf in shelves)
+            using (var accessDb = new AccessDb())
             {
-                foreach (var item in shelf.Items)
+                var shelves = accessDb.Shelves.Where(s => s.WarehouseId.Equals(warehouseId)).ToList();
+                foreach (var shelf in shelves)
                 {
-                    if (item.Quantity != 0) continue;
-                    shelf.Items.Remove(item);
-                    break;
+                    foreach (var item in shelf.Items)
+                    {
+                        if (item.Quantity != 0) continue;
+                        shelf.Items.Remove(item);
+                        break;
+                    }
                 }
+
+                return shelves;
             }
+        }
 
-            return shelves;
+        public IEnumerable<Shelf> GetShelves(string warehouseId)
+        {
+            using (var accessDb = new AccessDb())
+            {
+                var shelves = accessDb.Shelves.Where(s => s.WarehouseId.Equals(warehouseId)).ToList();
 
+                return shelves;
+            }
         }
     }
 }

@@ -17,18 +17,18 @@ namespace WebApplication
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Warehouse()
         {
-            this.Shelfs = new HashSet<Shelf>();
             this.Ramps = new HashSet<Ramp>();
+            this.Shelfs = new HashSet<Shelf>();
         }
     
         public string Id { get; set; }
         public string Address { get; set; }
         public string ManagerId { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Shelf> Shelfs { get; set; }
         public virtual Employee Employee { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Ramp> Ramps { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Shelf> Shelfs { get; set; }
     }
 }

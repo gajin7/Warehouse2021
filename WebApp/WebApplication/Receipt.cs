@@ -17,8 +17,8 @@ namespace WebApplication
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Receipt()
         {
-            this.Items = new HashSet<Item>();
             this.Loads = new HashSet<Load>();
+            this.ReceiptItems = new HashSet<ReceiptItem>();
         }
     
         public string Id { get; set; }
@@ -27,8 +27,8 @@ namespace WebApplication
         public string Company { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Item> Items { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Load> Loads { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ReceiptItem> ReceiptItems { get; set; }
     }
 }

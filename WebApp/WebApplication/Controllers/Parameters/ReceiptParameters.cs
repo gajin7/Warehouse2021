@@ -8,5 +8,7 @@ namespace WebApplication.Controllers.Parameters
     {
         public IEnumerable<ItemResult> Items { get; set; }
         public string Company { get; set; }
+        public string StorekeeperEmail { get; set; }
+        public string WarehouseId { get; set; }
     }
 }

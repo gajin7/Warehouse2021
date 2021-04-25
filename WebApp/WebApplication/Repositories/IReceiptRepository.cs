@@ -5,6 +5,7 @@ namespace WebApplication.Repositories
 {
     public interface IReceiptRepository
     {
-        OperationResult CreateReceipt(IEnumerable<Item> items, string company);
+        ReceiptOperationResult CreateReceipt(IEnumerable<ItemResult> items, string company);
+        IEnumerable<Receipt> GetReceipts();
     }
 }

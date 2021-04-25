@@ -1,72 +1,101 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Ajax.Utilities;
 using WebApplication.Models;
 
 namespace WebApplication.Repositories
 {
     public class ItemRepository : IItemRepository
     {
-        private readonly AccessDb _accessDb;
-
-        public ItemRepository(AccessDb accessDb)
-        {
-            _accessDb = accessDb;
-        }
 
         public OperationResult AddItem(Item item)
         {
-            var result = new OperationResult();
-
-            try
+            using (var accessDb = new AccessDb())
             {
-                if (!_accessDb.Items.Any(e => e.Id.Equals(item.Id)))
+                var result = new OperationResult();
+                if (item.Id.IsNullOrWhiteSpace())
                 {
-                    _accessDb.Items.Add(item);
-                    var dbResult = _accessDb.SaveChanges();
-                    if (dbResult > 0)
+                    item.Id = Guid.NewGuid().ToString();
+                }
+
+                try
+                {
+                    if (!accessDb.Items.Any(e => e.Id.Equals(item.Id)))
                     {
-                        result.Message = "Item added successfully";
-                        result.Success = true;
+                        accessDb.Items.Add(item);
+                        var dbResult = accessDb.SaveChanges();
+                        if (dbResult > 0)
+                        {
+                            result.Message = "Item added successfully";
+                            result.Success = true;
+                        }
+                        else
+                        {
+                            result.Message = "Something went wrong. Please try again";
+                            result.Success = false;
+                        }
                     }
                     else
                     {
-                        result.Message = "Something went wrong. Please try again";
+                        result.Message = "Item with same id already exist";
                         result.Success = false;
                     }
                 }
-                else
+                catch (Exception e)
                 {
-                    result.Message = "Item with same id already exist";
+                    result.Message = "An error occurred. Check your data and try again";
+                    result.ErrorMessage = e.Message;
                     result.Success = false;
                 }
-            }
-            catch (Exception e)
-            {
-                result.Message = "An error occurred. Check your data and try again";
-                result.ErrorMessage = e.Message;
-                result.Success = false;
-            }
 
-            return result;
+                return result;
+            }
         }
 
-        public OperationResult ChangeQuantity(string id, double addToQuantity)
+        public OperationResult ChangeQuantity(string id, int addToQuantity)
         {
             var result = new OperationResult();
 
-            try
+            using (var accessDb = new AccessDb())
             {
-                if (_accessDb.Items.Any(e => e.Id.Equals(id)))
+                try
                 {
-                    var item = _accessDb.Items.First(e => e.Id.Equals(id));
-                    if (addToQuantity < 0)
+                    if (accessDb.Items.Any(e => e.Id.Equals(id)))
                     {
-                        if ((item.Quantity - (int) addToQuantity) > 0)
+                        var item = accessDb.Items.First(e => e.Id.Equals(id));
+                        if (addToQuantity < 0)
                         {
-                            var addToQuantityAbs = (int) addToQuantity;
-                            item.Quantity += addToQuantityAbs;
-                            var dbResult = _accessDb.SaveChanges();
+                            if ((item.Quantity -  addToQuantity) > 0)
+                            {
+                                var addToQuantityAbs =  addToQuantity;
+                                item.Quantity += addToQuantityAbs;
+                                var dbResult = accessDb.SaveChanges();
+                                if (dbResult > 0)
+                                {
+                                    result.Message = "Item quantity changed successfully";
+                                    result.Success = true;
+                                }
+                                else
+                                {
+                                    result.Message = "Item quantity can't be changed at the moment";
+                                    result.Success = false;
+                                }
+                            }
+                            else
+                            {
+                                result.Message = "Item quantity can't be changed at the moment";
+                                result.Success = false;
+                            }
+
+                        }
+                        else
+                        {
+                            item.Quantity +=  addToQuantity;
+                            result.Message = "Item quantity changed successfully";
+                            result.Success = true;
+
+                            var dbResult = accessDb.SaveChanges();
                             if (dbResult > 0)
                             {
                                 result.Message = "Item quantity changed successfully";
@@ -78,74 +107,65 @@ namespace WebApplication.Repositories
                                 result.Success = false;
                             }
                         }
-                        else
-                        {
-                            result.Message = "Item quantity can't be changed at the moment";
-                            result.Success = false;
-                        }
-
                     }
                     else
                     {
-                        item.Quantity += (int) addToQuantity;
-                        result.Message = "Item quantity changed successfully";
-                        result.Success = true;
-
-                        var dbResult = _accessDb.SaveChanges();
-                        if (dbResult > 0)
-                        {
-                            result.Message = "Item quantity changed successfully";
-                            result.Success = true;
-                        }
-                        else
-                        {
-                            result.Message = "Item quantity can't be changed at the moment";
-                            result.Success = false;
-                        }
+                        result.Message = "Item with same id already exist";
+                        result.Success = false;
                     }
                 }
-                else
+                catch (Exception e)
                 {
-                    result.Message = "Item with same id already exist";
+                    result.Message = "An error occurred. Check your data and try again";
+                    result.ErrorMessage = e.Message;
                     result.Success = false;
                 }
-            }
-            catch (Exception e)
-            {
-                result.Message = "An error occurred. Check your data and try again";
-                result.ErrorMessage = e.Message;
-                result.Success = false;
             }
 
             return result;
         }
 
-        public IEnumerable<Item> GetAllItems()
+        public IEnumerable<ItemResult> GetAllItems()
         {
-            return _accessDb.Items.ToList();
+            using (var accessDb = new AccessDb())
+            {
+                var items = accessDb.Items.ToList();
+
+               return items.Select(item => new ItemResult()
+                    {
+                        Amount = item.Amount,
+                        Id = item.Id,
+                        Name = item.Name,
+                        Quantity = item.Quantity,
+                        Type = item.Type,
+                        Warehouse = item.Shelf.WarehouseId
+                    })
+                    .ToList();
+            }
         }
 
         public Item GetItem(string id)
         {
-            return _accessDb.Items.FirstOrDefault(i => i.Id.Equals(id));
-        }
-
-        public IEnumerable<Item> GetItemsOnShelf(string shelfId)
-        {
-            return _accessDb.Items.Where(i => i.ShelfId.Equals(shelfId)).ToList();
+            using (var accessDb = new AccessDb())
+            {
+                return accessDb.Items.FirstOrDefault(i => i.Id.Equals(id));
+            }
         }
 
         public int GetQuantityForItem(string id)
         {
-            var quantity = _accessDb.Items.First(i => i.Id.Equals(id)).Quantity;
+            using (var accessDb = new AccessDb())
+            {
+                var quantity = accessDb.Items.First(i => i.Id.Equals(id)).Quantity;
 
-            if (quantity != null)
-            {
-                return (int) quantity;
-            }
-            else
-            {
-                return 0;
+                if (quantity != null)
+                {
+                    return (int) quantity;
+                }
+                else
+                {
+                    return 0;
+                }
             }
         }
     }

@@ -33,13 +33,14 @@
           <li ngbNavItem="Shelves">
             <a ngbNavLink>Shelves</a>
             <ng-template ngbNavContent>
-                <div style="float: left; margin: 30px;">
+                <div style="float: left; margin-top: 30px; margin-right: 20px;">
                   <b style="font-size: 50px;">Items</b>
-                  <div style="float: top;">
+                  <div style="float: top; margin-bottom: 10px;">
                     <input style="width: 75%;" id="search" [value]="keyWord" (input)="updateSearch($event)" mdbInput>
                     <button style="width: 10%; float: right;" (click)="clearSearch()" >Clear</button>
                     <button style="width: 15%; float: right;" [disabled]="!(keyWord.length >= 3)" (click)="search()">Search</button>
                   </div>
+                  <div  id="tableAllItemsShelfs">
                     <table  class="table">
                         <thead>
                             <tr>
@@ -60,13 +61,21 @@
                       </tr>
                     </tbody>
                   </table>
+                  </div>
                 </div>
                 <div style="float: right;
-                margin-top: 50px;
+                margin-top: 30px;
                 margin-left: 100px; ">
                    <b style="font-size: 50px;">New Order</b>
+                   <div>
+                    <p style="float: left; width: 20%;">Company</p> &nbsp;
+                   <input style="width: 78%; float: right;" list="brow" (input)="takeCompany($event)">
+                    <datalist id="brow">
+                      <option *ngFor="let obj of companies" [value]="obj.Name"  [selected]="obj === company">{{obj.Name}}, {{obj.Address}}, {{obj.PIB}}</option>
+                    </datalist>  
+                  </div>
                    <div id=tableDiv>
-                   <table style="margin-top: 75px; " class="table">
+                   <table class="table">
                     <thead>
                         <tr>
                             <td>Name</td>
@@ -91,7 +100,7 @@
                     </tbody>
                   </table>
                 </div>
-                <div style=" margin-left: 500px;margin-top: 50px;">
+                <div style=" margin-left: 20px;margin-top: 50px;">
                   <p  style="float:left;font-size: xx-large;"><b>Total:</b> {{total}} $</p>
                   <button style="float:right;font-size: xx-large;" (click)="save()">Save</button>
                 </div>
@@ -107,7 +116,7 @@
               <div style="float: top;">
                 <b style="font-size: 50px;">Items</b>
                 <br>
-                <input style="width: 75%;" id="search" (keyup.enter)="AllItemsSearchEnter()" [value]="allItemsKeyWord" (input)="updateAllItemsSearch($event)" mdbInput>
+                <input style="width: 75%;" id="search" (keyup.enter)="AllItemsSearchEnter()" (keyup.clear)="clearAllItemsSearch()"  [value]="allItemsKeyWord" (input)="updateAllItemsSearch($event)" mdbInput>
                 <button style="float: right;width: 10%;" (click)="clearAllItemsSearch()">Clear</button>
                 <button style="float: right;width: 15%;" [disabled]="!(allItemsKeyWord.length >= 3)" (click)="allItemsSearch()">Search</button>
               <br>
@@ -141,37 +150,58 @@
             </div>
              
             </div>
-            <button id="newItemBtn"  (click)='showHide()'>Add new item</button>
-            <div  id="newItemSectionHidden" style="float:right; margin-top: 5%; visibility: hidden;">
-              <p>New item</p>
-              <form>
+            <button id="newItemBtn"  (click)='ShowNewItem()'>Add new item</button>
+            <div id="newItemSectionHidden">
+              <b style="font-size: large;">New item</b>
+              <form style="margin-top: 5%;" [formGroup]="NewItem" (submit)="SaveItem()" class="needs-validation" novalidate>
                 <label for="fname">Name:</label><br>
-                <input type="text" id="fname1" name="fname"><br>
+                <input  type="text" class="newItemInput" formControlName="Name" required><br>
                 <label for="lname">Quantity:</label><br>
-                <input type="number" id="lname2" name="lname"><br>
+                <input type="number" class="newItemInput" formControlName="Quantity" required><br>
                 <label for="lname">Amount:</label><br>
-                <input type="number" id="lname3" name="lname"><br>
+                <input type="number" class="newItemInput" formControlName="Amount" required><br>
                 <label for="lname">Type:</label><br>
-                <input type="checkbox" id="lname4" name="lname"><br>
-                <label for="lname">Warehouse</label><br>
-                <select class="custom-select" (change)="changeWarehouse($event)"  required>
-                  <option *ngFor="let obj of warehouseNames" [value]="obj"  [selected]="obj === curentWarehouse">{{obj}}</option>
+                <select class="custom-select" formControlName="Type"  required>
+                  <option *ngFor="let obj of itemTypes" [value]="obj">{{obj}}</option>
               </select>
-                <input type="button"  value="Save"><br>
+                <label for="lname">Warehouse:</label><br>
+                <select class="custom-select" formControlName="Warehouse"  (change)="getShelvesForNewItem()" required>
+                  <option *ngFor="let obj of warehouseNames" [value]="obj"  >{{obj}}</option>
+                </select>
+                <label for="lname">Shelf:</label><br>
+                <select class="custom-select" formControlName="ShelfId"  required>
+                  <option *ngFor="let obj of shelves" [value]="obj">{{obj}}</option>
+                </select>
+                <div style="margin-top: 20px;">
+                  <input style="float: right;" type="button" (click)='HideNewItem()'  value="Close">
+                  <input style="float: right;"  type="submit" title="Save"> &nbsp;
+               </div>
               </form>
             </div>
             </ng-template>
           </li>
-          <li ngbNavItem="Reports">
+          <li ngbNavItem="Reports" (click)="getReports()">
             <a ngbNavLink>Reports</a>
             <ng-template ngbNavContent>
-              <p>Sed commodo, leo at suscipit dictum, quam est porttitor sapien, eget sodales nibh elit id diam. Nulla facilisi.
-                Donec egestas ligula vitae odio interdum aliquet. Duis lectus turpis, luctus eget tincidunt eu, congue et odio.
-                Duis pharetra et nisl at faucibus. Quisque luctus pulvinar arcu, et molestie lectus ultrices et. Sed diam urna,
-                egestas ut ipsum vel, volutpat volutpat neque. Praesent fringilla tortor arcu. Vivamus faucibus nisl enim, nec
-                tristique ipsum euismod facilisis. Morbi ut bibendum est, eu tincidunt odio. Orci varius natoque penatibus et
-                magnis dis parturient montes, nascetur ridiculus mus. Mauris aliquet odio ac lorem aliquet ultricies in eget
-                neque. Phasellus nec tortor vel tellus pulvinar feugiat.</p>
+              <div>
+                <b style="font-size: 50px;">Reports</b>
+              <div id="tableAllItems">
+                <table class="table">
+                 <thead>
+                     <tr>
+                         <td><b (click)="SortByDate()">Date</b></td>
+                         <td><b (click)="SortByType()">Type</b> </td>
+                     </tr>
+                 </thead>
+                 <tbody>
+                 <tr *ngFor="let el of reports" >
+                   <td>{{el.Date}}</td>
+                   <td>{{el.Type}}</td>
+                 </tr>
+                 </tbody>
+               </table>
+              </div>
+              </div>
             </ng-template>
           </li>
         </ul>

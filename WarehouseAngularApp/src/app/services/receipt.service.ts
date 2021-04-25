@@ -19,8 +19,10 @@ export class ReceiptService {
  
   constructor(private http: HttpClient) { }
 
-  createReceipt(items: any, company : string): Observable<any> {
-    return this.http.post(this.hostInfo.defaultHostAddress + this.hostInfo.apiPrefix + this.hostInfo.receiptController + "/createReceipt", `Items=`+ items +`&Company=`+company,this.hostInfo.httpOptionsJson);
+  createReceipt(items: Item[], company : string | undefined, warehouse : string | undefined): Observable<any> {
+      console.log(company,"company");
+    const myPostBody = { Items: items, Company: company,  StorekeeperEmail: localStorage.email, WarehouseId : warehouse}
+    return this.http.post(this.hostInfo.defaultHostAddress + this.hostInfo.apiPrefix + this.hostInfo.receiptController + "/createReceipt", myPostBody,this.hostInfo.httpOptionsJson);
   }
   private handle(error: any) {
     return of (error.message);

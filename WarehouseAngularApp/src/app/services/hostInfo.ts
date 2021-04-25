@@ -8,7 +8,10 @@ export class HostInfo {
     shelvesController : string = "/shelves";
     itemsController : string = "/item";
     receiptController : string = "/receipt";
+    reportController : string = "/report";
+    vehicleController : string = "/vehicle";
+    loadController : string = "/load";
     httpOptionsJson = {
-      headers: new HttpHeaders({'Content-Type': 'application/x-www-form-urlencoded'})
+      headers: new HttpHeaders({'Content-Type': 'application/json'})
     }
   }

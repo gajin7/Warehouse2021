@@ -7,52 +7,62 @@ namespace WebApplication.Repositories
 {
     public class ReceiptRepository : IReceiptRepository
     {
-        private readonly AccessDb _accessDb;
-        public ReceiptRepository(AccessDb accessDb)
+        public ReceiptOperationResult CreateReceipt(IEnumerable<ItemResult> items, string company)
         {
-            _accessDb = accessDb;
-        }
-        public OperationResult CreateReceipt(IEnumerable<Item> items, string company)
-        {
-            var enumerable = items.ToList();
-            var amount = enumerable.Aggregate<Item, double?>(0, (current, item) => current + item.Amount);
-            var receipt = new Receipt()
+            using (var accessDb = new AccessDb())
             {
-                Date = DateTime.Now.ToLongDateString(),
-                Items =  enumerable.ToList(),
-                Amount = amount,
-                Company = company
-            };
-            try
-            {
-                _accessDb.Receipts.Add(receipt);
-                var result = _accessDb.SaveChanges();
-                if (result > 0)
+                var enumerable = items.ToList();
+                var amount = enumerable.Aggregate<ItemResult, double?>(0, (current, item) => current + item.Amount);
+                var receipt = new Receipt()
                 {
-                    return new OperationResult()
+                    Id = Guid.NewGuid().ToString(),
+                    Date = DateTime.Now.ToLongDateString(),
+                    Amount = amount,
+                    Company = company,
+                };
+                var recepitItemsList = enumerable.Select(item => new ReceiptItem() {ItemId = item.Id, Quantity = item.Quantity, ReceiptId = receipt.Id}).ToList();
+                receipt.ReceiptItems = recepitItemsList;
+
+                try
+                {
+                    accessDb.Receipts.Add(receipt);
+                    var result = accessDb.SaveChanges();
+                    if (result > 0)
                     {
-                        Success = true,
-                        Message = "Receipt created."
-                    };
+                        return new ReceiptOperationResult()
+                        {
+                            Success = true,
+                            Message = "Receipt created.",
+                            ReceiptId = receipt.Id,
+                        };
+                    }
+                    else
+                    {
+                        return new ReceiptOperationResult()
+                        {
+                            Success = false,
+                            Message = "Receipt can't be created at the moment."
+                        };
+                    }
+
                 }
-                else
+                catch (Exception e)
                 {
-                    return new OperationResult()
+                    return new ReceiptOperationResult()
                     {
                         Success = false,
-                        Message = "Receipt can't be created at the moment."
+                        Message = "Receipt can't be created at the moment.",
+                        ErrorMessage = e.Message
                     };
                 }
-                
             }
-            catch (Exception e)
+        }
+
+        public IEnumerable<Receipt> GetReceipts()
+        {
+            using (var accessDb = new AccessDb())
             {
-                return new OperationResult()
-                {
-                    Success = false,
-                    Message = "Receipt can't be created at the moment.",
-                    ErrorMessage = e.Message
-                };
+                return accessDb.Receipts.ToList();
             }
         }
     }

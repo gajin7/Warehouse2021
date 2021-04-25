@@ -35,6 +35,14 @@ namespace WebApplication.Controllers
                     { Name = shelf.Id, Items = items}).ToList();
         }
 
+        [Route("getShelves")]
+        [Authorize]
+        [HttpGet]
+        public IEnumerable<string> GetShelves([FromUri]string warehouseId)
+        {
+            return _shelfRepository.GetShelves(warehouseId).Select(s => s.Id);
+        }
+
         [Route("getShelvesInWarehouseSearch")]
         [Authorize]
         [HttpGet]

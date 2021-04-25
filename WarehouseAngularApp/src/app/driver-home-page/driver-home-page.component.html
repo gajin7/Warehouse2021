@@ -1,1 +1,68 @@
-<p>driver-home-page works!</p>
+<div style="margin-top: 200px; float: right;margin-right: 150px;" *ngIf="vehicle">
+    <p>Vehicle information</p>
+    <table style="width: 60%;border-collapse:separate; 
+    border-spacing:2.5em;">
+        <thead>
+          <tr>
+            <th id="th" scope="col">
+                <p>Registration: {{vehicle.Registration}}</p>
+                <p>Brand: {{vehicle.Brand}}</p>
+                <p>Type: {{vehicle.Type}}</p>
+                <p>LoadCapacity: {{vehicle.LoadCapacity}}</p>
+                <p>Mileage: {{vehicle.Mileage}}</p>
+                <p>ProductionYear: {{vehicle.ProductionYear}}</p>
+            </th>
+          </tr>
+        </thead>
+      </table>
+      <input type="submit" value="Return vehicle" (click)="freeVehicle(vehicle.Registration)"/>
+  </div>
+
+  <div style="margin-top: 200px; float: right;margin-right: 100px;" *ngIf="!vehicle">
+    <p>Please choose one of the free vehicles</p>
+    <table class="table">
+     <thead>
+         <tr>
+             <td><b>Registration</b></td>
+             <td><b>Brand</b> </td>
+             <td><b>Type</b></td>
+             <td><b>LoadCapacity</b></td>
+             <td><b>Mileage</b></td>
+             <td><b>ProductionYear</b></td>
+
+         </tr>
+     </thead>
+     <tbody>
+     <tr *ngFor="let el of vehicles" (dblclick)="takeVehicleByDriver(el.Registration)" >
+       <td>{{el.Registration}}</td>
+       <td>{{el.Brand}}</td>
+       <td>{{el.Type}}</td>
+       <td>{{el.LoadCapacity}}</td>
+       <td>{{el.Mileage}}</td>
+       <td>{{el.ProductionYear}}</td>
+     </tr>
+     </tbody>
+   </table>
+  </div>
+
+  <div style="margin-top: 200px; float: left;margin-left: 100px;" *ngIf="vehicle">
+    <p>Loads waiting for transport</p>
+    <table class="table">
+     <thead>
+         <tr>
+             <td><b>Id</b></td>
+             <td><b>Warehouse</b> </td>
+             <td><b>Ramp</b></td>
+             <td><b>Is Ramp Free</b></td>
+         </tr>
+     </thead>
+     <tbody>
+     <tr *ngFor="let el of loads" (dblclick)="takeLoad(el.Id,el.RampFree)" >
+       <td>{{el.Id}}</td>
+       <td>{{el.Warehouse}}</td>
+       <td>{{el.Ramp}}</td>
+       <td>{{el.RampFree}}</td>
+     </tr>
+     </tbody>
+   </table>
+  </div>

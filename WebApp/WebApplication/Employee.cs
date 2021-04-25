@@ -17,9 +17,9 @@ namespace WebApplication
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Employee()
         {
-            this.Warehouses = new HashSet<Warehouse>();
-            this.Vehicles = new HashSet<Vehicle>();
             this.Loads = new HashSet<Load>();
+            this.Vehicles = new HashSet<Vehicle>();
+            this.Warehouses = new HashSet<Warehouse>();
         }
     
         public string Id { get; set; }
@@ -31,10 +31,10 @@ namespace WebApplication
     
         public virtual EmployeeType EmployeeType { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Warehouse> Warehouses { get; set; }
+        public virtual ICollection<Load> Loads { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Vehicle> Vehicles { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Load> Loads { get; set; }
+        public virtual ICollection<Warehouse> Warehouses { get; set; }
     }
 }

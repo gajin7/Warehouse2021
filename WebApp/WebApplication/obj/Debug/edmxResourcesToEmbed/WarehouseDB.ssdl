@@ -1,5 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="WarehouseDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Company">
+    <Key>
+      <PropertyRef Name="Name" />
+    </Key>
+    <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="PIB" Type="varchar" MaxLength="50" />
+    <Property Name="Address" Type="varchar" MaxLength="50" />
+    <Property Name="AccountNo" Type="varchar" MaxLength="50" />
+    <Property Name="Deposit" Type="bit" />
+  </EntityType>
   <EntityType Name="Employees">
     <Key>
       <PropertyRef Name="Id" />
@@ -17,13 +27,14 @@
     </Key>
     <Property Name="name" Type="varchar" MaxLength="20" Nullable="false" />
   </EntityType>
-  <EntityType Name="ItemReceipt">
+  <EntityType Name="ItemReports">
     <Key>
-      <PropertyRef Name="Items_Id" />
-      <PropertyRef Name="Receipts_Id" />
+      <PropertyRef Name="ItemId" />
+      <PropertyRef Name="ReportId" />
     </Key>
-    <Property Name="Items_Id" Type="varchar" MaxLength="200" Nullable="false" />
-    <Property Name="Receipts_Id" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="ItemId" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="ReportId" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Quantity" Type="int" />
   </EntityType>
   <EntityType Name="Items">
     <Key>
@@ -34,8 +45,8 @@
     <Property Name="Quantity" Type="int" />
     <Property Name="Type" Type="varchar" MaxLength="50" />
     <Property Name="ShelfId" Type="varchar" MaxLength="50" />
-    <Property Name="ReciveReportId" Type="varchar" MaxLength="50" />
     <Property Name="Amount" Type="float" />
+    <Property Name="ReceiptId" Type="varchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="ItemTypes">
     <Key>
@@ -63,6 +74,15 @@
     <Property Name="Free" Type="bit" Nullable="false" />
     <Property Name="WarehouseId" Type="varchar" MaxLength="50" Nullable="false" />
   </EntityType>
+  <EntityType Name="ReceiptItems">
+    <Key>
+      <PropertyRef Name="ItemId" />
+      <PropertyRef Name="ReceiptId" />
+    </Key>
+    <Property Name="ItemId" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="ReceiptId" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Quantity" Type="int" />
+  </EntityType>
   <EntityType Name="Receipts">
     <Key>
       <PropertyRef Name="Id" />
@@ -71,6 +91,7 @@
     <Property Name="Amount" Type="float" />
     <Property Name="Date" Type="varchar" MaxLength="50" />
     <Property Name="Company" Type="varchar" MaxLength="50" />
+    <Property Name="ItemId" Type="varchar" MaxLength="200" />
   </EntityType>
   <EntityType Name="Reports">
     <Key>
@@ -127,15 +148,27 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Items__ReciveRep__6383C8BA">
-    <End Role="Reports" Type="Self.Reports" Multiplicity="0..1" />
-    <End Role="Items" Type="Self.Items" Multiplicity="*" />
+  <Association Name="FK__ItemRepor__ItemI__245D67DE">
+    <End Role="Items" Type="Self.Items" Multiplicity="1" />
+    <End Role="ItemReports" Type="Self.ItemReports" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Items">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ItemReports">
+        <PropertyRef Name="ItemId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ItemRepor__Repor__25518C17">
+    <End Role="Reports" Type="Self.Reports" Multiplicity="1" />
+    <End Role="ItemReports" Type="Self.ItemReports" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Reports">
         <PropertyRef Name="Id" />
       </Principal>
-      <Dependent Role="Items">
-        <PropertyRef Name="ReciveReportId" />
+      <Dependent Role="ItemReports">
+        <PropertyRef Name="ReportId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -235,7 +268,31 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Reports__Type__6E01572D">
+  <Association Name="FK__ReceiptIt__ItemI__1F98B2C1">
+    <End Role="Items" Type="Self.Items" Multiplicity="1" />
+    <End Role="ReceiptItems" Type="Self.ReceiptItems" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Items">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ReceiptItems">
+        <PropertyRef Name="ItemId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ReceiptIt__Recei__208CD6FA">
+    <End Role="Receipts" Type="Self.Receipts" Multiplicity="1" />
+    <End Role="ReceiptItems" Type="Self.ReceiptItems" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Receipts">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ReceiptItems">
+        <PropertyRef Name="ReceiptId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Reports__Type__10566F31">
     <End Role="ReportTypes" Type="Self.ReportTypes" Multiplicity="0..1" />
     <End Role="Reports" Type="Self.Reports" Multiplicity="*" />
     <ReferentialConstraint>
@@ -283,38 +340,16 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_ItemReceipt_Item">
-    <End Role="Items" Type="Self.Items" Multiplicity="1" />
-    <End Role="ItemReceipt" Type="Self.ItemReceipt" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Items">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="ItemReceipt">
-        <PropertyRef Name="Items_Id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_ItemReceipt_Receipt">
-    <End Role="Receipts" Type="Self.Receipts" Multiplicity="1" />
-    <End Role="ItemReceipt" Type="Self.ItemReceipt" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Receipts">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="ItemReceipt">
-        <PropertyRef Name="Receipts_Id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <EntityContainer Name="WarehouseDBModelStoreContainer">
+    <EntitySet Name="Company" EntityType="Self.Company" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Employees" EntityType="Self.Employees" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="EmployeeTypes" EntityType="Self.EmployeeTypes" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="ItemReceipt" EntityType="Self.ItemReceipt" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ItemReports" EntityType="Self.ItemReports" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Items" EntityType="Self.Items" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ItemTypes" EntityType="Self.ItemTypes" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Load" EntityType="Self.Load" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Ramps" EntityType="Self.Ramps" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ReceiptItems" EntityType="Self.ReceiptItems" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Receipts" EntityType="Self.Receipts" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Reports" EntityType="Self.Reports" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ReportTypes" EntityType="Self.ReportTypes" Schema="dbo" store:Type="Tables" />
@@ -325,9 +360,13 @@
       <End Role="EmployeeTypes" EntitySet="EmployeeTypes" />
       <End Role="Employees" EntitySet="Employees" />
     </AssociationSet>
-    <AssociationSet Name="FK__Items__ReciveRep__6383C8BA" Association="Self.FK__Items__ReciveRep__6383C8BA">
-      <End Role="Reports" EntitySet="Reports" />
+    <AssociationSet Name="FK__ItemRepor__ItemI__245D67DE" Association="Self.FK__ItemRepor__ItemI__245D67DE">
       <End Role="Items" EntitySet="Items" />
+      <End Role="ItemReports" EntitySet="ItemReports" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ItemRepor__Repor__25518C17" Association="Self.FK__ItemRepor__Repor__25518C17">
+      <End Role="Reports" EntitySet="Reports" />
+      <End Role="ItemReports" EntitySet="ItemReports" />
     </AssociationSet>
     <AssociationSet Name="FK__Items__ShelfId__628FA481" Association="Self.FK__Items__ShelfId__628FA481">
       <End Role="Shelfs" EntitySet="Shelfs" />
@@ -361,7 +400,15 @@
       <End Role="Warehouses" EntitySet="Warehouses" />
       <End Role="Ramps" EntitySet="Ramps" />
     </AssociationSet>
-    <AssociationSet Name="FK__Reports__Type__6E01572D" Association="Self.FK__Reports__Type__6E01572D">
+    <AssociationSet Name="FK__ReceiptIt__ItemI__1F98B2C1" Association="Self.FK__ReceiptIt__ItemI__1F98B2C1">
+      <End Role="Items" EntitySet="Items" />
+      <End Role="ReceiptItems" EntitySet="ReceiptItems" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ReceiptIt__Recei__208CD6FA" Association="Self.FK__ReceiptIt__Recei__208CD6FA">
+      <End Role="Receipts" EntitySet="Receipts" />
+      <End Role="ReceiptItems" EntitySet="ReceiptItems" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Reports__Type__10566F31" Association="Self.FK__Reports__Type__10566F31">
       <End Role="ReportTypes" EntitySet="ReportTypes" />
       <End Role="Reports" EntitySet="Reports" />
     </AssociationSet>
@@ -376,14 +423,6 @@
     <AssociationSet Name="FK__Warehouse__Manag__68487DD7" Association="Self.FK__Warehouse__Manag__68487DD7">
       <End Role="Employees" EntitySet="Employees" />
       <End Role="Warehouses" EntitySet="Warehouses" />
-    </AssociationSet>
-    <AssociationSet Name="FK_ItemReceipt_Item" Association="Self.FK_ItemReceipt_Item">
-      <End Role="Items" EntitySet="Items" />
-      <End Role="ItemReceipt" EntitySet="ItemReceipt" />
-    </AssociationSet>
-    <AssociationSet Name="FK_ItemReceipt_Receipt" Association="Self.FK_ItemReceipt_Receipt">
-      <End Role="Receipts" EntitySet="Receipts" />
-      <End Role="ItemReceipt" EntitySet="ItemReceipt" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

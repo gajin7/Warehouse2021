@@ -75,6 +75,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.IdentityModel" />
     <Reference Include="System.IdentityModel.Services" />
@@ -212,13 +213,19 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Company.cs">
+      <DependentUpon>WarehouseDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\ItemController.cs" />
+    <Compile Include="Controllers\LoadController.cs" />
     <Compile Include="Controllers\Parameters\ChangePasswordParameters.cs" />
     <Compile Include="Controllers\Parameters\LoginParameters.cs" />
     <Compile Include="Controllers\Parameters\ReceiptParameters.cs" />
     <Compile Include="Controllers\ReceiptController.cs" />
+    <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Controllers\ShelvesController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Controllers\VehicleController.cs" />
     <Compile Include="Controllers\WarehouseController.cs" />
     <Compile Include="Employee.cs">
       <DependentUpon>WarehouseDB.tt</DependentUpon>
@@ -232,18 +239,28 @@
     <Compile Include="Item.cs">
       <DependentUpon>WarehouseDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="ItemReport.cs">
+      <DependentUpon>WarehouseDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="ItemType.cs">
       <DependentUpon>WarehouseDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Load.cs">
       <DependentUpon>WarehouseDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\CompanyResult.cs" />
     <Compile Include="Models\DriverController.cs" />
     <Compile Include="Models\ItemResult.cs" />
+    <Compile Include="Models\LoadResult.cs" />
     <Compile Include="Models\LoginResult.cs" />
     <Compile Include="Models\OperationResult.cs" />
     <Compile Include="Models\QuantityResult.cs" />
+    <Compile Include="Models\ReceiptOperationResult.cs" />
+    <Compile Include="Models\ReceiptResult.cs" />
+    <Compile Include="Models\ReportOperationResult.cs" />
+    <Compile Include="Models\ReportResult.cs" />
     <Compile Include="Models\ShelfItemsResult.cs" />
+    <Compile Include="Models\VehicleResult.cs" />
     <Compile Include="Models\WarehouseResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\CustomJwtFormat.cs" />
@@ -254,21 +271,34 @@
     <Compile Include="Receipt.cs">
       <DependentUpon>WarehouseDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="ReceiptItem.cs">
+      <DependentUpon>WarehouseDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Report.cs">
       <DependentUpon>WarehouseDB.tt</DependentUpon>
     </Compile>
     <Compile Include="ReportType.cs">
       <DependentUpon>WarehouseDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Repositories\CompaniesRepository.cs" />
+    <Compile Include="Repositories\ICompaniesRepository.cs" />
     <Compile Include="Repositories\IEmployeeRepository.cs" />
     <Compile Include="Repositories\EmployeeRepository.cs" />
     <Compile Include="Repositories\IItemRepository.cs" />
+    <Compile Include="Repositories\IItemTypesRepository.cs" />
+    <Compile Include="Repositories\ILoadRepository.cs" />
+    <Compile Include="Repositories\IRampRepository.cs" />
     <Compile Include="Repositories\IReceiptRepository.cs" />
+    <Compile Include="Repositories\IReportRepository.cs" />
     <Compile Include="Repositories\IShelfRepository.cs" />
     <Compile Include="Repositories\ItemRepository.cs" />
+    <Compile Include="Repositories\ItemTypesRepository.cs" />
     <Compile Include="Repositories\IVehicleRepository.cs" />
     <Compile Include="Repositories\IWarehouseRepository.cs" />
+    <Compile Include="Repositories\LoadRepository.cs" />
+    <Compile Include="Repositories\RampRepository.cs" />
     <Compile Include="Repositories\ReceiptRepository.cs" />
+    <Compile Include="Repositories\ReportRepository.cs" />
     <Compile Include="Repositories\ShelfRepository.cs" />
     <Compile Include="Repositories\VehicleRepository.cs" />
     <Compile Include="Repositories\WarehouseRepository.cs" />
@@ -297,6 +327,11 @@
       <DependentUpon>WarehouseDB.tt</DependentUpon>
     </Compile>
     <Compile Include="WarehouseDB.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>WarehouseDB.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="WarehouseDB1.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>WarehouseDB.edmx</DependentUpon>
@@ -364,7 +399,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <EntityDeploy Include="WarehouseDB.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>WarehouseDB.Designer.cs</LastGenOutput>
+      <LastGenOutput>WarehouseDB1.Designer.cs</LastGenOutput>
     </EntityDeploy>
     <Content Include="WarehouseDB.edmx.diagram">
       <DependentUpon>WarehouseDB.edmx</DependentUpon>

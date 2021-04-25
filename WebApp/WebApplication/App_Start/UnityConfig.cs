@@ -13,9 +13,6 @@ namespace WebApplication
         {
 			var container = new UnityContainer();
 
-            //register access database as singleton
-            container.RegisterSingleton<AccessDb>();
-
             //register repositories
             container.RegisterType<IEmployeeRepository, EmployeeRepository>(new HierarchicalLifetimeManager());
             container.RegisterType<IItemRepository, ItemRepository>(new HierarchicalLifetimeManager());
@@ -23,6 +20,12 @@ namespace WebApplication
             container.RegisterType<IShelfRepository, ShelfRepository>(new HierarchicalLifetimeManager());
             container.RegisterType<IReceiptRepository, ReceiptRepository>(new HierarchicalLifetimeManager());
             container.RegisterType<IVehicleRepository, VehicleRepository>(new HierarchicalLifetimeManager());
+            container.RegisterType<IItemTypesRepository, ItemTypesRepository>(new HierarchicalLifetimeManager());
+            container.RegisterType<ICompaniesRepository, CompaniesRepository>(new HierarchicalLifetimeManager());
+            container.RegisterType<IReportRepository, ReportRepository>(new HierarchicalLifetimeManager());
+            container.RegisterType<ILoadRepository, LoadRepository>(new HierarchicalLifetimeManager());
+            container.RegisterType<IRampRepository, RampRepository>(new HierarchicalLifetimeManager());
+
 
             //register services
             container.RegisterType<IHashPasswordService, HashPasswordService>(new HierarchicalLifetimeManager());

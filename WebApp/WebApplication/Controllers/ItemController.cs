@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using Microsoft.Ajax.Utilities;
 using WebApplication.Models;
 using WebApplication.Repositories;
 using WebApplication.Services;
@@ -11,18 +12,50 @@ namespace WebApplication.Controllers
     public class ItemController : ApiController
     {
         private readonly IItemRepository _itemRepository;
+        private readonly IItemTypesRepository _itemTypesRepository;
+        private readonly ICompaniesRepository _companiesRepository;
         private readonly ISearchService _searchService;
-        public ItemController(IItemRepository itemRepository, ISearchService searchService)
+        private readonly IReportRepository _reportRepository;
+        public ItemController(IItemRepository itemRepository, ISearchService searchService,
+            IItemTypesRepository itemTypesRepository, ICompaniesRepository companiesRepository,
+            IReportRepository reportRepository)
         {
             _itemRepository = itemRepository;
             _searchService = searchService;
+            _itemTypesRepository = itemTypesRepository;
+            _companiesRepository = companiesRepository;
+            _reportRepository = reportRepository;
         }
 
         [HttpPost]
         [Route("addItem")]
         public OperationResult AddItem([FromBody]Item item)
         {
-            return _itemRepository.AddItem(item);
+            if (item == null || item.Name.IsNullOrWhiteSpace() || !item.Amount.HasValue || item.ShelfId.IsNullOrWhiteSpace() || !item.Quantity.HasValue)
+            {
+                return new OperationResult()
+                {
+                    Message = "Validation failed, please check your dana and try again",
+                    Success =  false
+                };
+            }
+            var itemResult = _itemRepository.AddItem(item);
+            if (itemResult.Success)
+            {
+                var reportResult = _reportRepository.CreateInReport(item);
+                if (reportResult.Success)
+                {
+                    return itemResult;
+                }
+                else
+                {
+                    return reportResult;
+                }
+            }
+            else
+            {
+                return itemResult;
+            }
         }
 
         [HttpGet]
@@ -37,38 +70,14 @@ namespace WebApplication.Controllers
         [Route("getAllItems")]
         public IEnumerable<ItemResult> GetAllItems()
         {
-            var items1 = _itemRepository.GetAllItems();
-            var items2 = _itemRepository.GetAllItems();
-            var items3 = _itemRepository.GetAllItems();
-            var items4 = _itemRepository.GetAllItems();
-            var items5 = _itemRepository.GetAllItems();
-            var items6 = _itemRepository.GetAllItems();
-            var items7 = _itemRepository.GetAllItems();
-
-            var allItems = items1.Concat(items2)
-                .Concat(items2).Concat(items3).Concat(items4).Concat(items5).Concat(items6).Concat(items7).ToList();
-            return allItems
-                .Select(item => new ItemResult()
-                {
-                    Amount = item.Amount,
-                    Id = item.Id,
-                    Name = item.Name,
-                    Quantity = item.Quantity,
-                    Type = item.Type,
-                    Warehouse = item.Shelf.WarehouseId
-                })
-                .ToList();
+            return _itemRepository.GetAllItems().ToList();
         }
 
         [HttpPost]
         [Authorize]
         [Route("changeQuantity")]
-        public OperationResult ChangeQuantity(string id, double quantityChanger, bool negative)
+        public OperationResult ChangeQuantity(string id, int quantityChanger)
         {
-            if (negative)
-            {
-                quantityChanger = System.Math.Abs(quantityChanger) * (-1);
-            }
             return _itemRepository.ChangeQuantity(id, quantityChanger);
         }
 
@@ -87,19 +96,29 @@ namespace WebApplication.Controllers
         [HttpGet]
         public IEnumerable<ItemResult> GetAllItemsSearch([FromUri]string warehouseId, string keyWord)
         {
-            var items = _itemRepository.GetAllItems()
-                .Select(item => new ItemResult()
-                {
-                    Amount = item.Amount,
-                    Id = item.Id,
-                    Name = item.Name,
-                    Quantity = item.Quantity,
-                    Type = item.Type,
-                    Warehouse = item.Shelf.WarehouseId
-                })
-                .ToList();
-
+            var items = _itemRepository.GetAllItems();
             return _searchService.FilterAllItemsBaseOnKeyWord(items, keyWord).ToList();
+        }
+
+        [HttpGet]
+        [Route("getItemTypes")]
+        [Authorize]
+        public IEnumerable<string> GetItemTypes()
+        {
+            return _itemTypesRepository.GetItemTypes();
+        }
+
+        [HttpGet]
+        [Route("getCompanies")]
+        public IEnumerable<CompanyResult> GetCompanies()
+        {
+            return _companiesRepository.GetCompanies().ToList().Select(c => new CompanyResult()
+            {
+                AccountNo = c.AccountNo,
+                Address = c.Address,
+                Name = c.Name,
+                PIB = c.PIB
+            });
         }
     }
 }

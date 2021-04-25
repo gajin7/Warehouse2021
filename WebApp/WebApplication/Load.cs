@@ -24,8 +24,8 @@ namespace WebApplication
     
         public virtual Employee Employee { get; set; }
         public virtual Ramp Ramp { get; set; }
+        public virtual Vehicle Vehicle { get; set; }
         public virtual Receipt Receipt { get; set; }
         public virtual Report Report { get; set; }
-        public virtual Vehicle Vehicle { get; set; }
     }
 }

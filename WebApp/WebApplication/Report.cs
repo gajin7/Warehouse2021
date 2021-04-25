@@ -17,8 +17,8 @@ namespace WebApplication
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Report()
         {
-            this.Items = new HashSet<Item>();
             this.Loads = new HashSet<Load>();
+            this.ItemReports = new HashSet<ItemReport>();
         }
     
         public string Id { get; set; }
@@ -28,9 +28,9 @@ namespace WebApplication
         public string Type { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Item> Items { get; set; }
+        public virtual ICollection<Load> Loads { get; set; }
         public virtual ReportType ReportType { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Load> Loads { get; set; }
+        public virtual ICollection<ItemReport> ItemReports { get; set; }
     }
 }
