@@ -8,5 +8,7 @@ namespace WebApplication.Repositories
         OperationResult CreateInReport(Item item);
         ReportOperationResult CreateOutReport(IEnumerable<ItemResult> items);
         IEnumerable<ReportResult> GetReports(string reportType);
+        Report GetReport(string reportId);
+        IEnumerable<ItemReport> GetReportItems(string reportId);
     }
 }

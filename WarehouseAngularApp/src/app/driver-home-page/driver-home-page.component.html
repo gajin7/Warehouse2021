@@ -67,11 +67,11 @@
       <li class="list-group-item">Id: <b style="float: right;">{{driversLoad.Id}}</b></li>
       <li class="list-group-item">Warehouse <b style="float: right;">{{driversLoad.Warehouse}}</b></li>
       <li class="list-group-item">Ramp: <b style="float: right;">{{driversLoad.Ramp}}</b></li>
-      <li class="list-group-item">Download report: <b style="float: right;"></b></li>
+      <li class="list-group-item">Report: <button style="float: right;" class="btn btn-link" (click)="GetReportPdf(driversLoad.ReportId)"> Download</button></li>
       <li class="list-group-item"><qr-code style="float: right;"  value={{driversLoad.Id}} size="100" errorCorrectionLevel="M"></qr-code></li>
     </ul>
     <div class="card-body">
-      <button style="float: right;" class="btn btn-outline-primary" (click)="LoadFinished()">Load finised</button>
+      <button style="float: right;" class="btn btn-outline-primary" (click)="LoadFinished(driversLoad.ReceiptId)">Load finised</button>
     </div>
   </div>
 </div>

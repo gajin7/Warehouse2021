@@ -55,6 +55,7 @@ export class AuthService {
     this.isLoggedin = false;
     localStorage.removeItem('jwt');
     localStorage.removeItem('role');
+    localStorage.removeItem('email');
   }
 
   private handle(error: any) {

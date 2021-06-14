@@ -132,6 +132,22 @@ namespace WebApplication.Repositories
 
         }
 
+        public Report GetReport(string reportId)
+        {
+            using (var accessDb = new AccessDb())
+            {
+                return accessDb.Reports.FirstOrDefault(r => r.Id.Equals(reportId));
+            }
+        }
+
+        public IEnumerable<ItemReport> GetReportItems(string reportId)
+        {
+            using (var accessDb = new AccessDb())
+            {
+                return accessDb.ItemReports.Where(ri => ri.ReportId.Equals(reportId)).ToList();
+            }
+        }
+
         public IEnumerable<ReportResult> GetReports(string reportType)
         {
             using (var accessDb = new AccessDb())

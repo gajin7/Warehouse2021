@@ -19,6 +19,10 @@ export class ReportsService {
     return this.http.get(this.hostInfo.defaultHostAddress + this.hostInfo.apiPrefix + this.hostInfo.reportController + '/getReports?type='+type);
   }
 
+  getReportFile(reportId : string | undefined) : Observable<Blob> {   
+    return this.http.get(this.hostInfo.defaultHostAddress + this.hostInfo.apiPrefix + this.hostInfo.reportController + '/getReportPdf?reportId=' + reportId, { responseType: 'blob' });
+}
+
   private handle(error: any) {
     return of (error.message);
   }

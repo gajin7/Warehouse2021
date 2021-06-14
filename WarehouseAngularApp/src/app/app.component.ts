@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from './auth/auth.service';
 
@@ -7,7 +7,7 @@ import { AuthService } from './auth/auth.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
   title = 'WarehouseAngularApp';
   date : Date | undefined;
 
@@ -15,6 +15,10 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.getDateAndTime();
 
+  }
+
+  async  ngOnDestroy() {
+    this.authService.logout();
   }
   constructor(public authService: AuthService,public router: Router) { 
   }
