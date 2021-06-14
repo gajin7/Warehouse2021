@@ -73,6 +73,12 @@
     <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
+    <Reference Include="PdfSharp, Version=1.50.5147.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\PDFsharp.1.50.5147\lib\net20\PdfSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="PdfSharp.Charting, Version=1.50.5147.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\PDFsharp.1.50.5147\lib\net20\PdfSharp.Charting.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
@@ -216,11 +222,15 @@
     <Compile Include="Company.cs">
       <DependentUpon>WarehouseDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\RampController.cs" />
+    <Compile Include="Controllers\CompanyController.cs" />
     <Compile Include="Controllers\ItemController.cs" />
     <Compile Include="Controllers\LoadController.cs" />
     <Compile Include="Controllers\Parameters\ChangePasswordParameters.cs" />
+    <Compile Include="Controllers\Parameters\GetLoadByDriverParameters.cs" />
     <Compile Include="Controllers\Parameters\LoginParameters.cs" />
     <Compile Include="Controllers\Parameters\ReceiptParameters.cs" />
+    <Compile Include="Controllers\Parameters\WarehouseParameters.cs" />
     <Compile Include="Controllers\ReceiptController.cs" />
     <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Controllers\ShelvesController.cs" />
@@ -249,12 +259,14 @@
       <DependentUpon>WarehouseDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CompanyResult.cs" />
-    <Compile Include="Models\DriverController.cs" />
+    <Compile Include="Controllers\DriverController.cs" />
+    <Compile Include="Models\EmployeeResult.cs" />
     <Compile Include="Models\ItemResult.cs" />
     <Compile Include="Models\LoadResult.cs" />
     <Compile Include="Models\LoginResult.cs" />
     <Compile Include="Models\OperationResult.cs" />
     <Compile Include="Models\QuantityResult.cs" />
+    <Compile Include="Models\RampResult.cs" />
     <Compile Include="Models\ReceiptOperationResult.cs" />
     <Compile Include="Models\ReceiptResult.cs" />
     <Compile Include="Models\ReportOperationResult.cs" />
@@ -302,7 +314,13 @@
     <Compile Include="Repositories\ShelfRepository.cs" />
     <Compile Include="Repositories\VehicleRepository.cs" />
     <Compile Include="Repositories\WarehouseRepository.cs" />
+    <Compile Include="Services\DefaultPasswordGenerator.cs" />
+    <Compile Include="Services\DocumentCreatorService.cs" />
     <Compile Include="Services\HashPasswordService.cs" />
+    <Compile Include="Services\EmailService.cs" />
+    <Compile Include="Services\IDefaultPasswordGenerator.cs" />
+    <Compile Include="Services\IDocumentCreatorService.cs" />
+    <Compile Include="Services\IEmailService.cs" />
     <Compile Include="Services\IHashPasswordService.cs" />
     <Compile Include="Services\ISearchService.cs" />
     <Compile Include="Services\SearchService.cs" />

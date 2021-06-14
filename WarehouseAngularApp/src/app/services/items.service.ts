@@ -35,14 +35,19 @@ export class ItemsService {
     return this.http.get(this.hostInfo.defaultHostAddress + this.hostInfo.apiPrefix + this.hostInfo.itemsController + '/getItemTypes');
   }
 
-  getCompanies()
-  {
-    return this.http.get(this.hostInfo.defaultHostAddress + this.hostInfo.apiPrefix + this.hostInfo.itemsController + '/getCompanies',{ 'headers': { 'Access-Control-Allow-Origin': 'http://localhost:4200' } });
-  }
-
   addItem(item : NewItem)
   {
     return this.http.post(this.hostInfo.defaultHostAddress + this.hostInfo.apiPrefix + this.hostInfo.itemsController + '/addItem',item);
+  }
+
+  change(item : NewItem)
+  {
+    return this.http.post(this.hostInfo.defaultHostAddress + this.hostInfo.apiPrefix + this.hostInfo.itemsController + '/changeItem',item);
+  }
+
+  remove(id : string)
+  {
+    return this.http.delete(this.hostInfo.defaultHostAddress + this.hostInfo.apiPrefix + this.hostInfo.itemsController + '/removeItem?id='+id);
   }
 
   private handle(error: any) {

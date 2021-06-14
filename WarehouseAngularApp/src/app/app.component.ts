@@ -37,5 +37,10 @@ export class AppComponent implements OnInit {
      this.authService.logout();
      this.router.navigate(['']);
    }
+
+   OpenMyProfile()
+  {
+    this.router.navigate(['my-profile']);
+  }
 }
 

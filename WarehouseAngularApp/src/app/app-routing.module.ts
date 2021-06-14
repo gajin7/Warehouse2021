@@ -8,6 +8,7 @@ import { DefaultHomepageComponent } from './default-homepage/default-homepage.co
 import { DriverHomePageComponent } from './driver-home-page/driver-home-page.component';
 import { LoginComponent } from './login/login.component';
 import { ManagerHomePageComponent } from './manager-home-page/manager-home-page.component';
+import { MyProfilePageComponent } from './my-profile-page/my-profile-page.component';
 import { StorekeeperHomePageComponent } from './storekeeper-home-page/storekeeper-home-page.component';
 
 const routes: Routes = [
@@ -34,6 +35,10 @@ const routes: Routes = [
     path: 'storekeeper-home',
     component: StorekeeperHomePageComponent,
     canActivate: [StorekeeperGuard]
+  },
+  {
+    path: 'my-profile',
+    component: MyProfilePageComponent
   }
 ];
 

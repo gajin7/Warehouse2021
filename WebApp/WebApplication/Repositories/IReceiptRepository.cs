@@ -7,5 +7,8 @@ namespace WebApplication.Repositories
     {
         ReceiptOperationResult CreateReceipt(IEnumerable<ItemResult> items, string company);
         IEnumerable<Receipt> GetReceipts();
+        Receipt GetReceipt(string id);
+        IEnumerable<ReceiptItem> GetReceiptItems(string id);
+
     }
 }

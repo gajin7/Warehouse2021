@@ -13,5 +13,6 @@ namespace WebApplication.Models
         public string Type { get; set; }
         public double? Amount { get; set; }
         public string Warehouse { get; set; }
+        public string ShelfId { get; set; }
     }
 }

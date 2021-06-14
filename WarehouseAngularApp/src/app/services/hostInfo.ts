@@ -11,6 +11,9 @@ export class HostInfo {
     reportController : string = "/report";
     vehicleController : string = "/vehicle";
     loadController : string = "/load";
+    userController : string = "/user";
+    comapnyController : string = "/company";
+    rampController : string = "/ramp";
     httpOptionsJson = {
       headers: new HttpHeaders({'Content-Type': 'application/json'})
     }

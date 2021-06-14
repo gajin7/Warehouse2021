@@ -1,25 +1,34 @@
-<div style="margin-top: 200px; float: right;margin-right: 150px;" *ngIf="vehicle">
-    <p>Vehicle information</p>
-    <table style="width: 60%;border-collapse:separate; 
-    border-spacing:2.5em;">
-        <thead>
-          <tr>
-            <th id="th" scope="col">
-                <p>Registration: {{vehicle.Registration}}</p>
-                <p>Brand: {{vehicle.Brand}}</p>
-                <p>Type: {{vehicle.Type}}</p>
-                <p>LoadCapacity: {{vehicle.LoadCapacity}}</p>
-                <p>Mileage: {{vehicle.Mileage}}</p>
-                <p>ProductionYear: {{vehicle.ProductionYear}}</p>
-            </th>
-          </tr>
-        </thead>
-      </table>
-      <input type="submit" value="Return vehicle" (click)="freeVehicle(vehicle.Registration)"/>
-  </div>
+<div style="margin-top: 5%; margin-left: 2%; float: left; ">
+  <h2 style="float: right;">Driver</h2>
+  <img style="float: left;" src="https://img.icons8.com/ultraviolet/100/000000/driver.png"/>
+</div>
+<br>
+<div>
 
-  <div style="margin-top: 200px; float: right;margin-right: 100px;" *ngIf="!vehicle">
-    <p>Please choose one of the free vehicles</p>
+<div class="card" style="width: 18rem; float: right; margin-right: 5%; margin-top: 3%;" *ngIf="vehicle">
+  <div class="card-body">
+    <img style="float: right;"  src="https://img.icons8.com/officel/100/000000/car.png" alt="Card image cap">
+    <h5 style="float: left;" class="card-title">My vehicle</h5>
+  </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item">Registration: <b style="float: right;">{{vehicle.Registration}}</b></li>
+    <li class="list-group-item">Brand <b style="float: right;">{{vehicle.Brand}}</b></li>
+    <li class="list-group-item">Type: <b style="float: right;">{{vehicle.Type}}</b></li>
+    <li class="list-group-item">LoadCapacity: <b style="float: right;">{{vehicle.LoadCapacity}}</b></li>
+    <li class="list-group-item">Milage: <b style="float: right;">{{vehicle.Mileage}} km</b></li>
+    <li class="list-group-item">Production Year: <b style="float: right;">{{vehicle.ProductionYear}}</b></li>
+  </ul>
+  <div class="card-body">
+    <button style="float: right;" class="btn btn-outline-primary" (click)="freeVehicle(vehicle.Registration)">Return vehicle</button>
+  </div>
+</div>
+
+  <div class="card" style="margin-top: 15%;  margin-left: 5%; margin-right: 7%;" *ngIf="!vehicle">
+    <div class="card-body">
+      <img style="float: right;"  src="https://img.icons8.com/officel/100/000000/car.png" alt="Card image cap">
+      <p>Please choose one of the free vehicles</p>
+    </div>
+    <div class="card-body">
     <table class="table">
      <thead>
          <tr>
@@ -43,10 +52,37 @@
      </tr>
      </tbody>
    </table>
+    </div>
   </div>
 
-  <div style="margin-top: 200px; float: left;margin-left: 100px;" *ngIf="vehicle">
-    <p>Loads waiting for transport</p>
+  <br>
+  <div  style="margin-top: 8%; margin-left: 9%; margin-bottom: 7%; width: 60%;" *ngIf="vehicle && driversLoad.Id">
+
+  <div class="card">
+    <div class="card-body">
+      <img style="float: right;" src="https://img.icons8.com/ultraviolet/40/000000/truck.png" alt="Card image cap">
+      <h5 style="float: left;" class="card-title">Loading</h5>
+    </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">Id: <b style="float: right;">{{driversLoad.Id}}</b></li>
+      <li class="list-group-item">Warehouse <b style="float: right;">{{driversLoad.Warehouse}}</b></li>
+      <li class="list-group-item">Ramp: <b style="float: right;">{{driversLoad.Ramp}}</b></li>
+      <li class="list-group-item">Download report: <b style="float: right;"></b></li>
+      <li class="list-group-item"><qr-code style="float: right;"  value={{driversLoad.Id}} size="100" errorCorrectionLevel="M"></qr-code></li>
+    </ul>
+    <div class="card-body">
+      <button style="float: right;" class="btn btn-outline-primary" (click)="LoadFinished()">Load finised</button>
+    </div>
+  </div>
+</div>
+  
+
+  <div style="margin-top: 15%; float: left; width: 55%;" *ngIf="vehicle && !driversLoad.Id">
+    <div class="card">
+      <div class="card-body">
+        <p>Loads waiting for transport (double click to take)</p>
+      </div>
+      <div class="card-body">
     <table class="table">
      <thead>
          <tr>
@@ -65,4 +101,7 @@
      </tr>
      </tbody>
    </table>
+   </div>
   </div>
+  </div>
+</div>

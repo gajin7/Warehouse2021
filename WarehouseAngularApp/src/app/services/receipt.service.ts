@@ -24,6 +24,10 @@ export class ReceiptService {
     const myPostBody = { Items: items, Company: company,  StorekeeperEmail: localStorage.email, WarehouseId : warehouse}
     return this.http.post(this.hostInfo.defaultHostAddress + this.hostInfo.apiPrefix + this.hostInfo.receiptController + "/createReceipt", myPostBody,this.hostInfo.httpOptionsJson);
   }
+
+  getReceiptFile(receiptid : string | undefined) : Observable<Blob> {   
+        return this.http.get(this.hostInfo.defaultHostAddress + this.hostInfo.apiPrefix + this.hostInfo.receiptController + '/getReceiptPdf?receiptId=' + receiptid, { responseType: 'blob' });
+    }
   private handle(error: any) {
     return of (error.message);
   }

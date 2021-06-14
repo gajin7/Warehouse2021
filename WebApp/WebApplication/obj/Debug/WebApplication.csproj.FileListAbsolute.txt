@@ -112,3 +112,9 @@ C:\Users\JGajin\Documents\GitHub\Warehouse2021\WebApp\WebApplication\obj\Debug\W
 C:\Users\JGajin\Documents\GitHub\Warehouse2021\WebApp\WebApplication\obj\Debug\WebApplication.dll
 C:\Users\JGajin\Documents\GitHub\Warehouse2021\WebApp\WebApplication\obj\Debug\WebApplication.pdb
 C:\Users\JGajin\Documents\GitHub\Warehouse2021\WebApp\WebApplication\obj\Debug\WebApplication.csprojAssemblyReference.cache
+C:\Users\JGajin\Documents\GitHub\Warehouse2021\WebApp\WebApplication\bin\PdfSharp.Charting.dll
+C:\Users\JGajin\Documents\GitHub\Warehouse2021\WebApp\WebApplication\bin\PdfSharp.dll
+C:\Users\JGajin\Documents\GitHub\Warehouse2021\WebApp\WebApplication\bin\PdfSharp.xml
+C:\Users\JGajin\Documents\GitHub\Warehouse2021\WebApp\WebApplication\bin\PdfSharp.Charting.xml
+C:\Users\JGajin\Documents\GitHub\Warehouse2021\WebApp\WebApplication\bin\de\PdfSharp.resources.dll
+C:\Users\JGajin\Documents\GitHub\Warehouse2021\WebApp\WebApplication\bin\de\PdfSharp.Charting.resources.dll

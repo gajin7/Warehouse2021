@@ -13,7 +13,9 @@ import { AuthService } from './auth/auth.service';
 import { DriverHomePageComponent } from './driver-home-page/driver-home-page.component';
 import { StorekeeperHomePageComponent } from './storekeeper-home-page/storekeeper-home-page.component';
 import { ManagerHomePageComponent } from './manager-home-page/manager-home-page.component';
-
+import { MyProfilePageComponent } from './my-profile-page/my-profile-page.component';
+import { QrCodeModule } from 'ng-qrcode';
+ 
 @NgModule({
   declarations: [
     AppComponent,
@@ -21,14 +23,16 @@ import { ManagerHomePageComponent } from './manager-home-page/manager-home-page.
     LoginComponent,
     DriverHomePageComponent,
     StorekeeperHomePageComponent,
-    ManagerHomePageComponent
+    ManagerHomePageComponent,
+    MyProfilePageComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     NgbModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    QrCodeModule
   ],
   providers: [
     AuthService,{ provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},

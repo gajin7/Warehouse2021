@@ -204,6 +204,36 @@
               </div>
             </ng-template>
           </li>
+          <li ngbNavItem="Load">
+            <a ngbNavLink>Load</a>
+            <ng-template ngbNavContent>
+              <div>
+                <p>Load type: </p>
+                <select class="custom-select" (change)="changeLoadType($event)"  required>
+                    <option *ngFor="let obj of loadTypes" [value]="obj"  [selected]="obj === currentLoadType">{{obj}}</option>
+                </select>
+              </div>
+              <div style="margin-top: 200px; float: left;margin-left: 100px;">
+                <p>Loads</p>
+                <table class="table">
+                 <thead>
+                     <tr>
+                         <td><b>Id</b></td>
+                         <td><b>Warehouse</b> </td>
+                         <td><b>Ramp</b></td>
+                     </tr>
+                 </thead>
+                 <tbody>
+                 <tr *ngFor="let el of loads" >
+                   <td>{{el.Id}}</td>
+                   <td>{{el.Warehouse}}</td>
+                   <td>{{el.Ramp}}</td>
+                 </tr>
+                 </tbody>
+               </table>
+              </div>
+            </ng-template>
+          </li>
         </ul>
         <div [ngbNavOutlet]="nav" class="ml-4"></div>
       </div>

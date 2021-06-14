@@ -11,7 +11,7 @@ namespace WebApplication.Services
             var filterShelvesItemsBaseOnKeyWord = shelves.ToList();
             foreach (var shelf in filterShelvesItemsBaseOnKeyWord)
             {
-                shelf.Items = shelf.Items.Where(i => i.Name.Contains(keyWord) || i.Type.Contains(keyWord) || i.Id.Equals(keyWord)).ToList();
+                shelf.Items = shelf.Items.Where(i => i.Name.ToLower().Contains(keyWord.ToLower()) || i.Type.ToLower().Contains(keyWord.ToLower()) || i.Id.ToLower().Equals(keyWord.ToLower())).ToList();
             }
 
             return filterShelvesItemsBaseOnKeyWord;
@@ -21,9 +21,34 @@ namespace WebApplication.Services
         {
             var filterAllItemsBaseOnKeyWord = items.ToList();
 
-            filterAllItemsBaseOnKeyWord = filterAllItemsBaseOnKeyWord.Where(i => i.Name.Contains(keyWord) || i.Type.Contains(keyWord) || i.Warehouse.Contains(keyWord) || i.Id.Equals(keyWord)).ToList();
+            filterAllItemsBaseOnKeyWord = filterAllItemsBaseOnKeyWord.Where(i => i.Name.ToLower().Contains(keyWord.ToLower()) || i.Type.ToLower().Contains(keyWord.ToLower()) || i.Warehouse.ToLower().Contains(keyWord.ToLower()) || i.Id.ToLower().Equals(keyWord.ToLower())).ToList();
             
             return filterAllItemsBaseOnKeyWord;
+        }
+
+        public IEnumerable<EmployeeResult> FilterAllEmployeesBaseOnKeyWord(IEnumerable<EmployeeResult> employees,
+            string keyWord)
+        {
+            var filterAllItemsBaseOnKeyWord = employees.ToList();
+            filterAllItemsBaseOnKeyWord = filterAllItemsBaseOnKeyWord.Where(i => i.FirstName.ToLower().Contains(keyWord.ToLower()) || i.LastName.ToLower().Contains(keyWord.ToLower()) || i.Email.ToLower().Contains(keyWord.ToLower()) || i.Type.ToLower().Equals(keyWord.ToLower())).ToList();
+            return filterAllItemsBaseOnKeyWord;
+        }
+
+        public IEnumerable<CompanyResult> FilterAllCompaniesBaseOnKeyWord(IEnumerable<Company> companies, string keyWord)
+        {
+            var filterAllItemsBaseOnKeyWord = companies.ToList();
+
+            filterAllItemsBaseOnKeyWord = filterAllItemsBaseOnKeyWord.Where(i => i.Name.ToLower().Contains(keyWord.ToLower()) || i.PIB.ToLower().Contains(keyWord.ToLower()) || i.Name.ToLower().Contains(keyWord.ToLower())).ToList();
+
+            return filterAllItemsBaseOnKeyWord.Select(comp => new CompanyResult
+                {
+                    AccountNo = comp.AccountNo,
+                    Address = comp.Address,
+                    Deposit = comp.Deposit.ToString(),
+                    Name = comp.Name,
+                    PIB = comp.PIB
+                })
+                .ToList();
         }
     }
 }

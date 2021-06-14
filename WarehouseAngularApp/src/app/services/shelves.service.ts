@@ -28,6 +28,14 @@ export class ShelvesService {
        this.hostInfo.shelvesController + '/getShelvesInWarehouseSearch?warehouseId='+warehouseId
        +'&keyWord=' + keyWord);
   }
+
+  addShelves(warehouseId : string |  undefined, shelfId : string | undefined): Observable<any> {
+    return this.http.get(this.hostInfo.defaultHostAddress + this.hostInfo.apiPrefix + this.hostInfo.shelvesController + '/addShelf?warehouseId='+warehouseId + '&shelfId=' + shelfId);
+  }
+
+  removeShelves(warehouseId : string |  undefined, shelfId : string | undefined): Observable<any> {
+    return this.http.delete(this.hostInfo.defaultHostAddress + this.hostInfo.apiPrefix + this.hostInfo.shelvesController + '/removeShelf?warehouseId='+warehouseId + '&shelfId=' + shelfId);
+  }
   private handle(error: any) {
     return of (error.message);
   }

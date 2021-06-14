@@ -1,7 +1,10 @@
-﻿using System.Web.Http;
+﻿using System.Collections.Generic;
+using System.Web.Http;
+using Microsoft.Ajax.Utilities;
 using WebApplication.Controllers.Parameters;
 using WebApplication.Models;
 using WebApplication.Repositories;
+using WebApplication.Services;
 
 namespace WebApplication.Controllers
 {
@@ -9,23 +12,37 @@ namespace WebApplication.Controllers
     public class UserController : ApiController
     {
         private readonly IEmployeeRepository _userRepository;
+        private readonly ISearchService _searchService;
+        private readonly IEmailService _emailService;
+        private readonly IDefaultPasswordGenerator _defaultPasswordGenerator;
 
         public UserController()
         {
 
         }
 
-        public UserController(IEmployeeRepository userRepository)
+        public UserController(IEmployeeRepository userRepository, ISearchService searchService,
+            IEmailService emailService, IDefaultPasswordGenerator defaultPasswordGenerator)
         {
             _userRepository = userRepository;
+            _searchService = searchService;
+            _emailService = emailService;
+            _defaultPasswordGenerator = defaultPasswordGenerator;
         }
 
         [HttpGet]
-        [Authorize(Roles = "admin")]
+        [Authorize]
         [Route("GetUserInfo")]
-        public Employee GetUserInfo([FromUri] string email)
+        public EmployeeResult GetUserInfo([FromUri] string email)
         {
-            return _userRepository.GetUserInfo(email);
+            var employee = _userRepository.GetUserInfo(email);
+            return  new EmployeeResult
+            {
+                Email = employee.Email,
+                FirstName = employee.FirstName,
+                LastName = employee.LastName,
+                Type = employee.Type
+            };
         }
 
         [HttpPost]
@@ -35,11 +52,57 @@ namespace WebApplication.Controllers
             return _userRepository.RegisterNewEmployee(employee);
         }
 
+        [HttpDelete]
+        [Authorize(Roles = "admin")]
+        [Route("DeleteEmployee")]
+        public OperationResult DeleteEmployee([FromUri] string email)
+        {
+            return _userRepository.RemoveUser(email);
+        }
+
         [HttpPost]
         [Route("ChangePassword")]
         public OperationResult ChangePassword([FromBody] ChangePasswordParameters parameters)
         {
+            if (parameters == null || parameters.Email.IsNullOrWhiteSpace() ||
+                parameters.OldPassword.IsNullOrWhiteSpace() || parameters.NewPassword.IsNullOrWhiteSpace())
+            {
+                return new OperationResult
+                {
+                    Success = false,
+                    Message = "Please check your data and try again!"
+                };
+
+            }
             return _userRepository.ChangePassword(parameters.Email, parameters.OldPassword, parameters.NewPassword);
+        }
+
+        [HttpGet]
+        [Route("resetPassword")]
+        public OperationResult ResetPassword([FromUri] string email)
+        {
+            var pass = _defaultPasswordGenerator.GetDefaultPassword();
+            var result = _userRepository.ResetPassword(email, pass);
+            if (result.Success)
+            {
+                var emailResult = _emailService.SendNewPasswordEmail(email, pass);
+                if (emailResult)
+                {
+                    return result;
+                }
+                else
+                {
+                    return new OperationResult
+                    {
+                        Success = false,
+                        Message = "Email can't be sent at the moment. Please try again"
+                    };
+                }
+            }
+            else
+            {
+                return result;
+            }
         }
 
         [HttpPost]
@@ -61,5 +124,34 @@ namespace WebApplication.Controllers
             };
         }
 
+        [HttpGet]
+        [Route("GetAllUsers")]
+        public IEnumerable<EmployeeResult> GetAllEmployees()
+        {
+            return _userRepository.GetAllEmployees();
+        }
+
+        [HttpGet]
+        [Route("GetEmployeeTypes")]
+        public IEnumerable<string> GetEmployeeTypes()
+        {
+            return _userRepository.EmployeeTypes();
+        }
+
+
+        [HttpPost]
+        [Route("ChangeEmployeeData")]
+        public OperationResult ChangeEmployeeData(Employee employee)
+        {
+            return _userRepository.ChangeEmployeeData(employee);
+        }
+
+        [HttpGet]
+        [Route("SearchEmployees")]
+        public IEnumerable<EmployeeResult> SearchEmployees([FromUri]string keyWord)
+        {
+            var employees = _userRepository.GetAllEmployees();
+            return _searchService.FilterAllEmployeesBaseOnKeyWord(employees, keyWord);
+        }
     }
 }

@@ -12,7 +12,7 @@ namespace WebApplication.Repositories
             using (var accessDb = new AccessDb())
             {
                 var enumerable = items.ToList();
-                var amount = enumerable.Aggregate<ItemResult, double?>(0, (current, item) => current + item.Amount);
+                var amount = enumerable.Aggregate<ItemResult, double?>(0, (current, item) => current + item.Amount*item.Quantity);
                 var receipt = new Receipt()
                 {
                     Id = Guid.NewGuid().ToString(),
@@ -63,6 +63,22 @@ namespace WebApplication.Repositories
             using (var accessDb = new AccessDb())
             {
                 return accessDb.Receipts.ToList();
+            }
+        }
+
+        public Receipt GetReceipt(string id)
+        {
+            using (var accessDb = new AccessDb())
+            {
+                return accessDb.Receipts.FirstOrDefault(r => r.Id.Equals(id));
+            }
+        }
+
+        public IEnumerable<ReceiptItem> GetReceiptItems(string id)
+        {
+            using (var accessDb = new AccessDb())
+            {
+                return accessDb.ReceiptItems.Where(ri => ri.ReceiptId.Equals(id)).ToList();
             }
         }
     }

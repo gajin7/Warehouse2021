@@ -138,7 +138,8 @@ namespace WebApplication.Repositories
                         Name = item.Name,
                         Quantity = item.Quantity,
                         Type = item.Type,
-                        Warehouse = item.Shelf.WarehouseId
+                        Warehouse = item.Shelf.WarehouseId,
+                        ShelfId = item.ShelfId
                     })
                     .ToList();
             }
@@ -167,6 +168,105 @@ namespace WebApplication.Repositories
                     return 0;
                 }
             }
+        }
+
+        public OperationResult ChangeItem(Item item)
+        {
+            using (var accessDb = new AccessDb())
+            {
+                try
+                {
+                    var oldItem = accessDb.Items.FirstOrDefault(i => i.Id.Equals(item.Id));
+                    if (oldItem == null)
+                    {
+                        return new OperationResult
+                        {
+                            Message = "Item not found. Please try again.",
+                            Success = false
+                        };
+                    }
+
+                    oldItem.Quantity = item.Quantity;
+                    oldItem.Type = item.Type;
+                    oldItem.Amount = item.Amount;
+                    oldItem.Name = item.Name;
+                    oldItem.ShelfId = item.ShelfId;
+                    var dbResult = accessDb.SaveChanges();
+                    if (dbResult > 0)
+                    {
+                        return new OperationResult
+                        {
+                            Message = "Item successfully changed.",
+                            Success = true
+                        };
+                    }
+                    else
+                    {
+                        return new OperationResult
+                        {
+                            Message = "An error occurred. Check your data and try again",
+                            Success = false
+                        };
+                    }
+                }
+                catch (Exception e)
+                {
+                    return new OperationResult
+                    {
+                        Message = "An error occurred. Check your data and try again",
+                        ErrorMessage = e.Message,
+                        Success = false
+                    };
+                }
+            }
+        }
+
+        public OperationResult RemoveItem(string id)
+        {
+            var result = new OperationResult();
+            using (var accessDb = new AccessDb())
+            {
+                try
+                {
+                    if (accessDb.Items.Any(e => e.Id.Equals(id)))
+                    {
+                        var item = accessDb.Items.First(u => u.Id == id);
+
+                        if (item.ItemReports.Count != 0)
+                        {
+                            item.ItemReports.Select(i => accessDb.ItemReports.Remove(i));
+                        }
+                        accessDb.Items.Remove(item);
+                        var dbResult = accessDb.SaveChanges();
+                        if (dbResult > 0)
+                        {
+                            result.Message = "Item removed.";
+                            result.Success = true;
+                        }
+
+                        else
+                        {
+                            result.Message = "Something went wrong. Please try again";
+                            result.Success = false;
+                        }
+                    }
+
+                    else
+                    {
+                        result.Message = "Item" + " can't be removed";
+                        result.Success = false;
+                    }
+
+                }
+                catch (Exception e)
+                {
+                    result.Message = "An error occurred. Check your data and try again";
+                    result.ErrorMessage = e.Message;
+                    result.Success = false;
+                }
+            }
+
+            return result;
         }
     }
 }

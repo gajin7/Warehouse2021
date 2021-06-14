@@ -10,6 +10,8 @@ namespace WebApplication.Repositories
         OperationResult ChangeQuantity(string id, int addToQuantity);
         IEnumerable<ItemResult> GetAllItems();
         int GetQuantityForItem(string id);
+        OperationResult ChangeItem(Item item);
+        OperationResult RemoveItem(string id);
 
     }
 }

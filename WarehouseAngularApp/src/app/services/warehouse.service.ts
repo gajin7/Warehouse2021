@@ -4,6 +4,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, pipe, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { HostInfo } from '../services/hostInfo';
+import { Warehouse } from '../Models/Warehouse';
 
 
 @Injectable({
@@ -18,6 +19,12 @@ export class WarehouseService {
 
   getWarehouses(): Observable<any> {
     return this.http.get(this.hostInfo.defaultHostAddress + this.hostInfo.apiPrefix + this.hostInfo.warehouseController + '/getAllWarehouses');
+  }
+  addWarehouses(warehouse : Warehouse): Observable<any> {
+    return this.http.post(this.hostInfo.defaultHostAddress + this.hostInfo.apiPrefix + this.hostInfo.warehouseController + '/AddWarehouses',warehouse);
+  }
+  changeWarehouses(warehouse : Warehouse): Observable<any> {
+    return this.http.post(this.hostInfo.defaultHostAddress + this.hostInfo.apiPrefix + this.hostInfo.warehouseController + '/ChangeWarehouses',warehouse);
   }
 
   logout(): void {

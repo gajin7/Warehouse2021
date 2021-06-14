@@ -1,1 +1,396 @@
-<p>manager-home-page works!</p>
+<div style="margin-top: 5%; margin-left: 1%;">
+<ul ngbNav #nav="ngbNav"  class="nav-tabs"> <!--nav-pills-->
+  <li ngbNavItem (click)="GetEmployees()">
+    <a ngbNavLink>Employees</a>
+    <br>
+    <ng-template ngbNavContent>
+      <b style="font-size: 50px;">Employees</b>
+      <br>
+      <div  style="float: left;" id="tableAllEmployees">
+        <div>
+          <button id="newEmployeeBtn"  (click)='ShowNewEmployee()'>Add new empoyee</button>
+        </div>
+        <br>
+        <div style="float: top;">
+          <input style="width: 75%;" id="search" (keyup.enter)="AllUsersSearchEnter()" (keyup.clear)="clearAllUsersSearch()"  [value]="allIUsersKeyWord" (input)="updateAllUsersSearch($event)" mdbInput>
+          <button style="float: right;width: 10%;" (click)="clearAllUsersSearch()">Clear</button>
+          <button style="float: right;width: 15%;" [disabled]="!(allIUsersKeyWord.length >= 3)" (click)="allUsersSearch()">Search</button>
+        <br>
+        </div>
+      <table class="table">
+        <thead>
+            <tr>
+                <td>FirstName</td>
+                <td>LastName </td>
+                <td>Type</td>
+                <td>Email</td>
+                <td></td>
+            </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let el of employees" (dblclick)="ChangeUser(el)" >
+          <td>{{el.FirstName}}</td>
+          <td>{{el.LastName}}</td>
+          <td>{{el.Type}}</td>
+          <td>{{el.Email}}</td>
+          <td><button style="background-color: transparent; border: transparent; color: red; font-size: large;" (click)="RemoveUser(el.Email)">x</button></td>
+        </tr>
+        </tbody>
+      </table>
+      </div>
+     
+      <div id="newEmployeeSectionHidden">
+        <b style="font-size: large;">Employee</b>
+        <form [formGroup]="NewEmployee" class="needs-validation" novalidate>
+          <label for="fname">First Name:</label><br>
+          <input  type="text" class="newItemInput" formControlName="FirstName" required><br>
+          <label for="lname">Last Name:</label><br>
+          <input type="text" class="newItemInput" formControlName="LastName" required><br>
+          <label for="lname">Email:</label><br>
+          <input id="email" type="text" class="newItemInput" formControlName="Email" required><br>
+          <label for="lname">Type:</label><br>
+          <select class="custom-select" formControlName="Type"  required>
+            <option *ngFor="let obj of employeeTypes" [value]="obj">{{obj}}</option>
+        </select>
+        <div id="EmployeePassword">
+        <label for="lname">First time password:</label><br>
+        <input type="password" class="newItemInput" formControlName="Password" required><br>
+      </div>
+        <div style="margin-top: 20px;">
+          <input style="float: right;" type="button" (click)='HideNewEmployee()'  value="Close">
+          <input style="float: right;"  type="submit" (click)="SubmitUser()" title="Save"> &nbsp;
+       </div>
+        </form>
+      </div></ng-template>
+  </li>
+  <li ngbNavItem="Items" (click)="getAllItems()">
+    <a ngbNavLink>Items</a>
+    <!--Items-->
+    <ng-template ngbNavContent>
+      <div>
+      <div style="float: top;">
+        <b style="font-size: 50px;">Items</b>
+        <br>
+      </div>
+      <br>
+      <div style="float: left;" id="allItemsTable">
+        <div>
+          <button id="newItemBtn"  (click)='ShowNewItem()'>Add new Item</button>
+        </div>
+        <br>
+        <input style="width: 75%;" id="search" (keyup.enter)="AllItemsSearchEnter()" (keyup.clear)="clearAllItemsSearch()"  [value]="allItemsKeyWord" (input)="updateAllItemsSearch($event)" mdbInput>
+        <button style="float: right;width: 10%;" (click)="clearAllItemsSearch()">Clear</button>
+        <button style="float: right;width: 15%;" [disabled]="!(allItemsKeyWord.length >= 3)" (click)="allItemsSearch()">Search</button>
+      <br>
+        <table class="table" style="overflow-y: scroll;">
+         <thead>
+             <tr>
+                 <td><b>Name</b></td>
+                 <td><b>Quantity</b> </td>
+                 <td><b>Type</b></td>
+                 <td><b>Amount</b></td>
+                 <td><b>Warehouse</b></td>
+                 <td><b>Shelf</b></td>
+                 <td></td>
+             </tr>
+         </thead>
+         <tbody>
+         <tr *ngFor="let el of allItems" (dblclick)="ChangeItem(el)" >
+           <td>{{el.Name}}</td>
+           <td>{{el.Quantity}}</td>
+           <td>{{el.Type}}</td>
+           <td>{{el.Amount}} $</td>
+           <td>{{el.Warehouse}}</td>
+           <td>{{el.ShelfId}}</td>
+           <td><button style="background-color: transparent; border: transparent; color: red; font-size: large;" (click)="RemoveItem(el.Id,el.Name)">x</button></td>
+         </tr>
+         </tbody>
+       </table>
+     </div>
+    <div id="newItemSectionHidden">
+      <b style="font-size: large;">Item</b>
+      <form [formGroup]="NewItem" (submit)="SaveItem()" class="needs-validation" novalidate>
+        <label for="fname">Name:</label><br>
+        <input  type="text" class="newItemInput" formControlName="Name" required><br>
+        <label for="lname">Quantity:</label><br>
+        <input type="number" class="newItemInput" formControlName="Quantity" required><br>
+        <label for="lname">Amount:</label><br>
+        <input type="number" class="newItemInput" formControlName="Amount" required><br>
+        <label for="lname">Type:</label><br>
+        <select class="custom-select" formControlName="Type"  required>
+          <option *ngFor="let obj of itemTypes" [value]="obj">{{obj}}</option>
+      </select>
+        <label for="lname">Warehouse:</label><br>
+        <select id="warehouseField" class="custom-select" formControlName="Warehouse"  (change)="getShelvesForNewItem()" required>
+          <option *ngFor="let obj of warehouseNames" [value]="obj"  >{{obj}}</option>
+        </select>
+        <label for="lname">Shelf:</label><br>
+        <select class="custom-select" formControlName="ShelfId"  required>
+          <option *ngFor="let obj of shelves" [value]="obj">{{obj}}</option>
+        </select>
+        <div style="margin-top: 20px;">
+          <input style="float: right;" type="button" (click)='HideNewItem()'  value="Close">
+          <input style="float: right;"  type="submit" title="Save"> &nbsp;
+       </div>
+      </form>
+    </div>
+  </div>
+    </ng-template>
+  </li>
+  <li ngbNavItem>
+    <a (click)="getAllWarehouses()" ngbNavLink>Warehouses & Shelves</a>
+    <ng-template ngbNavContent>
+      <div id="warehouses">
+        <table style="width: 60%;border-collapse:separate; 
+        border-spacing:2.5em;">
+            <thead>
+              <tr>
+                <th id="th" scope="col" *ngFor="let col of warehouses; index as i" (dblclick)="ChangeWarehouse(warehouses[i])">
+                    <p>{{warehouses[i].WarehouseId}}</p>
+                    <p>Manager: {{warehouses[i].StorekeeperName}}</p>
+                    <p>Email: {{warehouses[i].StorekeeperEmail}}</p>
+                    <p>Address: {{warehouses[i].Address}}</p>
+                </th>
+                <th id=thNewWarehouse (click)="ShowNewWarehouseDrawer()">
+                    <div>
+                      <p>Add new warehouse</p>
+                      <p>+</p>
+                  </div>
+                </th>
+              </tr>
+            </thead>
+          </table>
+      </div>
+      <div id="newWarehouseSectionHidden" style="float: right;">
+        <form [formGroup]="NewWarehouse" (submit)="SaveWarehouse()" class="needs-validation" novalidate>
+          <label for="fname">Name(Id):</label><br>
+          <input id="warehouseName"  type="text" class="newItemInput" formControlName="WarehouseId" required><br>
+          <label for="fname">Address:</label><br>
+          <input  type="text" class="newItemInput" formControlName="Address" required><br>
+          <label for="lname">Mannager:</label><br>
+          <select id="warehouseField" class="custom-select" formControlName="StorekeeperEmail"  (change)="getShelvesForNewItem()" required>
+            <option *ngFor="let obj of employees" [value]="obj.Email"  >{{obj.Email}}</option>
+          </select>
+          <div style="margin-top: 20px;">
+            <input style="float: right;" type="button" (click)='HideNewWarehouseDrawer()'  value="Close">
+            <input style="float: right;"  type="submit" title="Save"> &nbsp;
+         </div>
+        </form>
+
+        <div  id="tableAllItemsShelfs">
+          <table  class="table">
+              <thead>
+                  <tr>
+                      <td>Name</td>
+                      <td>Quantity </td>
+                      <td>Type</td>
+                      <td>Amount</td>
+                  </tr>
+              </thead>
+              <tbody *ngFor="let col of dataSource; index as i" id={{dataSource[i].Name}} title={{dataSource[i].Name}}>
+                  Shelf: {{dataSource[i].Name}} <button style="background-color: transparent; border: transparent; color: red; font-size: large;" (click)="RemoveShelf(dataSource[i].Name)">x</button>
+              <tr scope="col" *ngFor="let col of dataSource[i].Items; index as j">
+                 
+                      <td>{{dataSource[i].Items[j].Name}}</td>
+                      <td> {{dataSource[i].Items[j].Quantity}}</td>
+                      <td>{{dataSource[i].Items[j].Type}}</td>
+                      <td>{{dataSource[i].Items[j].Amount}} $</td>
+            </tr>
+          </tbody>
+        </table>
+        <button (click)="ShowNewShelfForm()">Add shelf</button>
+        <div id="newShelfForm">
+          <form [formGroup]="NewShelf" (submit)="SaveNewShelf()" class="needs-validation" novalidate>
+            <label for="fname">Warehouse:</label><br>
+            <input id="warehouseId"  type="text" class="newItemInput" formControlName="WarehouseId" readonly><br>
+            <label for="fname">Name(Id):</label><br>
+            <input id="shelfId"  type="text" class="newItemInput" formControlName="Name" required><br>
+            <div style="margin-top: 20px;">
+              <input style="float: right;" type="button" (click)='HideNewShelfForm()'  value="Close">
+              <input style="float: right;"  type="submit" title="Save"> &nbsp;
+           </div>
+          </form>
+        </div>
+        </div>
+      </div>
+    
+    </ng-template>
+  </li>
+  <li ngbNavItem>
+    <a (click)="getAllComapnies()" ngbNavLink>Companies</a>
+    <ng-template ngbNavContent>
+      <b style="font-size: 50px;">Companies</b>
+      <br>
+      <div  style="float: left;" id="tableAllCompanies">
+        <div>
+          <button id="newCompanyBtn"  (click)='ShowNewCompany()'>Add new company</button>
+        </div>
+        <br>
+        <div style="float: top;">
+          <input style="width: 75%;" id="searchCompany" (keyup.enter)="AllCompaniesSearchEnter()" (keyup.clear)="clearAllCompaniesSearch()"  [value]="allCompaniesKeyWord" (input)="updateAllCompaniesSearch($event)" mdbInput>
+          <button style="float: right;width: 10%;" (click)="clearAllCompaniesSearch()">Clear</button>
+          <button style="float: right;width: 15%;" [disabled]="!(allCompaniesKeyWord.length >= 3)" (click)="allCompaniesSearch()">Search</button>
+        <br>
+        </div>
+      <table class="table">
+        <thead>
+            <tr>
+                <td>Name</td>
+                <td>PIB </td>
+                <td>Address</td>
+                <td>AccountNo</td>
+                <td>Deposit</td>
+                <td></td>
+            </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let el of companies" (dblclick)="ChangeCompany(el)">
+          <td>{{el.Name}}</td>
+          <td>{{el.PIB}}</td>
+          <td>{{el.Address}}</td>
+          <td>{{el.AccountNo}}</td>
+          <td>{{el.Deposit}}</td>
+          <td><button style="background-color: transparent; border: transparent; color: red; font-size: large;" (click)="RemoveCompany(el.PIB,el.Name)">x</button></td>
+        </tr>
+        </tbody>
+      </table>
+      </div>
+      <div id="newCompanySectionHidden">
+        <b style="font-size: large;">Company</b>
+        <form [formGroup]="Company" (submit)="SaveCompany()" class="needs-validation" novalidate>
+          <label for="fname">PIB:</label><br>
+          <input  type="text" class="newItemInput" formControlName="PIB" required><br>
+          <label for="lname">Name:</label><br>
+          <input type="text" class="newItemInput" formControlName="Name" required><br>
+          <label for="lname">Address:</label><br>
+          <input type="text" class="newItemInput" formControlName="Address" required><br>
+          <label for="lname">AccountNo:</label><br>
+          <input type="number" class="newItemInput" formControlName="AccountNo" required><br>
+          <label for="lname">Deposit:</label><br>
+          <input type="checkbox" class="newItemInput" formControlName="Deposit" required><br>
+          <div style="margin-top: 20px;">
+            <input style="float: right;" type="button" (click)='HideNewCompany()'  value="Close">
+            <input style="float: right;"  type="submit" title="Save"> &nbsp;
+         </div>
+        </form>
+      </div>
+    </ng-template>
+  </li>
+  <li ngbNavItem>
+    <a (click)="getAllRamps()" ngbNavLink>Ramps</a>
+    <ng-template ngbNavContent>
+      <div>
+        <p>Warehouse:</p>
+        <select class="custom-select" (change)="changeRampWarehouse($event)"  required>
+            <option *ngFor="let obj of warehouseNames" [value]="obj"  [selected]="obj === rampWarehouse">{{obj}}</option>
+        </select>
+      </div>
+      <div  style="float: left;" id="tableAllRamps">
+        <div>
+          <button id="newRampBtn"  (click)='ShowNewRamp()'>Add new ramp</button>
+        </div>
+        <br>
+        </div>
+      <table class="table">
+        <thead>
+            <tr>
+                <td>Id</td>
+                <td>Free </td>
+                <td>Load</td>
+                <td>Warehouse</td>
+                <td></td>
+            </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let el of ramps" (dblclick)="ChangeRamp(el)">
+          <td>{{el.Id}}</td>
+          <td>{{el.Free}}</td>
+          <td>{{el.Load}}</td>
+          <td>{{el.WarehouseId}}</td>
+          <td><button style="background-color: transparent; border: transparent; color: red; font-size: large;" (click)="RemoveRamp(el.Id)">x</button></td>
+        </tr>
+        </tbody>
+      </table>
+      <div id="newRampSectionHidden">
+        <b style="font-size: large;">Ramps</b>
+        <form [formGroup]="Ramp" (submit)="SaveRamp()" class="needs-validation" novalidate>
+          <label for="fname">Warehouse:</label><br>
+          <input  type="text" class="newItemInput" formControlName="WarehouseId" required readonly><br>
+          <label for="fname">Id:</label><br>
+          <input id="rampId" type="text" class="newItemInput" formControlName="Id" required><br>
+          <label for="lname">Free:</label><br>
+          <input type="checkbox" class="newItemInput" formControlName="Free" required><br>
+          <div style="margin-top: 20px;">
+            <input style="float: right;" type="button" (click)='HideNewRamp()'  value="Close">
+            <input style="float: right;"  type="submit" title="Save"> &nbsp;
+         </div>
+        </form>
+      </div>
+    </ng-template>
+  </li>
+  <li ngbNavItem="Load">
+    <a ngbNavLink>Load</a>
+    <ng-template ngbNavContent>
+      <div>
+        <p>Load type: </p>
+        <select class="custom-select" (change)="changeLoadType($event)"  required>
+            <option *ngFor="let obj of loadTypes" [value]="obj"  [selected]="obj === currentLoadType">{{obj}}</option>
+        </select>
+      </div>
+      <div style="margin-top: 200px; float: left;margin-left: 100px;">
+        <p>Loads</p>
+        <table class="table">
+         <thead>
+             <tr>
+                 <td><b>Id</b></td>
+                 <td><b>Warehouse</b> </td>
+                 <td><b>Ramp</b></td>
+                 <td><b>Storekeeper</b></td>
+                 <td><b>Vehicle</b></td>
+                 <td><b>Driver</b></td>
+                 <td><b>Download receipt</b></td>
+             </tr>
+         </thead>
+         <tbody>
+         <tr *ngFor="let el of loads" >
+           <td>{{el.Id}}</td>
+           <td>{{el.Warehouse}}</td>
+           <td>{{el.Ramp}}</td>
+           <td>{{el.Storekeeper}}</td>
+           <td>{{el.Vehicle}}</td>
+           <td>{{el.Driver}}</td>
+           <td><button (click)="GetReceiptPdf(el.ReceiptId)"></button></td>
+         </tr>
+         </tbody>
+       </table>
+      </div>
+    </ng-template>
+  </li>
+  <li ngbNavItem="Reports" (click)="getReports()">
+    <a ngbNavLink>Reports</a>
+    <ng-template ngbNavContent>
+      <div>
+        <b style="font-size: 50px;">Reports</b>
+      <div id="tableAllItems">
+        <table class="table">
+         <thead>
+             <tr>
+                 <td><b (click)="SortByDate()">Date</b></td>
+                 <td><b (click)="SortByType()">Type</b> </td>
+             </tr>
+         </thead>
+         <tbody>
+         <tr *ngFor="let el of reports" >
+           <td>{{el.Date}}</td>
+           <td>{{el.Type}}</td>
+         </tr>
+         </tbody>
+       </table>
+      </div>
+      </div>
+    </ng-template>
+  </li>
+</ul>
+<div [ngbNavOutlet]="nav"></div>
+  
+</div>

@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
+using WebApplication.Controllers.Parameters;
+using WebApplication.Models;
 
 namespace WebApplication.Repositories
 {
@@ -9,5 +8,7 @@ namespace WebApplication.Repositories
     {
         Warehouse GetWarehouse(string id);
         IEnumerable<Warehouse> GetAllWarehouses();
+        OperationResult AddWarehouse(WarehouseParameters warehouse);
+        OperationResult ChangeWarehouse(WarehouseParameters warehouse);
     }
 }

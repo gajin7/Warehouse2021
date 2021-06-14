@@ -1,0 +1,155 @@
+#th{
+    border: double;
+     border-color:  rgb(61, 81, 97); 
+     border-style: solid; 
+     width: 33%; padding-bottom: 33%; height: 0;
+  }
+
+  #tableAllEmployees
+  {
+    min-height: 100%; 
+    max-height: 100%; 
+    height: 100%;
+    width: 90%;
+    max-width: 90%;
+    min-width: 90%;
+  }
+
+  #newEmployeeSectionHidden
+  {
+    min-height: 40%; 
+    max-height: 40%; 
+    height: 40%;
+    width: 40%;
+    max-width: 40%;
+    min-width: 40%;
+    float:right;
+    visibility: hidden;
+    float: right; 
+    margin-right: 5%;
+  }
+
+  #newItemSectionHidden
+  {
+    min-height: 40%; 
+    max-height: 40%; 
+    height: 40%;
+    width: 20%;
+    max-width: 20%;
+    min-width: 20%;
+    float:right;
+    visibility: hidden;
+    margin-right: 5%;
+    margin-bottom: 40%;
+  }
+
+  #th{
+    border: double;
+     border-color:  rgb(61, 81, 97); 
+     border-style: solid; 
+     width: 33%; padding-bottom: 33%; height: 0;
+  }
+
+  #thNew{
+    border: double;
+     border-color:  rgb(61, 81, 97); 
+     border-style: solid; 
+     width: 60%; padding-bottom: 60%; height: 0;
+  }
+
+  #thNewWarehouse
+  {
+     border: double;
+     border-color:  rgb(61, 81, 97); 
+     border-style: solid; 
+     width: 60%; padding-bottom: 60%; height: 0;
+  }
+
+  #tableDiv
+  {
+      min-height: 550px; 
+      max-height: 550px; 
+      height: 550px;
+      width: 700px;
+      min-width: 700px;
+      max-width: 700px;
+  }
+
+
+  #allItemsTable
+  {
+    min-height: 100%; 
+    max-height: 100%; 
+    height: 100%;
+    width: 90%;
+    max-width: 90%;
+    min-width: 90%;
+  }
+
+  .newItemInput
+  {
+    width: 100%;
+  }
+
+  #newWarehouseSectionHidden
+  {
+    min-height: 40%; 
+    max-height: 40%; 
+    height: 40%;
+    width: 20%;
+    max-width: 20%;
+    min-width: 20%;
+    float:right;
+    visibility: hidden;
+    margin-right: 5%;
+    margin-bottom: 40%;
+  }
+
+  #newRampSectionHidden
+  {
+    min-height: 40%; 
+    max-height: 40%; 
+    height: 40%;
+    width: 20%;
+    max-width: 20%;
+    min-width: 20%;
+    float:right;
+    visibility: hidden;
+    margin-right: 5%;
+    margin-bottom: 40%;
+  }
+
+  #newCompanySectionHidden
+  {
+    min-height: 40%; 
+    max-height: 40%; 
+    height: 40%;
+    width: 20%;
+    max-width: 20%;
+    min-width: 20%;
+    float:right;
+    visibility: hidden;
+    margin-right: 5%;
+    margin-bottom: 40%;
+  }
+
+  #warehouses
+  {
+    min-height: 100%; 
+    max-height: 100%; 
+    height: 100%;
+    width: 90%;
+    max-width: 90%;
+    min-width: 90%;
+    float:left;
+  }
+
+  #newShelfForm
+  {
+    visibility: hidden;
+  }
+
+  #tableAllItemsShelfs
+  {
+    visibility: hidden;
+  }

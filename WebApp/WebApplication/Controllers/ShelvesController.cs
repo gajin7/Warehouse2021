@@ -60,6 +60,21 @@ namespace WebApplication.Controllers
             return  _searchService.FilterShelvesItemsBaseOnKeyWord(shelfItems, keyWord).ToList();
         }
 
+        [HttpGet]
+        [Authorize]
+        [Route("addShelf")]
+        public OperationResult AddShelf([FromUri]string warehouseId, string shelfId)
+        {
+            return _shelfRepository.AddShelf(warehouseId, shelfId);
+        }
+
+        [HttpDelete]
+        [Authorize]
+        [Route("removeShelf")]
+        public OperationResult RemoveShelf([FromUri]string warehouseId, string shelfId)
+        {
+            return _shelfRepository.RemoveShelf(warehouseId, shelfId);
+        }
 
     }
 }

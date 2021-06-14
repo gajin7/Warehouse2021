@@ -6,19 +6,17 @@
           &nbsp; {{date | date:'MMM dd YYYY'}}
         </span>
         <span *ngIf="getRole()" style="float:right; color: aliceblue;">
-                {{getRole()}} : &nbsp; {{getEmail()}} &nbsp; | &nbsp; 
+                {{getRole()}} : &nbsp; <a style="color: aliceblue;" href="my-profile">{{getEmail()}}</a>  &nbsp; | &nbsp; 
         </span>
-        <span style="margin-left: 60%; color: aliceblue;">
-          <button *ngIf="getRole()" style="background-color: transparent; border-color: transparent; color: white; text-align: center;" (click)="logOut()">Log out</button>
-             &nbsp;
-          </span>
+        <button style="float: right; margin-left: 2%; margin-right: 2%;" *ngIf="getRole()" class="btn btn-danger" (click)="logOut()">Log out</button>
+        <br>
         </p>
         
   </header>
   <router-outlet #routerOutlet="outlet"></router-outlet>
   <footer id="footer">
     <p style="text-align: center;">&copy; Copyright Jovan Gajin 2021</p>
-    <p style="text-align: center;">For support, please click <a href="mailto:gajinjovan@gmail.com">here</a></p>
+    <p style="text-align: center;">For support, please click <a href="mailto:vdg.warehouse.logistic@gmail.com">here</a></p>
   </footer>
 </div>
 <router-outlet name="popup"></router-outlet>

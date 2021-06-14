@@ -46,6 +46,11 @@ export class AuthService {
     );
   }
 
+  resetPassword(email : string)
+  {
+    return this.http.get(this.hostInfo.defaultHostAddress + this.hostInfo.apiPrefix + this.hostInfo.userController + '/resetPassword?email='+email);
+  }
+
   logout(): void {
     this.isLoggedin = false;
     localStorage.removeItem('jwt');

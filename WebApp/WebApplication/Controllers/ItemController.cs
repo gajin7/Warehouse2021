@@ -40,22 +40,14 @@ namespace WebApplication.Controllers
                 };
             }
             var itemResult = _itemRepository.AddItem(item);
-            if (itemResult.Success)
-            {
-                var reportResult = _reportRepository.CreateInReport(item);
-                if (reportResult.Success)
-                {
-                    return itemResult;
-                }
-                else
-                {
-                    return reportResult;
-                }
-            }
-            else
+            if (!itemResult.Success)
             {
                 return itemResult;
             }
+            var reportResult = _reportRepository.CreateInReport(item);
+
+            return reportResult.Success ? itemResult : reportResult;
+
         }
 
         [HttpGet]
@@ -108,17 +100,20 @@ namespace WebApplication.Controllers
             return _itemTypesRepository.GetItemTypes();
         }
 
-        [HttpGet]
-        [Route("getCompanies")]
-        public IEnumerable<CompanyResult> GetCompanies()
+        [HttpPost]
+        [Authorize]
+        [Route("changeItem")]
+        public OperationResult ChangeItem([FromBody]Item item)
         {
-            return _companiesRepository.GetCompanies().ToList().Select(c => new CompanyResult()
-            {
-                AccountNo = c.AccountNo,
-                Address = c.Address,
-                Name = c.Name,
-                PIB = c.PIB
-            });
+            return _itemRepository.ChangeItem(item);
+        }
+
+        [HttpDelete]
+        [Authorize(Roles = "admin")]
+        [Route("removeItem")]
+        public OperationResult RemoveItem([FromUri] string id)
+        {
+            return _itemRepository.RemoveItem(id);
         }
     }
 }

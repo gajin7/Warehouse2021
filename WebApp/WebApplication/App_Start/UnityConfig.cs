@@ -30,6 +30,9 @@ namespace WebApplication
             //register services
             container.RegisterType<IHashPasswordService, HashPasswordService>(new HierarchicalLifetimeManager());
             container.RegisterType<ISearchService, SearchService>(new HierarchicalLifetimeManager());
+            container.RegisterType<IEmailService, EmailService>(new HierarchicalLifetimeManager());
+            container.RegisterType<IDefaultPasswordGenerator, DefaultPasswordGenerator>(new HierarchicalLifetimeManager());
+            container.RegisterType<IDocumentCreatorService, DocumentCreatorService>(new HierarchicalLifetimeManager());
 
             GlobalConfiguration.Configuration.DependencyResolver = new UnityDependencyResolver(container);
         }

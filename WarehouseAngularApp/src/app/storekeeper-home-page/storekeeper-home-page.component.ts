@@ -11,6 +11,9 @@ import { ReceiptService } from '../services/receipt.service';
 import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { Result } from '../Models/Result';
 import { ReportsService } from '../services/reports.service';
+import { LoadService } from '../services/load.service';
+import { TakeLoadByDriverParams } from '../Models/TakeLoadByDriverParams';
+import { CompaniesService } from '../services/companies.service';
 
 @Component({
   selector: 'app-storekeeper-home-page',
@@ -55,11 +58,15 @@ export class StorekeeperHomePageComponent implements OnInit {
   shelves: any;
   reports : any;
   columnsToDisplay = ['date', 'type'];
+  loads: any;
+  loadTypes = ['Unloaded','Loaded','Loading'];
+  currentLoadType : string | undefined = 'Unloaded';
+
   
  
   constructor(private warehouseService : WarehouseService,private shelvesService : ShelvesService, private authService: 
     AuthService,public router: Router, private itemsService : ItemsService, public receiptService : ReceiptService,
-    private fb: FormBuilder, private reportService : ReportsService) { 
+    private fb: FormBuilder, private reportService : ReportsService, private loadService : LoadService, private companyService : CompaniesService) { 
     this.colums = 0;
     this.colArray = [];
     this.warehouseNames = [];
@@ -99,6 +106,7 @@ export class StorekeeperHomePageComponent implements OnInit {
     this.curentWarehouse = warehouseId;
     this.getShelves(warehouseId);
     this.warehousesTableShow = false;
+    this.getLoad();
   }
 
   getShelves(warehouseId: string | undefined) : void
@@ -113,6 +121,7 @@ export class StorekeeperHomePageComponent implements OnInit {
     this.OrderDataSource = [];
     this.openWarehouse(event.target.value);
   }
+ 
 
   addToOrder(i: number, j :number)
   {
@@ -336,7 +345,7 @@ export class StorekeeperHomePageComponent implements OnInit {
 
   getCompanies()
   {
-    this.itemsService.getCompanies().subscribe((data) => {
+    this.companyService.getCompanies().subscribe((data) => {
       this.companies = data;
       console.log(this.companies,"companies");
       });
@@ -391,4 +400,48 @@ export class StorekeeperHomePageComponent implements OnInit {
     console.log("SortByType");
   }
   
+  getUnloadedLoads()
+  {
+    this.loadService.getUnloadedLoads(this.curentWarehouse).subscribe((data) => {
+      this.loads = data;
+    })
+  }
+
+  getLoadedLoads()
+  {
+    this.loadService.getLoadedLoads(this.curentWarehouse).subscribe((data) => {
+      this.loads = data;
+    })
+  }
+
+  getLoadingLoads()
+  {
+    this.loadService.getLoadingLoads(this.curentWarehouse).subscribe((data) => {
+      this.loads = data;
+    })
+  }
+
+  getLoad()
+  {
+    if(this.currentLoadType === 'Unloaded')
+    {
+      this.getUnloadedLoads();
+    }
+    if(this.currentLoadType === 'Loaded')
+    {
+      this.getLoadedLoads();
+    }
+    if(this.currentLoadType === 'Loading')
+    {
+      this.getLoadingLoads();
+    }
+  }
+
+  changeLoadType (event: any) {
+   
+    this.currentLoadType = event.target.value;
+    this.getLoad();
+    
+  }
+
 }

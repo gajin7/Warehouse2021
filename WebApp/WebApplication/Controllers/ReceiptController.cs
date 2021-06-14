@@ -1,10 +1,14 @@
 ﻿using System.Collections.Generic;
+using System.IO;
+using System.Net;
+using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Results;
 using Microsoft.Ajax.Utilities;
 using WebApplication.Controllers.Parameters;
 using WebApplication.Models;
 using WebApplication.Repositories;
+using WebApplication.Services;
 
 namespace WebApplication.Controllers
 {
@@ -17,6 +21,7 @@ namespace WebApplication.Controllers
         private readonly ILoadRepository _loadRepository;
         private readonly IEmployeeRepository _employeeRepository;
         private readonly IRampRepository _rampRepository;
+        private readonly IDocumentCreatorService _documentCreatorService;
 
         public ReceiptController()
         {
@@ -24,7 +29,8 @@ namespace WebApplication.Controllers
 
         public ReceiptController(IReceiptRepository receiptRepository,IItemRepository itemRepository,
             IReportRepository reportRepository,ILoadRepository loadRepository,
-            IEmployeeRepository employeeRepository,IRampRepository rampRepository)
+            IEmployeeRepository employeeRepository,IRampRepository rampRepository,
+            IDocumentCreatorService documentCreatorService)
         {
             _receiptRepository = receiptRepository;
             _itemRepository = itemRepository;
@@ -32,6 +38,7 @@ namespace WebApplication.Controllers
             _loadRepository = loadRepository;
             _employeeRepository = employeeRepository;
             _rampRepository = rampRepository;
+            _documentCreatorService = documentCreatorService;
         }
 
         [HttpPost]
@@ -103,5 +110,32 @@ namespace WebApplication.Controllers
             var receipts = _receiptRepository.GetReceipts();
             return Json(receipts);
         }
+
+        [HttpGet]
+        //[Authorize]
+        [Route("getReceiptPdf")]
+        public HttpResponseMessage GetReceiptPdf([FromUri] string receiptId)
+        {
+            var receipt = _receiptRepository.GetReceipt(receiptId);
+            var items = _receiptRepository.GetReceiptItems(receiptId);
+            var result = _documentCreatorService.CreateReceiptPdf(receipt, items);
+
+            if (!result.Success) return Request.CreateResponse(HttpStatusCode.BadRequest);
+
+
+            var dataBytes = File.ReadAllBytes(result.Message);
+            var dataStream = new MemoryStream(dataBytes);
+
+            var httpResponseMessage = Request.CreateResponse(HttpStatusCode.OK);
+            httpResponseMessage.Content = new StreamContent(dataStream);
+            httpResponseMessage.Content.Headers.ContentDisposition = new System.Net.Http.Headers.ContentDispositionHeaderValue("attachment")
+            {
+                FileName = "Receipt" + receipt.Id + ".pdf"
+            };
+            httpResponseMessage.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/octet-stream");
+            return httpResponseMessage;
+
+        }
+
     }
 }
