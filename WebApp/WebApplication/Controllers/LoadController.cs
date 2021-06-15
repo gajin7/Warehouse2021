@@ -3,6 +3,7 @@ using System.Web.Http;
 using WebApplication.Controllers.Parameters;
 using WebApplication.Models;
 using WebApplication.Repositories;
+using WebApplication.Services;
 
 namespace WebApplication.Controllers
 {
@@ -11,15 +12,17 @@ namespace WebApplication.Controllers
     {
         private readonly ILoadRepository _loadRepository;
         private readonly IEmployeeRepository _employeeRepository;
+        private readonly ISearchService _searchService;
         public LoadController()
         {
 
         }
 
-        public LoadController(ILoadRepository loadRepository, IEmployeeRepository employeeRepository)
+        public LoadController(ILoadRepository loadRepository, IEmployeeRepository employeeRepository,ISearchService searchService)
         {
             _loadRepository = loadRepository;
             _employeeRepository = employeeRepository;
+            _searchService = searchService;
         }
 
         [HttpGet]
@@ -53,6 +56,16 @@ namespace WebApplication.Controllers
         {
             var employeeId = _employeeRepository.GetIdByEmail(getLoadByDriverParameters.Email);
             return _loadRepository.TakeLoadByDriver(getLoadByDriverParameters.LoadId,employeeId);
+        }
+
+        [HttpGet]
+        [Authorize]
+        [Route("getLoadsById")]
+        public IEnumerable<LoadResult> GetLoadsById([FromUri]string loadId)
+        {
+            var loads = _loadRepository.GetAllLoads();
+
+            return _searchService.FilterLoadById(loads,loadId);
         }
 
         [HttpPost]

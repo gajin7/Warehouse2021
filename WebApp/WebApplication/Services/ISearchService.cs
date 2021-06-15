@@ -13,5 +13,8 @@ namespace WebApplication.Services
 
         IEnumerable<CompanyResult>
             FilterAllCompaniesBaseOnKeyWord(IEnumerable<Company> companies, string keyWord);
+
+        IEnumerable<LoadResult>
+            FilterLoadById(IEnumerable<LoadResult> loads,string keyWord);
     }
 }

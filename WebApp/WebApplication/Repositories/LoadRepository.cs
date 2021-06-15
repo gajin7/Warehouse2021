@@ -56,6 +56,7 @@ namespace WebApplication.Repositories
             }
 
         }
+
         public IEnumerable<LoadResult> GetWaitingLoads(string warehouseId)
         {
             using (var accessDb = new AccessDb())
@@ -65,21 +66,25 @@ namespace WebApplication.Repositories
                     var loads = accessDb.Loads.Where(l => l.VehicleId == null || l.VehicleId == "").ToList();
                     return loads.Select(load => new LoadResult()
                     {
-                        Id = load.Id, Ramp = load.RampId, Warehouse = load.Ramp.WarehouseId, RampFree = load.Ramp.Free, Storekeeper = load.Employee.FirstName + " " + load.Employee.LastName,
+                        Id = load.Id, Ramp = load.RampId, Warehouse = load.Ramp.WarehouseId, RampFree = load.Ramp.Free,
+                        Storekeeper = load.Employee.FirstName + " " + load.Employee.LastName,
                         ReportId = load.ReportId,
                         ReceiptId = load.RecepitId
                     }).ToList();
                 }
                 else
                 {
-                    var loads = accessDb.Loads.Where(l => l.VehicleId == null || l.VehicleId == "" && l.Ramp.WarehouseId.Equals(warehouseId)).ToList();
-                    return loads.Select(load => new LoadResult() { Id = load.Id, Ramp = load.RampId, Warehouse = load.Ramp.WarehouseId, RampFree = load.Ramp.Free,
+                    var loads = accessDb.Loads.Where(l =>
+                        (l.VehicleId == null || l.VehicleId == "") && l.Ramp.WarehouseId.Equals(warehouseId)).ToList();
+                    return loads.Select(load => new LoadResult()
+                    {
+                        Id = load.Id, Ramp = load.RampId, Warehouse = load.Ramp.WarehouseId, RampFree = load.Ramp.Free,
                         Storekeeper = load.Employee.FirstName + " " + load.Employee.LastName,
                         ReportId = load.ReportId,
                         ReceiptId = load.RecepitId
                     }).ToList();
                 }
-               
+
             }
         }
 
@@ -90,9 +95,10 @@ namespace WebApplication.Repositories
                 if (warehouseId.IsNullOrWhiteSpace() || warehouseId.Equals("all"))
                 {
                     var loads = accessDb.Loads.Where(l => l.Loaded).ToList();
-                    return loads.Select(load => new LoadResult() { Id = load.Id, Ramp = load.RampId, Warehouse = load.Ramp.WarehouseId, RampFree = load.Ramp.Free,
+                    return loads.Select(load => new LoadResult()
+                    {
+                        Id = load.Id, Ramp = load.RampId, Warehouse = load.Ramp.WarehouseId, RampFree = load.Ramp.Free,
                         Storekeeper = load.Employee.FirstName + " " + load.Employee.LastName,
-                        Driver = load.Vehicle.Employee.FirstName + " " + load.Vehicle.Employee.LastName,
                         Vehicle = load.Vehicle.Registration,
                         ReportId = load.ReportId,
                         ReceiptId = load.RecepitId
@@ -101,16 +107,17 @@ namespace WebApplication.Repositories
                 else
                 {
                     var loads = accessDb.Loads.Where(l => l.Loaded && l.Ramp.WarehouseId.Equals(warehouseId)).ToList();
-                    return loads.Select(load => new LoadResult() { Id = load.Id, Ramp = load.RampId, Warehouse = load.Ramp.WarehouseId, RampFree = load.Ramp.Free,
+                    return loads.Select(load => new LoadResult()
+                    {
+                        Id = load.Id, Ramp = load.RampId, Warehouse = load.Ramp.WarehouseId, RampFree = load.Ramp.Free,
                         Storekeeper = load.Employee.FirstName + " " + load.Employee.LastName,
-                        Driver = load.Vehicle.Employee.FirstName + " " + load.Vehicle.Employee.LastName,
-                        Vehicle = load.Vehicle.Registration,
+                        Vehicle = load.Vehicle?.Registration,
                         ReportId = load.ReportId,
                         ReceiptId = load.RecepitId
                     }).ToList();
                 }
 
-                
+
             }
         }
 
@@ -120,8 +127,11 @@ namespace WebApplication.Repositories
             {
                 if (warehouseId.IsNullOrWhiteSpace() || warehouseId.Equals("all"))
                 {
-                    var loads = accessDb.Loads.Where(l => l.VehicleId != null && l.VehicleId != "" && !l.Loaded).ToList();
-                    return loads.Select(load => new LoadResult() { Id = load.Id, Ramp = load.RampId, Warehouse = load.Ramp.WarehouseId, RampFree = load.Ramp.Free,
+                    var loads = accessDb.Loads.Where(l => l.VehicleId != null && l.VehicleId != "" && !l.Loaded)
+                        .ToList();
+                    return loads.Select(load => new LoadResult()
+                    {
+                        Id = load.Id, Ramp = load.RampId, Warehouse = load.Ramp.WarehouseId, RampFree = load.Ramp.Free,
                         Storekeeper = load.Employee.FirstName + " " + load.Employee.LastName,
                         Driver = load.Vehicle.Employee.FirstName + " " + load.Vehicle.Employee.LastName,
                         Vehicle = load.Vehicle.Registration,
@@ -131,8 +141,13 @@ namespace WebApplication.Repositories
                 }
                 else
                 {
-                    var loads = accessDb.Loads.Where(l => l.VehicleId != null && l.VehicleId != "" && !l.Loaded && l.Ramp.WarehouseId.Equals(warehouseId)).ToList();
-                    return loads.Select(load => new LoadResult() { Id = load.Id, Ramp = load.RampId, Warehouse = load.Ramp.WarehouseId, RampFree = load.Ramp.Free,
+                    var loads = accessDb.Loads.Where(l =>
+                            l.VehicleId != null && l.VehicleId != "" && !l.Loaded &&
+                            l.Ramp.WarehouseId.Equals(warehouseId))
+                        .ToList();
+                    return loads.Select(load => new LoadResult()
+                    {
+                        Id = load.Id, Ramp = load.RampId, Warehouse = load.Ramp.WarehouseId, RampFree = load.Ramp.Free,
                         Storekeeper = load.Employee.FirstName + " " + load.Employee.LastName,
                         Driver = load.Vehicle.Employee.FirstName + " " + load.Vehicle.Employee.LastName,
                         Vehicle = load.Vehicle.Registration,
@@ -149,6 +164,7 @@ namespace WebApplication.Repositories
             {
                 return null;
             }
+
             using (var accessDb = new AccessDb())
             {
                 try
@@ -158,7 +174,8 @@ namespace WebApplication.Repositories
                     {
                         return null;
                     }
-                    return  new LoadResult
+
+                    return new LoadResult
                     {
                         Id = load.Id,
                         Ramp = load.RampId,
@@ -170,7 +187,7 @@ namespace WebApplication.Repositories
                         ReportId = load.ReportId,
                         ReceiptId = load.RecepitId
                     };
-                    
+
                 }
                 catch (Exception)
                 {
@@ -193,6 +210,7 @@ namespace WebApplication.Repositories
                     Message = "Please check your data and try again"
                 };
             }
+
             using (var accessDb = new AccessDb())
             {
                 try
@@ -216,6 +234,7 @@ namespace WebApplication.Repositories
                             Message = "Vehicle can't be found, please try again"
                         };
                     }
+
                     load.VehicleId = vehicle.Registration;
                     load.Ramp.Free = false;
                     var result = accessDb.SaveChanges();
@@ -245,8 +264,8 @@ namespace WebApplication.Repositories
                         ErrorMessage = e.Message
                     };
                 }
-               
-                
+
+
             }
         }
 
@@ -260,6 +279,7 @@ namespace WebApplication.Repositories
                     Message = "Please check your data and try again"
                 };
             }
+
             using (var accessDb = new AccessDb())
             {
                 try
@@ -273,6 +293,7 @@ namespace WebApplication.Repositories
                             Message = "Load can't be found, please try again"
                         };
                     }
+
                     load.Ramp.Free = true;
                     load.Loaded = true;
                     var result = accessDb.SaveChanges();
@@ -304,6 +325,26 @@ namespace WebApplication.Repositories
                 }
 
 
+            }
+        }
+
+        public IEnumerable<LoadResult> GetAllLoads()
+        {
+            using (var accessDb = new AccessDb())
+            {
+                var loads = accessDb.Loads.ToList();
+                return loads.Select(load => new LoadResult()
+                {
+                    Id = load.Id,
+                    Ramp = load.RampId,
+                    Warehouse = load.Ramp.WarehouseId,
+                    RampFree = load.Ramp.Free,
+                    Storekeeper = load.Employee.FirstName + " " + load.Employee.LastName,
+                    Driver = load.Vehicle?.Employee?.FirstName + " " + load.Vehicle?.Employee?.LastName,
+                    Vehicle = load.Vehicle?.Registration,
+                    ReportId = load.ReportId,
+                    ReceiptId = load.RecepitId
+                }).ToList();
             }
         }
     }

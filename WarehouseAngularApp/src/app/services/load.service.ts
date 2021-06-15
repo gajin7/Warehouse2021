@@ -25,7 +25,9 @@ export class LoadService {
   getLoadingLoads(warehouse : string | undefined): Observable<any> {
     return this.http.get(this.hostInfo.defaultHostAddress + this.hostInfo.apiPrefix + this.hostInfo.loadController + '/getLoadingLoads?warehouseId=' + warehouse);
   }
-
+  getLoadsById(loadId : string | undefined): Observable<any> {
+    return this.http.get(this.hostInfo.defaultHostAddress + this.hostInfo.apiPrefix + this.hostInfo.loadController + '/getLoadsById?loadId=' + loadId);
+  }
   takeLoadByDriver(params : TakeLoadByDriverParams): Observable<any> {
     return this.http.post(this.hostInfo.defaultHostAddress + this.hostInfo.apiPrefix + this.hostInfo.loadController + '/takeLoadByDriver', params);
   }

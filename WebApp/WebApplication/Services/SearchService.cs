@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Ajax.Utilities;
 using WebApplication.Models;
 
 namespace WebApplication.Services
@@ -49,6 +50,17 @@ namespace WebApplication.Services
                     PIB = comp.PIB
                 })
                 .ToList();
+        }
+
+        public IEnumerable<LoadResult> FilterLoadById(IEnumerable<LoadResult> loads, string keyWord)
+        {
+            if (keyWord.IsNullOrWhiteSpace())
+            {
+                return new List<LoadResult>();
+            }
+            var filterAllItemsBaseOnKeyWord = loads.ToList();
+            filterAllItemsBaseOnKeyWord = filterAllItemsBaseOnKeyWord.Where(i => i.Id.ToLower().Equals(keyWord.ToLower())).ToList();
+            return filterAllItemsBaseOnKeyWord;
         }
     }
 }

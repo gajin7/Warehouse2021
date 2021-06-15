@@ -49,6 +49,7 @@ export class StorekeeperHomePageComponent implements OnInit {
   message: string = '';
   keyWord : string = '';
   allItemsKeyWord : string = '';
+  loadKeyWord : string = '';
   quantity : number = 0;
   allItems : any;
   newItemSectionHidden: any;
@@ -241,7 +242,6 @@ export class StorekeeperHomePageComponent implements OnInit {
         window.alert(data.Message);
       this.OrderDataSource = [];
       this.total = 0;
-      this.company = '';
       });
     }
   }
@@ -304,6 +304,24 @@ export class StorekeeperHomePageComponent implements OnInit {
     }
   }
 
+
+  LoadSearch()
+  {
+    this.loadService.getLoadsById(this.loadKeyWord).subscribe((data) => {
+      this.loads = data;
+    });
+  }
+
+  clearLoadSearch()
+  {
+    this.loadKeyWord = '';
+    this.getLoad()
+  }
+
+  updateLoadSearch(e : any) {
+    this.loadKeyWord = e.target.value; 
+  }
+
   ShowNewItem() {
     const nId = "newItemSectionHidden"; 
     var item = document.getElementById(nId)!;
@@ -312,11 +330,11 @@ export class StorekeeperHomePageComponent implements OnInit {
     var btn = document.getElementById('newItemBtn')!;
     btn.style.visibility = 'hidden';
 
-    const tableid = "tableAllItems";
-    var table = document.getElementById(tableid)!;
-    table.style.width = "800px";
-    table.style.minWidth = "800px";
-    table.style.maxWidth = "800px";
+    //const tableid = "tableAllItems";
+   // var table = document.getElementById(tableid)!;
+    //table.style.width = "800px";
+    //table.style.minWidth = "800px";
+    //table.style.maxWidth = "800px";
     
   }
 
@@ -328,11 +346,11 @@ export class StorekeeperHomePageComponent implements OnInit {
     var btn = document.getElementById('newItemBtn')!;
     btn.style.visibility = 'visible';
 
-    const tableid = "tableAllItems";
-    var table = document.getElementById(tableid)!;
-    table.style.width = "1400px";
-    table.style.minWidth = "1400px";
-    table.style.maxWidth = "1400px";
+    //const tableid = "tableAllItems";
+    //var table = document.getElementById(tableid)!;
+    //table.style.width = "1400px";
+    //table.style.minWidth = "1400px";
+    //table.style.maxWidth = "1400px";
     
   }
 
@@ -443,5 +461,71 @@ export class StorekeeperHomePageComponent implements OnInit {
     this.getLoad();
     
   }
+
+  GetReportPdf(reportId : string | undefined): void {
+    this.reportService.getReportFile(reportId)
+        .subscribe(x => {
+            // It is necessary to create a new blob object with mime-type explicitly set
+            // otherwise only Chrome works like it should
+            var newBlob = new Blob([x], { type: "application/pdf" });
+  
+            // IE doesn't allow using a blob object directly as link href
+            // instead it is necessary to use msSaveOrOpenBlob
+            if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+                window.navigator.msSaveOrOpenBlob(newBlob);
+                return;
+            }
+  
+            // For other browsers: 
+            // Create a link pointing to the ObjectURL containing the blob.
+            const data = window.URL.createObjectURL(newBlob);
+  
+            var link = document.createElement('a');
+            link.href = data;
+            link.download = "Report" + reportId + ".pdf";
+            // this is necessary as link.click() does not work on the latest firefox
+            link.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }));
+  
+            setTimeout(function () {
+                // For Firefox it is necessary to delay revoking the ObjectURL
+                window.URL.revokeObjectURL(data);
+                link.remove();
+            }, 100);
+  
+        });
+  }
+
+  GetReceiptPdf(receiptId : string): void {
+    this.receiptService.getReceiptFile('08b185c6-fb40-487f-b80a-f868fbdf5498')
+        .subscribe(x => {
+            // It is necessary to create a new blob object with mime-type explicitly set
+            // otherwise only Chrome works like it should
+            var newBlob = new Blob([x], { type: "application/pdf" });
+
+            // IE doesn't allow using a blob object directly as link href
+            // instead it is necessary to use msSaveOrOpenBlob
+            if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+                window.navigator.msSaveOrOpenBlob(newBlob);
+                return;
+            }
+
+            // For other browsers: 
+            // Create a link pointing to the ObjectURL containing the blob.
+            const data = window.URL.createObjectURL(newBlob);
+
+            var link = document.createElement('a');
+            link.href = data;
+            link.download = "Receipt" + receiptId + ".pdf";
+            // this is necessary as link.click() does not work on the latest firefox
+            link.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }));
+
+            setTimeout(function () {
+                // For Firefox it is necessary to delay revoking the ObjectURL
+                window.URL.revokeObjectURL(data);
+                link.remove();
+            }, 100);
+
+        });
+}
 
 }

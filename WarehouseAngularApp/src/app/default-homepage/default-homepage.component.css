@@ -9,3 +9,12 @@
     color: gray;
     font-size:1.5vw;
   }
+
+  body
+  {
+    position: fixed;
+    padding-top: 0.4%;
+    padding-left: 2%;
+    padding-right: 2%;
+    padding-bottom: 5%;
+  }

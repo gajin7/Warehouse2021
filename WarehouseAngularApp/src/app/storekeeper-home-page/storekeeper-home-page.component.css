@@ -1,52 +1,22 @@
-#th{
-    border: double;
-     border-color:  rgb(61, 81, 97); 
-     border-style: solid; 
-     width: 33%; padding-bottom: 33%; height: 0;
-  }
+body
+{
+  padding-top: 5%;
+}
 
-  #tableDiv
-  {
-      overflow-y: scroll;
-      min-height: 550px; 
-      max-height: 550px; 
-      height: 550px;
-      width: 700px;
-      min-width: 700px;
-      max-width: 700px;
-  }
 
   #tableAllItems
   {
-      overflow-y: scroll;
-      min-height: 600px; 
-      max-height: 600px; 
-      height: 600px;
-      width: 1400px;
-      max-width: 1400px;
-      min-width: 1400px;
+    overflow-y: auto;
   }
 
   #tableAllItemsShelfs
   {
-    overflow-y: scroll;
-    min-height: 600px; 
-    max-height: 600px; 
-    height: 600px;
-    width: 700px;
-    max-width: 700px;
-    min-width: 700px;
+    overflow-y: auto;
   }
 
   #newItemSectionHidden
   {
-    min-height: 500px; 
-    max-height: 500px; 
-    height: 500px;
-    width: 500px;
-    max-width: 500px;
-    min-width: 500px;
-    margin-top: 200px;
+    margin-top: 2%;
     float:right;
     visibility: hidden;
   }
@@ -56,7 +26,3 @@
     width: 100%;
   }
 
-  #newItemBtn
-  {
-    margin-top: 105px;
-  }

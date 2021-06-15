@@ -1,47 +1,67 @@
-<div style="margin-top: 200px; margin-left: 100px;" *ngIf="warehousesTableShow">
-    <table style="width: 60%;border-collapse:separate; 
+<div class="card" *ngIf="warehousesTableShow">
+  <div class="card-body">
+    <img style="float: right;"  src="https://img.icons8.com/ultraviolet/100/000000/garage-closed.png" alt="Card image cap">
+    <h1>Warehouses</h1>
+    <h5>Chose warehouse by clicking on it to continue</h5>
+  </div>
+</div>
+
+<div style="overflow-x: auto" class="card" *ngIf="warehousesTableShow">
+    <table style="width: 60%;border-collapse:separate; table-layout: fixed;
+    word-wrap: nowrap; overflow-x: auto;
     border-spacing:2.5em;">
         <thead>
           <tr>
-            <th (click)="openWarehouse(colArray[i].WarehouseId)" id="th" scope="col" *ngFor="let col of colArray; index as i">
-                <p>{{colArray[i].WarehouseId}}</p>
-                <p>Manager: {{colArray[i].StorekeeperName}}</p>
-                <p>Address: {{colArray[i].Address}}</p>
+            <th style="width: 30em;"  (click)="openWarehouse(colArray[i].WarehouseId)" id="th" scope="col" *ngFor="let col of colArray; index as i">
+              <div class="card">
+                <div class="card-body">
+                  <img style="float: right;"  src="https://img.icons8.com/ultraviolet/100/000000/garage-closed.png" alt="Card image cap">
+                  <h5 style="float: left;" class="card-title">Warehouse</h5>
+                </div>
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item">Name: <b style="float: right;">{{colArray[i].WarehouseId}}</b></li>
+                  <li class="list-group-item">Manager <b style="float: right;">{{colArray[i].StorekeeperName}}</b></li>
+                  <li class="list-group-item">Address: <b style="float: right;">{{colArray[i].Address}}</b></li>
+                </ul>
+              </div>
             </th>
           </tr>
         </thead>
       </table>
   </div>
 
-  <div style="margin-top: 70px;" *ngIf="!warehousesTableShow">
+  <div *ngIf="!warehousesTableShow">
     <div>
-      <div *ngIf = "message" #alert class="alert alert-warning alert-dismissible fade show" style="background-color: rgb(43, 138, 90); color: black;" role="alert">
-        <button type="button" class="close" aria-label="Close" (click)="closeAlert()">
-          <span aria-hidden="true">&times;</span>
-        </button>
-        <strong> {{message}}</strong>
-      </div>
   </div>
-    <div style="float:right; margin-right: 50px;" >
-        <p>Warehouse:</p>
+    <div style="float:right; margin: 1%;" >
         <select class="custom-select" (change)="changeWarehouse($event)"  required>
             <option *ngFor="let obj of warehouseNames" [value]="obj"  [selected]="obj === curentWarehouse">{{obj}}</option>
         </select>
       </div>
-    <div class="d-flex">
-        <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-pills" orientation="vertical">
+    <div>
+        <ul ngbNav #nav="ngbNav"  class="nav-pills" [(activeId)]="active" orientation="horisontal">
           <li ngbNavItem="Shelves">
             <a ngbNavLink>Shelves</a>
             <ng-template ngbNavContent>
-                <div style="float: left; margin-top: 30px; margin-right: 20px;">
-                  <b style="font-size: 50px;">Items</b>
-                  <div style="float: top; margin-bottom: 10px;">
-                    <input style="width: 75%;" id="search" [value]="keyWord" (input)="updateSearch($event)" mdbInput>
-                    <button style="width: 10%; float: right;" (click)="clearSearch()" >Clear</button>
-                    <button style="width: 15%; float: right;" [disabled]="!(keyWord.length >= 3)" (click)="search()">Search</button>
+              <div>
+                <div class="card" style="float: left; margin-top: 3%; width: 50%; height: 40em;">
+                  <div>
+                    <b style="font-size: 50px; float: left;">Shelfs & Items</b>
+                    <img style="float: right;" src="https://img.icons8.com/ultraviolet/100/000000/book-shelf.png"/>
                   </div>
-                  <div  id="tableAllItemsShelfs">
-                    <table  class="table">
+                  
+                  <div class="card" style="float: top;">
+                    <div>
+                      <input class="form-control" style="width: 95%; margin: 2%;"  id="search" [value]="keyWord" (input)="updateSearch($event)" mdbInput>
+                    </div>
+                    <div>
+                      <button class="btn btn-secondary" style="width: 15%; margin: 0.5%; float: right;" (click)="clearSearch()" >Clear</button>
+                      <button class="btn btn-primary" style="width: 20%; margin: 0.5%; float: right;" [disabled]="!(keyWord.length >= 3)" (click)="search()">Search</button>
+                    </div>
+                   
+                  </div>
+                  <div class="card-body"  id="tableAllItemsShelfs">
+                    <table  class="table" style="scroll-behavior: auto;">
                         <thead>
                             <tr>
                                 <td>Name</td>
@@ -53,9 +73,8 @@
                         <tbody *ngFor="let col of dataSource; index as i" id={{dataSource[i].Name}} title={{dataSource[i].Name}}>
                             Shelf: {{dataSource[i].Name}}
                         <tr scope="col" *ngFor="let col of dataSource[i].Items; index as j" (dblclick)="addToOrder(i,j)">
-                           
                                 <td>{{dataSource[i].Items[j].Name}}</td>
-                                <td> {{dataSource[i].Items[j].Quantity}}</td>
+                                <td>{{dataSource[i].Items[j].Quantity}}</td>
                                 <td>{{dataSource[i].Items[j].Type}}</td>
                                 <td>{{dataSource[i].Items[j].Amount}} $</td>
                       </tr>
@@ -63,19 +82,21 @@
                   </table>
                   </div>
                 </div>
-                <div style="float: right;
-                margin-top: 30px;
-                margin-left: 100px; ">
-                   <b style="font-size: 50px;">New Order</b>
+                
+                <div class="card" style="float: right; margin: 10px; margin-top: 3%; width: 40%; height: 40em;">
+                  <div>
+                    <b style="font-size: 50px; float: left;">New Order</b>
+                    <img style="float: right;" src="https://img.icons8.com/ultraviolet/100/000000/create-order--v1.png"/>
+                  </div>
                    <div>
                     <p style="float: left; width: 20%;">Company</p> &nbsp;
-                   <input style="width: 78%; float: right;" list="brow" (input)="takeCompany($event)">
+                   <input  class="form-control" style="width: 70%; float: right; margin: 1%;" list="brow" (input)="takeCompany($event)">
                     <datalist id="brow">
                       <option *ngFor="let obj of companies" [value]="obj.Name"  [selected]="obj === company">{{obj.Name}}, {{obj.Address}}, {{obj.PIB}}</option>
                     </datalist>  
                   </div>
                    <div id=tableDiv>
-                   <table class="table">
+                   <table class="table" style="width: 100%; overflow-y:scroll">
                     <thead>
                         <tr>
                             <td>Name</td>
@@ -100,30 +121,35 @@
                     </tbody>
                   </table>
                 </div>
-                <div style=" margin-left: 20px;margin-top: 50px;">
+                <div class="card">
                   <p  style="float:left;font-size: xx-large;"><b>Total:</b> {{total}} $</p>
-                  <button style="float:right;font-size: xx-large;" (click)="save()">Save</button>
+                  <button class="btn btn-primary" style="float:right;font-size: xx-large;" (click)="save()">Save</button>
                 </div>
+            </div>
               </div>
+             
             </ng-template>
           </li>
           <li ngbNavItem="Items" (click)="getAllItems()">
             <a ngbNavLink>Items</a>
             <!--Items-->
             <ng-template ngbNavContent>
-              <div style="float: left;">
-              <div style="float: right; margin: 30px;">
-              <div style="float: top;">
-                <b style="font-size: 50px;">Items</b>
-                <br>
-                <input style="width: 75%;" id="search" (keyup.enter)="AllItemsSearchEnter()" (keyup.clear)="clearAllItemsSearch()"  [value]="allItemsKeyWord" (input)="updateAllItemsSearch($event)" mdbInput>
-                <button style="float: right;width: 10%;" (click)="clearAllItemsSearch()">Clear</button>
-                <button style="float: right;width: 15%;" [disabled]="!(allItemsKeyWord.length >= 3)" (click)="allItemsSearch()">Search</button>
-              <br>
-              </div>
-              <br>
-              <div id="tableAllItems">
-                <table class="table">
+              <div class="card" style="width: 60%;  margin: 2%; float: left;">
+                <div class="card-body">
+                  <b style="font-size: 50px; float: left;">Items</b>
+                  <img style="float: right;"  src="https://img.icons8.com/ultraviolet/100/000000/ingredients.png"/>
+                </div>
+                <div class="card-body" style="float: top;">
+                  <div>
+                    <input class="form-control" style="width: 95%; margin: 2%;" id="search" (keyup.enter)="AllItemsSearchEnter()" (keyup.clear)="clearAllItemsSearch()"  [value]="allItemsKeyWord" (input)="updateAllItemsSearch($event)" mdbInput>
+                  </div>
+                  <div>
+                    <button class="btn btn-secondary" style="width: 15%; margin: 0.5%; float: right;" (click)="clearAllItemsSearch()">Clear</button>
+                    <button class="btn btn-primary" style="width: 20%; margin: 0.5%; float: right;" [disabled]="!(allItemsKeyWord.length >= 3)" (click)="allItemsSearch()">Search</button>
+                  </div>
+                  </div>
+              <div class="card-body" id="tableAllItems" style="overflow-y:scroll">
+                <table class="table" >
                  <thead>
                      <tr>
                          <td><b>Name</b></td>
@@ -131,7 +157,6 @@
                          <td><b>Type</b></td>
                          <td><b>Amount</b></td>
                          <td><b>Warehouse</b></td>
- 
                      </tr>
                  </thead>
                  <tbody>
@@ -145,26 +170,25 @@
                  </tbody>
                </table>
               </div>
-             </div>
-            <div>
             </div>
-             
+            <div style="float: right; margin: 1%;">
+              <button class="btn btn-primary" id="newItemBtn"  (click)='ShowNewItem()'>Add new item</button>
             </div>
-            <button id="newItemBtn"  (click)='ShowNewItem()'>Add new item</button>
-            <div id="newItemSectionHidden">
+            
+            <div class="card" id="newItemSectionHidden">
               <b style="font-size: large;">New item</b>
-              <form style="margin-top: 5%;" [formGroup]="NewItem" (submit)="SaveItem()" class="needs-validation" novalidate>
-                <label for="fname">Name:</label><br>
-                <input  type="text" class="newItemInput" formControlName="Name" required><br>
-                <label for="lname">Quantity:</label><br>
-                <input type="number" class="newItemInput" formControlName="Quantity" required><br>
-                <label for="lname">Amount:</label><br>
-                <input type="number" class="newItemInput" formControlName="Amount" required><br>
-                <label for="lname">Type:</label><br>
+              <form [formGroup]="NewItem" (submit)="SaveItem()" class="needs-validation" novalidate>
+                <label  for="fname">Name:</label><br>
+                <input class="list-group-item"  type="text" class="newItemInput" formControlName="Name" required><br>
+                <label  for="lname">Quantity:</label><br>
+                <input class="list-group-item" type="number" class="newItemInput" formControlName="Quantity" required><br>
+                <label  for="lname">Amount:</label><br>
+                <input class="list-group-item" type="number" class="newItemInput" formControlName="Amount" required><br>
+                <label  for="lname">Type:</label><br>
                 <select class="custom-select" formControlName="Type"  required>
                   <option *ngFor="let obj of itemTypes" [value]="obj">{{obj}}</option>
               </select>
-                <label for="lname">Warehouse:</label><br>
+                <label  for="lname">Warehouse:</label><br>
                 <select class="custom-select" formControlName="Warehouse"  (change)="getShelvesForNewItem()" required>
                   <option *ngFor="let obj of warehouseNames" [value]="obj"  >{{obj}}</option>
                 </select>
@@ -172,10 +196,8 @@
                 <select class="custom-select" formControlName="ShelfId"  required>
                   <option *ngFor="let obj of shelves" [value]="obj">{{obj}}</option>
                 </select>
-                <div style="margin-top: 20px;">
-                  <input style="float: right;" type="button" (click)='HideNewItem()'  value="Close">
-                  <input style="float: right;"  type="submit" title="Save"> &nbsp;
-               </div>
+                  <input class="btn btn-secondary" style="float: right; margin-top: 2%;" type="button" (click)='HideNewItem()'  value="Close">
+                  <input class="btn btn-primary" style="float: right; margin-top: 2%; margin-right: 2%;"  type="submit" title="Save"> &nbsp;
               </form>
             </div>
             </ng-template>
@@ -183,20 +205,25 @@
           <li ngbNavItem="Reports" (click)="getReports()">
             <a ngbNavLink>Reports</a>
             <ng-template ngbNavContent>
-              <div>
-                <b style="font-size: 50px;">Reports</b>
-              <div id="tableAllItems">
+              <div class="card" style="margin: 2%;">
+                <div class="card-body">
+                  <b style="font-size: 50px; float: left;">Reports</b>
+                  <img style="float: right;" src="https://img.icons8.com/cotton/100/000000/report-file--v2.png"/>
+                </div>
+              <div class="card-body" id="tableAllItems">
                 <table class="table">
                  <thead>
                      <tr>
                          <td><b (click)="SortByDate()">Date</b></td>
                          <td><b (click)="SortByType()">Type</b> </td>
+                         <td><b>File (PDF)</b></td>
                      </tr>
                  </thead>
                  <tbody>
-                 <tr *ngFor="let el of reports" >
+                 <tr *ngFor="let el of reports">
                    <td>{{el.Date}}</td>
                    <td>{{el.Type}}</td>
+                   <td><button class="btn btn-link" (click)="GetReportPdf(el.Id)"> Download</button></td>
                  </tr>
                  </tbody>
                </table>
@@ -207,20 +234,37 @@
           <li ngbNavItem="Load">
             <a ngbNavLink>Load</a>
             <ng-template ngbNavContent>
-              <div>
+              <div class="card" style="margin: 1%;">
+                <div class="card-body">
+                  <b style="font-size: 50px; float: left;">Loads</b>
+                  <img style="float: right;" src="https://img.icons8.com/cotton/100/000000/transport--delivery--logistics--cargo--parcel--box--service-28.png"/>
+                </div>
+              <div class="card-body">
                 <p>Load type: </p>
                 <select class="custom-select" (change)="changeLoadType($event)"  required>
                     <option *ngFor="let obj of loadTypes" [value]="obj"  [selected]="obj === currentLoadType">{{obj}}</option>
                 </select>
+                
+                <div style="margin-top: 1%;">
+                  <p>Id: </p>
+                    <input class="form-control" style="width: 100%;" id="search"  [value]="allItemsKeyWord" (keyup.clear)="clearLoadSearch()" (input)="updateLoadSearch($event)" mdbInput>
+                    <button class="btn btn-secondary" style="width: 10%; margin: 0.5%; float: right;" (click)="clearLoadSearch()">Clear</button>
+                    <button class="btn btn-primary" style="width: 15%; margin: 0.5%; float: right;" (click)="LoadSearch()">Search</button>
+                  </div>
               </div>
-              <div style="margin-top: 200px; float: left;margin-left: 100px;">
-                <p>Loads</p>
-                <table class="table">
+              <div class="card-body" >
+                <div style="overflow-y: auto;">
+                <table class="table" style="table-layout: fixed;
+                word-wrap: nowrap; overflow-y: auto" >
                  <thead>
                      <tr>
                          <td><b>Id</b></td>
                          <td><b>Warehouse</b> </td>
                          <td><b>Ramp</b></td>
+                         <td><b>Storekeeper</b></td>
+                         <td><b>Vehicle</b></td>
+                         <td><b>Driver</b></td>
+                         <td><b>Receipt (PDF)</b></td>
                      </tr>
                  </thead>
                  <tbody>
@@ -228,10 +272,16 @@
                    <td>{{el.Id}}</td>
                    <td>{{el.Warehouse}}</td>
                    <td>{{el.Ramp}}</td>
+                   <td>{{el.Storekeeper}}</td>
+                   <td>{{el.Vehicle}}</td>
+                   <td>{{el.Driver}}</td>
+                   <td><button class="btn btn-link" (click)="GetReceiptPdf(el.ReceiptId)">Download</button></td>
                  </tr>
                  </tbody>
                </table>
+                </div>
               </div>
+            </div>
             </ng-template>
           </li>
         </ul>

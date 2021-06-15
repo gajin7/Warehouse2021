@@ -140,28 +140,45 @@
   <li ngbNavItem>
     <a (click)="getAllWarehouses()" ngbNavLink>Warehouses & Shelves</a>
     <ng-template ngbNavContent>
-      <div id="warehouses">
-        <table style="width: 60%;border-collapse:separate; 
-        border-spacing:2.5em;">
-            <thead>
-              <tr>
-                <th id="th" scope="col" *ngFor="let col of warehouses; index as i" (dblclick)="ChangeWarehouse(warehouses[i])">
-                    <p>{{warehouses[i].WarehouseId}}</p>
-                    <p>Manager: {{warehouses[i].StorekeeperName}}</p>
-                    <p>Email: {{warehouses[i].StorekeeperEmail}}</p>
-                    <p>Address: {{warehouses[i].Address}}</p>
-                </th>
-                <th id=thNewWarehouse (click)="ShowNewWarehouseDrawer()">
+
+      <div class="card">
+        <div class="card-body">
+          <img style="float: right;"  src="https://img.icons8.com/ultraviolet/100/000000/garage-closed.png" alt="Card image cap">
+          <h1>Warehouses</h1>
+          <h5>Chose warehouse by clicking on it to continue</h5>
+        </div>
+      </div>
+      <div style="overflow-x: auto" class="card">
+          <table style="width: 60%;border-collapse:separate; table-layout: fixed;
+          word-wrap: nowrap; overflow-x: auto;
+          border-spacing:2.5em;">
+              <thead>
+                <tr>
+                  <td style="width: 30em;" id="th" scope="col" *ngFor="let col of warehouses; index as i" (dblclick)="ChangeWarehouse(warehouses[i])">
+                    <div class="card">
+                      <div class="card-body">
+                        <img style="float: right;"  src="https://img.icons8.com/ultraviolet/100/000000/garage-closed.png" alt="Card image cap">
+                        <h5 style="float: left;" class="card-title">Warehouse</h5>
+                      </div>
+                      <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Name: <b style="float: right;">{{warehouses[i].WarehouseId}}</b></li>
+                        <li class="list-group-item">Manager <b style="float: right;">{{warehouses[i].StorekeeperName}}</b></li>
+                        <li class="list-group-item">Address: <b style="float: right;">{{warehouses[i].Address}}</b></li>
+                      </ul>
+                    </div>
+                  </td>
+                  <td class="card" style="width: 15em;" id=thNewWarehouse (click)="ShowNewWarehouseDrawer()">
                     <div>
                       <p>Add new warehouse</p>
                       <p>+</p>
                   </div>
-                </th>
-              </tr>
-            </thead>
-          </table>
-      </div>
-      <div id="newWarehouseSectionHidden" style="float: right;">
+                </td>
+                </tr>
+              </thead>
+            </table>
+        </div>
+       
+      <div class="card" id="newWarehouseSectionHidden">
         <form [formGroup]="NewWarehouse" (submit)="SaveWarehouse()" class="needs-validation" novalidate>
           <label for="fname">Name(Id):</label><br>
           <input id="warehouseName"  type="text" class="newItemInput" formControlName="WarehouseId" required><br>
@@ -177,7 +194,7 @@
          </div>
         </form>
 
-        <div  id="tableAllItemsShelfs">
+        <div class="card-body"  id="tableAllItemsShelfs">
           <table  class="table">
               <thead>
                   <tr>
@@ -328,18 +345,36 @@
       </div>
     </ng-template>
   </li>
+  <li ngbNavItem="Vehicles">
+    <a ngbNavLink>Vehicles</a>
+    <ng-template ngbNavContent>
+    </ng-template>
+  </li>
   <li ngbNavItem="Load">
     <a ngbNavLink>Load</a>
     <ng-template ngbNavContent>
-      <div>
+      <div class="card" style="margin: 1%;">
+        <div class="card-body">
+          <b style="font-size: 50px; float: left;">Loads</b>
+          <img style="float: right;" src="https://img.icons8.com/cotton/100/000000/transport--delivery--logistics--cargo--parcel--box--service-28.png"/>
+        </div>
+      <div class="card-body">
         <p>Load type: </p>
         <select class="custom-select" (change)="changeLoadType($event)"  required>
             <option *ngFor="let obj of loadTypes" [value]="obj"  [selected]="obj === currentLoadType">{{obj}}</option>
         </select>
+        
+        <div style="margin-top: 1%;">
+          <p>Id: </p>
+            <input class="form-control" style="width: 100%;" id="search"  [value]="allItemsKeyWord" (keyup.clear)="clearLoadSearch()" (input)="updateLoadSearch($event)" mdbInput>
+            <button class="btn btn-secondary" style="width: 10%; margin: 0.5%; float: right;" (click)="clearLoadSearch()">Clear</button>
+            <button class="btn btn-primary" style="width: 15%; margin: 0.5%; float: right;" (click)="LoadSearch()">Search</button>
+          </div>
       </div>
-      <div style="margin-top: 200px; float: left;margin-left: 100px;">
-        <p>Loads</p>
-        <table class="table">
+      <div class="card-body" >
+        <div style="overflow-y: auto;">
+        <table class="table" style="table-layout: fixed;
+        word-wrap: nowrap; overflow-y: auto" >
          <thead>
              <tr>
                  <td><b>Id</b></td>
@@ -348,7 +383,7 @@
                  <td><b>Storekeeper</b></td>
                  <td><b>Vehicle</b></td>
                  <td><b>Driver</b></td>
-                 <td><b>Download receipt</b></td>
+                 <td><b>Receipt (PDF)</b></td>
              </tr>
          </thead>
          <tbody>
@@ -359,30 +394,37 @@
            <td>{{el.Storekeeper}}</td>
            <td>{{el.Vehicle}}</td>
            <td>{{el.Driver}}</td>
-           <td><button (click)="GetReceiptPdf(el.ReceiptId)"></button></td>
+           <td><button class="btn btn-link" (click)="GetReceiptPdf(el.ReceiptId)">Download</button></td>
          </tr>
          </tbody>
        </table>
+        </div>
       </div>
+    </div>
     </ng-template>
   </li>
   <li ngbNavItem="Reports" (click)="getReports()">
     <a ngbNavLink>Reports</a>
     <ng-template ngbNavContent>
-      <div>
-        <b style="font-size: 50px;">Reports</b>
-      <div id="tableAllItems">
+      <div class="card" style="margin: 2%;">
+        <div class="card-body">
+          <b style="font-size: 50px; float: left;">Reports</b>
+          <img style="float: right;" src="https://img.icons8.com/cotton/100/000000/report-file--v2.png"/>
+        </div>
+      <div class="card-body" id="tableAllItems">
         <table class="table">
          <thead>
              <tr>
                  <td><b (click)="SortByDate()">Date</b></td>
                  <td><b (click)="SortByType()">Type</b> </td>
+                 <td><b>File (PDF)</b></td>
              </tr>
          </thead>
          <tbody>
-         <tr *ngFor="let el of reports" >
+         <tr *ngFor="let el of reports">
            <td>{{el.Date}}</td>
            <td>{{el.Type}}</td>
+           <td><button class="btn btn-link" (click)="GetReportPdf(el.Id)"> Download</button></td>
          </tr>
          </tbody>
        </table>
