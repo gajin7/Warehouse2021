@@ -6,6 +6,7 @@ import { Item } from '../Models/Item';
 import { Ramp } from '../Models/Ramp';
 import { Result } from '../Models/Result';
 import { User } from '../Models/User';
+import { Vehicle } from '../Models/Vehicle';
 import { Warehouse } from '../Models/Warehouse';
 import { CompaniesService } from '../services/companies.service';
 import { ItemsService } from '../services/items.service';
@@ -15,6 +16,7 @@ import { ReceiptService } from '../services/receipt.service';
 import { ReportsService } from '../services/reports.service';
 import { ShelvesService } from '../services/shelves.service';
 import { UserService } from '../services/user.service';
+import { VehicleService } from '../services/vehicle.service';
 import { WarehouseService } from '../services/warehouse.service';
 
 @Component({
@@ -32,6 +34,7 @@ export class ManagerHomePageComponent implements OnInit {
   CompanySubmitType = "";
   RampSubmitType = "";
   WarehouseSubmitType = "";
+  VehicleSubmitType = "";
   allItems : any;
   allItemsKeyWord : string = '';
   allCompaniesKeyWord : string = '';
@@ -49,6 +52,7 @@ export class ManagerHomePageComponent implements OnInit {
   rampWarehouse = '';
   ramps: Array<Ramp>;
   loadKeyWord : string = '';
+  allVehicles : Array<Vehicle>;
 
   NewEmployee = this.fb.group({
     FirstName: ['', Validators.required],
@@ -95,15 +99,27 @@ export class ManagerHomePageComponent implements OnInit {
     Load: ['', Validators.required],
     WarehouseId: ['', Validators.required],
   });
+  NewVehicle = this.fb.group({
+    Registration: ['', Validators.required],
+    Brand: ['', Validators.required],
+    Type: ['', Validators.required],
+    LoadCapacity: ['', Validators.required],
+    ProductionYear: ['', Validators.required],
+    Free: ['', Validators.required],
+    Mileage: ['', Validators.required],
+    DriverId: ['', Validators.required],
+    DriverName: ['', Validators.required],
+  });
   constructor(private userService: UserService, private fb: FormBuilder, private itemsService : ItemsService, 
     private shelvesService : ShelvesService, private warehouseService : WarehouseService,public router: Router, 
     private companyService : CompaniesService,private loadService : LoadService,private reportService : ReportsService,
-    private rampService : RampService, private receiptService : ReceiptService) {
+    private rampService : RampService, private receiptService : ReceiptService, private vehicleService : VehicleService) {
     this.warehouseNames = [];
     this.warehouses = [];
     this.companies = [];
     this.reports = [];
     this.ramps = [];
+    this.allVehicles = [];
    }
 
   ngOnInit(): void {
@@ -164,9 +180,9 @@ export class ManagerHomePageComponent implements OnInit {
 
     const tableid = "tableAllEmployees";
     var table = document.getElementById(tableid)!;
-    table.style.width = "90%";
-    table.style.minWidth = "90%";
-    table.style.maxWidth = "90%";
+    table.style.width = "100%";
+    table.style.minWidth = "100%";
+    table.style.maxWidth = "100%";
 
     var password = document.getElementById('EmployeePassword')!;
     password.style.visibility = 'visible';
@@ -181,6 +197,7 @@ export class ManagerHomePageComponent implements OnInit {
       }
 
       this.submitType = '';
+      this.GetEmployees();
     
   }
 
@@ -305,7 +322,7 @@ export class ManagerHomePageComponent implements OnInit {
     var btn = document.getElementById('newItemBtn')!;
     btn.style.visibility = 'hidden';
 
-    const tableid = "allItemsTable";
+    const tableid = "tableAllItems";
     var table = document.getElementById(tableid)!;
     table.style.width = "50%";
     table.style.minWidth = "50%";
@@ -325,11 +342,11 @@ export class ManagerHomePageComponent implements OnInit {
     var btn = document.getElementById('newItemBtn')!;
     btn.style.visibility = 'visible';
 
-    const tableid = "allItemsTable";
+    const tableid = "tableAllItems";
     var table = document.getElementById(tableid)!;
-    table.style.width = "90%";
-    table.style.minWidth = "90%";
-    table.style.maxWidth = "90%";
+    table.style.width = "95%";
+    table.style.minWidth = "95%";
+    table.style.maxWidth = "95%";
 
       for(var name in this.NewItem.controls) {
             
@@ -697,9 +714,9 @@ export class ManagerHomePageComponent implements OnInit {
 
     const tableid = "tableAllCompanies";
     var table = document.getElementById(tableid)!;
-    table.style.width = "90%";
-    table.style.minWidth = "90%";
-    table.style.maxWidth = "90%";
+    table.style.width = "100%";
+    table.style.minWidth = "100%";
+    table.style.maxWidth = "100%";
 
       for(var name in this.Company.controls) {
             
@@ -837,9 +854,9 @@ export class ManagerHomePageComponent implements OnInit {
 
     const tableid = "tableAllRamps";
     var table = document.getElementById(tableid)!;
-    table.style.width = "90%";
-    table.style.minWidth = "90%";
-    table.style.maxWidth = "90%";
+    table.style.width = "100%";
+    table.style.minWidth = "100%";
+    table.style.maxWidth = "100%";
 
       for(var name in this.Ramp.controls) {
             
@@ -955,5 +972,112 @@ updateLoadSearch(e : any) {
   this.loadKeyWord = e.target.value; 
 }
 
+getAllVehicles() : void {
+  this.vehicleService.getAllVehicles().subscribe((data) => {
+    let array = data as Array<Vehicle>;
+    this.allVehicles = [];
+    array.forEach(element => {
+      this.allVehicles.push(element);
+    });
+  });
+}
+
+ShowNewVehicle() {
+  const nId = "newVehicleSectionHidden"; 
+  var item = document.getElementById(nId)!;
+  item.style.visibility = 'visible';
+
+  var btn = document.getElementById('newVehicleBtn')!;
+  btn.style.visibility = 'hidden';
+
+  const tableid = "tableAllVehicles";
+  var table = document.getElementById(tableid)!;
+  table.style.width = "50%";
+  table.style.minWidth = "50%";
+  table.style.maxWidth = "50%";
+  
+  if(this.VehicleSubmitType === "change")
+  {
+    var id = document.getElementById("registration")!;
+    id.setAttribute('readonly', 'readonly');
+  }
+}
+
+HideNewVehicle() {
+  const nId = "newVehicleSectionHidden"; 
+  var item = document.getElementById(nId)!;
+  item.style.visibility = 'hidden';
+
+  var btn = document.getElementById('newVehicleBtn')!;
+  btn.style.visibility = 'visible';
+
+  const tableid = "tableAllVehicles";
+  var table = document.getElementById(tableid)!;
+  table.style.width = "100%";
+  table.style.minWidth = "100%";
+  table.style.maxWidth = "100%";
+
+    for(var name in this.NewVehicle.controls) {
+          
+      (<FormControl>this.NewVehicle.controls[name]).setValue('');
+      this.NewVehicle.controls[name].setErrors(null);
+    }
+
+    this.VehicleSubmitType = '';
+  
+}
+
+ChangeVehicle(vehicle : Vehicle)
+  {
+    this.NewVehicle.setValue(vehicle);
+    this.VehicleSubmitType = "change";
+    this.ShowNewVehicle();
+  }
+
+  SaveVehicle()
+  {
+    if(this.VehicleSubmitType === "change")
+    {
+      this.vehicleService.changeVehicle(this.NewVehicle.value).subscribe((data: Result) =>{
+        var result = data as Result;
+        window.alert(result.Message);
+        this.HideNewVehicle();
+        this.getAllVehicles();
+        
+      });
+    }
+    else
+    {
+      this.NewVehicle.controls['Free'].setValue('true');
+    this.vehicleService.addVehicle(this.NewVehicle.value).subscribe((data) =>{
+      var result = data as Result;
+      window.alert(result.Message);
+      
+      if(result.Success)
+      {
+        this.getAllVehicles();
+        for(var name in this.NewVehicle.controls) {
+            
+          (<FormControl>this.NewVehicle.controls[name]).setValue('');
+          this.NewVehicle.controls[name].setErrors(null);
+        }
+        this.HideNewVehicle();
+      }
+    });
+    
+    }
+  }
+
+  RemoveVehicle(registration : string | undefined)
+  {
+    if(window.confirm("Are you sure want to delete " + registration + " vehicle?"))
+    {
+      this.vehicleService.removeVehicle(registration).subscribe((data) =>{
+        var result = data as Result;
+        window.alert(result.Message);
+        this.getAllVehicles();
+      });
+    }
+  }
 
 }

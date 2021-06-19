@@ -19,6 +19,7 @@ export class MyProfilePageComponent implements OnInit {
   Type : string | undefined;
   OldPassword : string | undefined = '';
   NewPassword : string | undefined = '';
+  ChangePasswordVisibility : boolean = false;
   constructor(private fb: FormBuilder,private userService : UserService, private router : Router, private loginService : LoginService) { }
 
   ngOnInit(): void {
@@ -69,4 +70,16 @@ export class MyProfilePageComponent implements OnInit {
 
   }
 
+  ShowChangePassword()
+  {
+    if(this.ChangePasswordVisibility)
+    {
+      this.ChangePasswordVisibility = false;
+      console.log(this.ChangePasswordVisibility,"change");
+    }
+    else
+    {
+    this.ChangePasswordVisibility = true;
+    }
+  }
 }

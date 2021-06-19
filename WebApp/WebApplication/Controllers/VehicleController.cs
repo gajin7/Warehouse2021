@@ -51,6 +51,41 @@ namespace WebApplication.Controllers
 
         [HttpGet]
         [Authorize]
+        [Route("getAllVehicles")]
+        public IEnumerable<VehicleResult> GetAllVehicles()
+        {
+            return _vehicleRepository.GetAllVehicles();
+        }
+
+        [HttpPost]
+        [Authorize]
+        [Route("addVehicle")]
+        public OperationResult AddVehicle(VehicleResult vehicle)
+        {
+            return _vehicleRepository.AddVehicle(vehicle);
+           
+        }
+
+        [HttpPost]
+        [Authorize]
+        [Route("changeVehicle")]
+        public OperationResult ChangeVehicle(VehicleResult vehicle)
+        {
+            return _vehicleRepository.ChangeVehicle(vehicle);
+
+        }
+
+        [HttpDelete]
+        [Authorize]
+        [Route("removeVehicle")]
+        public OperationResult RemoveVehicle(string registration)
+        {
+            return _vehicleRepository.RemoveVehicle(registration);
+
+        }
+
+        [HttpGet]
+        [Authorize]
         [Route("getFreeVehicles")]
         public IEnumerable<VehicleResult> GetFreeVehicles()
         {

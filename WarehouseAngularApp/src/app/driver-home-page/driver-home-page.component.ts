@@ -4,9 +4,10 @@ import { Result } from '../Models/Result';
 import { TakeLoadByDriverParams } from '../Models/TakeLoadByDriverParams';
 import { LoadService } from '../services/load.service';
 import { VehicleService } from '../services/vehicle.service';
-import { NgxQRCodeModule } from 'ngx-qrcode2';
 import { ReceiptService } from '../services/receipt.service';
 import { ReportsService } from '../services/reports.service';
+import { of, Subscription, timer } from "rxjs";
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-driver-home-page',
@@ -18,11 +19,14 @@ export class DriverHomePageComponent implements OnInit {
  vehicles: any
  loads: any;
  driversLoad: DriversLoad;
+ minutes: number = 0;
+ subscription: Subscription | undefined;
   constructor(private vehicleService : VehicleService, private loadsService : LoadService, private receiptService : ReceiptService,
     private reportService : ReportsService) {
     this.vehicle = [];
     this.loads = [];
     this.driversLoad = new DriversLoad();
+
    }
 
   ngOnInit(): void {
@@ -34,6 +38,19 @@ export class DriverHomePageComponent implements OnInit {
     console.log(this.driversLoad,"OVO")
     console.log(this.vehicle,"ve")
     console.log(this.driversLoad.Id,"id")
+
+    this.minutes =  30 * 1000; // on evry 30 seconds
+
+    this.subscription = timer(0, this.minutes)
+      .pipe(
+        switchMap(() => {
+          return this.loadsService.getUnloadedLoads('')
+            .pipe();
+        }),
+      )
+      .subscribe(data => {
+        this.loads = data;
+      });
 
   }
 

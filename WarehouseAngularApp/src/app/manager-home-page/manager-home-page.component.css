@@ -5,9 +5,9 @@
     min-height: 100%; 
     max-height: 100%; 
     height: 100%;
-    width: 90%;
-    max-width: 90%;
-    min-width: 90%;
+    width: 100%;
+    max-width: 100%;
+    min-width: 100%;
   }
 
   #newEmployeeSectionHidden
@@ -20,8 +20,6 @@
     min-width: 40%;
     float:right;
     visibility: hidden;
-    float: right; 
-    margin-right: 5%;
   }
 
   #newItemSectionHidden
@@ -32,10 +30,8 @@
     width: 20%;
     max-width: 20%;
     min-width: 20%;
-    float:right;
+    float:left;
     visibility: hidden;
-    margin-right: 5%;
-    margin-bottom: 40%;
   }
 
   #tableDiv
@@ -57,6 +53,16 @@
     width: 90%;
     max-width: 90%;
     min-width: 90%;
+  }
+
+  #tableAllVehicles
+  {
+    min-height: 100%; 
+    max-height: 100%; 
+    height: 100%;
+    width: 100%;
+    max-width: 100%;
+    min-width: 100%;
   }
 
   .newItemInput
@@ -82,8 +88,6 @@
     min-width: 20%;
     float:right;
     visibility: hidden;
-    margin-right: 5%;
-    margin-bottom: 40%;
   }
 
   #newCompanySectionHidden
@@ -91,13 +95,27 @@
     min-height: 40%; 
     max-height: 40%; 
     height: 40%;
-    width: 20%;
-    max-width: 20%;
-    min-width: 20%;
+    width: 40%;
+    max-width: 40%;
+    min-width: 40%;
     float:right;
+    margin-left: 10%;
     visibility: hidden;
-    margin-right: 5%;
-    margin-bottom: 40%;
+    
+  }
+  #newVehicleSectionHidden
+  {
+    min-height: 40%; 
+    max-height: 40%; 
+    height: 40%;
+    width: 40%;
+    max-width: 25%;
+    min-width: 25%;
+    float:right;
+    margin-left: 12%;
+    margin-right: 10%;
+    visibility: hidden;
+    
   }
 
   #warehouses

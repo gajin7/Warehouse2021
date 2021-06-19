@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { DriverGuard } from './auth/driver.guard';
 import { LoginGuard } from './auth/login.guard';
 import { ManagerGuard } from './auth/manager.guard';
+import { ProfileGuard } from './auth/profile.guard';
 import { StorekeeperGuard } from './auth/storekeeper.guard';
 import { DefaultHomepageComponent } from './default-homepage/default-homepage.component';
 import { DriverHomePageComponent } from './driver-home-page/driver-home-page.component';
@@ -14,7 +15,8 @@ import { StorekeeperHomePageComponent } from './storekeeper-home-page/storekeepe
 const routes: Routes = [
   {
     path: '',
-    component: DefaultHomepageComponent
+    component: DefaultHomepageComponent,
+    canActivate: [LoginGuard]
   },
   {
     path: 'login',
@@ -38,7 +40,8 @@ const routes: Routes = [
   },
   {
     path: 'my-profile',
-    component: MyProfilePageComponent
+    component: MyProfilePageComponent,
+    canActivate: [ProfileGuard]
   }
 ];
 

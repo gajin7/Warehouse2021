@@ -20,7 +20,7 @@ export class ManagerGuard implements CanActivate, CanActivateChild {
     // not logged in so redirect to login page
     else {
       
-        this.router.navigate(['']);
+        this.router.navigate(['login']);
         return false;
     }
   }

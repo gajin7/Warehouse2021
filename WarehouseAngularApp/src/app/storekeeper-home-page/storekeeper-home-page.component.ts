@@ -240,8 +240,12 @@ export class StorekeeperHomePageComponent implements OnInit {
       });
       this.receiptService.createReceipt(this.OrderDataSource,this.company,this.curentWarehouse).subscribe((data) => {
         window.alert(data.Message);
-      this.OrderDataSource = [];
-      this.total = 0;
+        if(data.Success)
+        {
+          this.OrderDataSource = [];
+          this.total = 0;
+        }
+        this.getShelves(this.curentWarehouse);      
       });
     }
   }
