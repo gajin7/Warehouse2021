@@ -29,6 +29,7 @@ namespace WebApplication.Controllers
 
         [HttpPost]
         [Route("addItem")]
+        [Authorize(Roles = "admin,storekeeper")]
         public OperationResult AddItem([FromBody]Item item)
         {
             if (item == null || item.Name.IsNullOrWhiteSpace() || !item.Amount.HasValue || item.ShelfId.IsNullOrWhiteSpace() || !item.Quantity.HasValue)
@@ -51,6 +52,7 @@ namespace WebApplication.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "admin,storekeeper")]
         [Route("getItem")]
         public Item GetItem(string id)
         {
@@ -58,7 +60,7 @@ namespace WebApplication.Controllers
         }
 
         [HttpGet]
-        [Authorize]
+        [Authorize(Roles = "admin,storekeeper")]
         [Route("getAllItems")]
         public IEnumerable<ItemResult> GetAllItems()
         {
@@ -66,7 +68,7 @@ namespace WebApplication.Controllers
         }
 
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "admin,storekeeper")]
         [Route("changeQuantity")]
         public OperationResult ChangeQuantity(string id, int quantityChanger)
         {
@@ -74,6 +76,7 @@ namespace WebApplication.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "admin,storekeeper")]
         [Route("getQuantity")]
         public QuantityResult GetQuantity(string id)
         {
@@ -84,7 +87,7 @@ namespace WebApplication.Controllers
         }
 
         [Route("getAllItemsSearch")]
-        [Authorize]
+        [Authorize(Roles = "admin,storekeeper")]
         [HttpGet]
         public IEnumerable<ItemResult> GetAllItemsSearch([FromUri]string warehouseId, string keyWord)
         {
@@ -94,14 +97,14 @@ namespace WebApplication.Controllers
 
         [HttpGet]
         [Route("getItemTypes")]
-        [Authorize]
+        [Authorize(Roles = "admin,storekeeper")]
         public IEnumerable<string> GetItemTypes()
         {
             return _itemTypesRepository.GetItemTypes();
         }
 
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "admin")]
         [Route("changeItem")]
         public OperationResult ChangeItem([FromBody]Item item)
         {

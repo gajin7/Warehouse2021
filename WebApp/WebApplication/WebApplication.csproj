@@ -271,7 +271,6 @@
       <DependentUpon>WarehouseDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CompanyResult.cs" />
-    <Compile Include="Controllers\DriverController.cs" />
     <Compile Include="Models\EmployeeResult.cs" />
     <Compile Include="Models\ItemResult.cs" />
     <Compile Include="Models\LoadResult.cs" />

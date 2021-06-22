@@ -33,7 +33,7 @@
   <div *ngIf="!warehousesTableShow">
     <div>
   </div>
-    <div style="float:right; margin: 1%;" >
+    <div style="float:right;  margin: 1%;margin-bottom: 5%;" >
         <select class="custom-select" (change)="changeWarehouse($event)"  required>
             <option *ngFor="let obj of warehouseNames" [value]="obj"  [selected]="obj === curentWarehouse">{{obj}}</option>
         </select>
@@ -44,7 +44,7 @@
             <a ngbNavLink>Shelves</a>
             <ng-template ngbNavContent>
               <div>
-                <div class="card" style="float: left; margin-top: 3%; width: 50%; height: 40em;">
+                <div class="card" style="float: left; margin-top: 3%; width: 50%; height: 40em; margin-bottom: 7%;">
                   <div>
                     <b style="font-size: 50px; float: left;">Shelfs & Items</b>
                     <img style="float: right;" src="https://img.icons8.com/ultraviolet/100/000000/book-shelf.png"/>
@@ -83,7 +83,7 @@
                   </div>
                 </div>
                 
-                <div class="card" style="float: right; margin: 10px; margin-top: 3%; width: 40%; height: 40em;">
+                <div class="card" style="float: right; margin: 1%; margin-top: 3%; width: 40%;margin-bottom: 5%;">
                   <div>
                     <b style="font-size: 50px; float: left;">New Order</b>
                     <img style="float: right;" src="https://img.icons8.com/ultraviolet/100/000000/create-order--v1.png"/>
@@ -134,7 +134,7 @@
             <a ngbNavLink>Items</a>
             <!--Items-->
             <ng-template ngbNavContent>
-              <div class="card" style="width: 60%;  margin: 2%; float: left;">
+              <div class="card" style="width: 60%;  margin: 2%; float: left; margin-bottom: 7%;">
                 <div class="card-body">
                   <b style="font-size: 50px; float: left;">Items</b>
                   <img style="float: right;"  src="https://img.icons8.com/ultraviolet/100/000000/ingredients.png"/>
@@ -175,7 +175,7 @@
               <button class="btn btn-primary" id="newItemBtn"  (click)='ShowNewItem()'>Add new item</button>
             </div>
             
-            <div class="card" id="newItemSectionHidden">
+            <div class="card" id="newItemSectionHidden" style="margin-bottom: 7%;">
               <b style="font-size: large;">New item</b>
               <form [formGroup]="NewItem" (submit)="SaveItem()" class="needs-validation" novalidate>
                 <label  for="fname">Name:</label><br>
@@ -205,7 +205,7 @@
           <li ngbNavItem="Reports" (click)="getReports()">
             <a ngbNavLink>Reports</a>
             <ng-template ngbNavContent>
-              <div class="card" style="margin: 2%;">
+              <div class="card" style="margin: 2%; margin-bottom: 7%;">
                 <div class="card-body">
                   <b style="font-size: 50px; float: left;">Reports</b>
                   <img style="float: right;" src="https://img.icons8.com/cotton/100/000000/report-file--v2.png"/>
@@ -234,7 +234,7 @@
           <li ngbNavItem="Load">
             <a ngbNavLink>Load</a>
             <ng-template ngbNavContent>
-              <div class="card" style="margin: 1%;">
+              <div class="card" style="margin: 1%; margin-bottom: 7%;">
                 <div class="card-body">
                   <b style="font-size: 50px; float: left;">Loads</b>
                   <img style="float: right;" src="https://img.icons8.com/cotton/100/000000/transport--delivery--logistics--cargo--parcel--box--service-28.png"/>

@@ -20,6 +20,7 @@ namespace WebApplication.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "admin,storekeeper")]
         [Route("getCompanies")]
         public IEnumerable<CompanyResult> GetCompanies()
         {
@@ -34,6 +35,7 @@ namespace WebApplication.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "admin")]
         [Route("addCompany")]
         public OperationResult AddCompany([FromBody]CompanyResult company)
         {
@@ -41,6 +43,7 @@ namespace WebApplication.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "admin")]
         [Route("changeCompany")]
         public OperationResult ChangeCompany([FromBody]CompanyResult company)
         {
@@ -48,6 +51,7 @@ namespace WebApplication.Controllers
         }
 
         [HttpDelete]
+        [Authorize(Roles = "admin")]
         [Route("removeCompany")]
         public OperationResult RemoveCompany([FromUri]string companyPib)
         {
@@ -55,7 +59,7 @@ namespace WebApplication.Controllers
         }
 
         [Route("getAllCompaniesSearch")]
-        [Authorize]
+        [Authorize(Roles = "admin")]
         [HttpGet]
         public IEnumerable<CompanyResult> GetAllCompaniesSearch([FromUri]string keyWord)
         {

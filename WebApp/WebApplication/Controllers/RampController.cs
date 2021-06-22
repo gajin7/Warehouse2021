@@ -16,6 +16,7 @@ namespace WebApplication.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "admin,storekeeper")]
         [Route("getRamps")]
         public IEnumerable<RampResult> GetRamps([FromUri] string warehouseId)
         {
@@ -23,6 +24,7 @@ namespace WebApplication.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "admin")]
         [Route("addRamp")]
         public OperationResult AddRamp([FromBody]RampResult ramp)
         {
@@ -30,6 +32,7 @@ namespace WebApplication.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "admin")]
         [Route("changeRamp")]
         public OperationResult ChangeRamp([FromBody]RampResult ramp)
         {
@@ -37,6 +40,7 @@ namespace WebApplication.Controllers
         }
 
         [HttpDelete]
+        [Authorize(Roles = "admin")]
         [Route("removeRamp")]
         public OperationResult RemoveRamp([FromUri]string rampId)
         {
