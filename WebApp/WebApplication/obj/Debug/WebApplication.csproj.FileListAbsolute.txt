@@ -118,3 +118,9 @@ C:\Users\JGajin\Documents\GitHub\Warehouse2021\WebApp\WebApplication\bin\PdfShar
 C:\Users\JGajin\Documents\GitHub\Warehouse2021\WebApp\WebApplication\bin\PdfSharp.Charting.xml
 C:\Users\JGajin\Documents\GitHub\Warehouse2021\WebApp\WebApplication\bin\de\PdfSharp.resources.dll
 C:\Users\JGajin\Documents\GitHub\Warehouse2021\WebApp\WebApplication\bin\de\PdfSharp.Charting.resources.dll
+C:\Users\JGajin\Documents\GitHub\Warehouse2021\WebApp\WebApplication\bin\DocumentFormat.OpenXml.dll
+C:\Users\JGajin\Documents\GitHub\Warehouse2021\WebApp\WebApplication\bin\Syncfusion.Compression.Base.dll
+C:\Users\JGajin\Documents\GitHub\Warehouse2021\WebApp\WebApplication\bin\Syncfusion.Licensing.dll
+C:\Users\JGajin\Documents\GitHub\Warehouse2021\WebApp\WebApplication\bin\Syncfusion.Pdf.Base.dll
+C:\Users\JGajin\Documents\GitHub\Warehouse2021\WebApp\WebApplication\bin\Syncfusion.Compression.Base.xml
+C:\Users\JGajin\Documents\GitHub\Warehouse2021\WebApp\WebApplication\bin\Syncfusion.Pdf.Base.xml
