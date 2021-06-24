@@ -14,7 +14,7 @@ export class ManagerGuard implements CanActivate, CanActivateChild {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {    
 
-    if (localStorage.role === 'admin') {
+    if (sessionStorage.role === 'admin') {
       return true;
     }
     // not logged in so redirect to login page

@@ -19,6 +19,14 @@ export class ReportsService {
     return this.http.get(this.hostInfo.defaultHostAddress + this.hostInfo.apiPrefix + this.hostInfo.reportController + '/getReports?type='+type);
   }
 
+  getReportsSortByDate(type : string |  undefined, orderDate : string | undefined): Observable<any> {
+    return this.http.get(this.hostInfo.defaultHostAddress + this.hostInfo.apiPrefix + this.hostInfo.reportController + '/getReportsSortByDate?type='+type + '&orderWay=' + orderDate);
+  }
+
+  getReportsSortByType(type : string |  undefined,orderType : string | undefined): Observable<any> {
+    return this.http.get(this.hostInfo.defaultHostAddress + this.hostInfo.apiPrefix + this.hostInfo.reportController + '/getReportsSortByType?type='+type + '&orderWay=' + orderType);
+  }
+
   getReportFile(reportId : string | undefined) : Observable<Blob> {   
     return this.http.get(this.hostInfo.defaultHostAddress + this.hostInfo.apiPrefix + this.hostInfo.reportController + '/getReportPdf?reportId=' + reportId, { responseType: 'blob' });
 }

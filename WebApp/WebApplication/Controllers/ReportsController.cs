@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
@@ -35,7 +36,25 @@ namespace WebApplication.Controllers
         }
 
         [HttpGet]
-        //[Authorize]
+        [Route("getReportsSortByDate")]
+        [Authorize]
+        public IEnumerable<ReportResult> GetReportsSortByDate([FromUri] string type, string orderWay)
+        {
+            var reports = _reportRepository.GetReports(type);
+            return orderWay.Equals("desc") ? reports.OrderByDescending(o => o.Date).ToList() : reports.OrderBy(o => o.Date).ToList();
+        }
+
+        [HttpGet]
+        [Route("getReportsSortByType")]
+        [Authorize]
+        public IEnumerable<ReportResult> GetReportsSortByType([FromUri] string type, string orderWay)
+        {
+            var reports = _reportRepository.GetReports(type);
+            return orderWay.Equals("desc") ? reports.OrderByDescending(o => o.Type).ToList() : reports.OrderBy(o => o.Type).ToList();
+        }
+
+        [HttpGet]
+        [Authorize]
         [Route("getReportPdf")]
         public HttpResponseMessage GetReportPdf([FromUri] string reportId)
         {

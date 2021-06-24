@@ -28,15 +28,15 @@ export class LoginComponent {
       if(this.authService.isLoggedin)
       {
           this.isLoginFailed = false;
-          if(localStorage.role == "driver")
+          if(sessionStorage.role == "driver")
           {
               this.router.navigate(['driver-home']);
           }
-          else if(localStorage.role == "admin")
+          else if(sessionStorage.role == "admin")
           {
               this.router.navigate(['manager-home']);
           }
-          else if(localStorage.role == "storekeeper")
+          else if(sessionStorage.role == "storekeeper")
           {
               this.router.navigate(['storekeeper-home']);
           }

@@ -46,6 +46,7 @@ namespace WebApplication.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "admin")]
         [Route("Register")]
         public OperationResult Register([FromBody] Employee employee)
         {
@@ -61,6 +62,7 @@ namespace WebApplication.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         [Route("ChangePassword")]
         public OperationResult ChangePassword([FromBody] ChangePasswordParameters parameters)
         {
@@ -125,6 +127,7 @@ namespace WebApplication.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "admin")]
         [Route("GetAllUsers")]
         public IEnumerable<EmployeeResult> GetAllEmployees()
         {
@@ -132,6 +135,7 @@ namespace WebApplication.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         [Route("GetEmployeeTypes")]
         public IEnumerable<string> GetEmployeeTypes()
         {
@@ -140,6 +144,7 @@ namespace WebApplication.Controllers
 
 
         [HttpPost]
+        [Authorize(Roles = "admin")]
         [Route("ChangeEmployeeData")]
         public OperationResult ChangeEmployeeData(Employee employee)
         {
@@ -147,6 +152,7 @@ namespace WebApplication.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "admin")]
         [Route("SearchEmployees")]
         public IEnumerable<EmployeeResult> SearchEmployees([FromUri]string keyWord)
         {

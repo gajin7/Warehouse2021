@@ -104,7 +104,7 @@ namespace WebApplication.Controllers
 
         [HttpGet]
         [Authorize]
-        [Route("createReceipt")]
+        [Route("GetReceipts")]
         public JsonResult<IEnumerable<Receipt>> GetReceipts()
         {
             var receipts = _receiptRepository.GetReceipts();
@@ -112,7 +112,7 @@ namespace WebApplication.Controllers
         }
 
         [HttpGet]
-        //[Authorize]
+        [Authorize]
         [Route("getReceiptPdf")]
         public HttpResponseMessage GetReceiptPdf([FromUri] string receiptId)
         {

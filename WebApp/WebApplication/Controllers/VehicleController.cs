@@ -24,7 +24,7 @@ namespace WebApplication.Controllers
         }
 
         [HttpGet]
-        [Authorize]
+        [Authorize(Roles = "driver")]
         [Route("getDriversVehicle")]
         public VehicleResult GetDriversVehicle([FromUri] string driversEmail)
         {
@@ -58,7 +58,7 @@ namespace WebApplication.Controllers
         }
 
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "admin")]
         [Route("addVehicle")]
         public OperationResult AddVehicle(VehicleResult vehicle)
         {
@@ -67,7 +67,7 @@ namespace WebApplication.Controllers
         }
 
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "admin")]
         [Route("changeVehicle")]
         public OperationResult ChangeVehicle(VehicleResult vehicle)
         {
@@ -76,7 +76,7 @@ namespace WebApplication.Controllers
         }
 
         [HttpDelete]
-        [Authorize]
+        [Authorize(Roles = "admin")]
         [Route("removeVehicle")]
         public OperationResult RemoveVehicle(string registration)
         {

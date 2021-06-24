@@ -25,11 +25,6 @@ namespace WebApplication.Repositories
                             Quantity = item.Quantity
                         };
                         report.ItemReports.Add(reportItem);
-                        return new OperationResult
-                        {
-                            Message = "Receipt created successfully",
-                            Success = true
-                        };
                     }
                     else
                     {
@@ -48,7 +43,9 @@ namespace WebApplication.Repositories
                         report.ItemReports.Add(reportItem);
 
                         accessDb.Reports.Add(report);
-                        var result = accessDb.SaveChanges();
+                    }
+
+                    var result = accessDb.SaveChanges();
 
                         if (result > 0)
                         {
@@ -66,9 +63,8 @@ namespace WebApplication.Repositories
                                 Success = false
                             };
                         }
-                    }
-                    
                 }
+                
                 catch (Exception e)
                 {
                     return new OperationResult()

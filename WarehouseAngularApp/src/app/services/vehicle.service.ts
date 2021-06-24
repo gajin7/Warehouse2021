@@ -17,7 +17,7 @@ export class VehicleService {
   constructor(private http: HttpClient) { }
 
   getDriversVehicle(): Observable<any> {
-    return this.http.get(this.hostInfo.defaultHostAddress + this.hostInfo.apiPrefix + this.hostInfo.vehicleController + '/getDriversVehicle?driversEmail='+localStorage.email);
+    return this.http.get(this.hostInfo.defaultHostAddress + this.hostInfo.apiPrefix + this.hostInfo.vehicleController + '/getDriversVehicle?driversEmail='+sessionStorage.email);
   }
 
   getFreeVehicles(): Observable<any> {
@@ -29,7 +29,7 @@ export class VehicleService {
   }
 
   giveVehicleToDriver(registration : string |  undefined): Observable<any> {
-    return this.http.get(this.hostInfo.defaultHostAddress + this.hostInfo.apiPrefix + this.hostInfo.vehicleController + '/giveVehicleToDriver?registration='+registration +'&driversEmail='+localStorage.email);
+    return this.http.get(this.hostInfo.defaultHostAddress + this.hostInfo.apiPrefix + this.hostInfo.vehicleController + '/giveVehicleToDriver?registration='+registration +'&driversEmail='+sessionStorage.email);
   }
 
   freeVehicle(registration : string |  undefined): Observable<any> {

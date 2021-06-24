@@ -24,7 +24,7 @@ export class LoginService {
           this.isLoggedin = true;
           console.log('role: ' + res.Role)
      
-        localStorage.setItem('role', res.Role)
+        sessionStorage.setItem('role', res.Role)
         }
       }),
 
@@ -34,8 +34,8 @@ export class LoginService {
 
   logout(): void {
     this.isLoggedin = false;
-    localStorage.removeItem('jwt');
-    localStorage.removeItem('role');
+    sessionStorage.removeItem('jwt');
+    sessionStorage.removeItem('role');
   }
 
   private handle(error: any) {

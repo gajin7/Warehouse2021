@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System.Data.Common.CommandTrees;
+using System.Data.Entity;
 
 
 namespace WebApplication
@@ -6,7 +7,7 @@ namespace WebApplication
     public class AccessDb : DbContext
     {
         public AccessDb() : base("WarehouseDBEntities") { }
-
+        
         public DbSet<Employee> Employees { get; set; }
         public DbSet<EmployeeType> EmployeeTypes { get; set; }
         public DbSet<Item> Items { get; set; }

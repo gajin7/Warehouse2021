@@ -29,8 +29,8 @@ export class WarehouseService {
 
   logout(): void {
     this.isLoggedin = false;
-    localStorage.removeItem('jwt');
-    localStorage.removeItem('role');
+    sessionStorage.removeItem('jwt');
+    sessionStorage.removeItem('role');
   }
 
   private handle(error: any) {

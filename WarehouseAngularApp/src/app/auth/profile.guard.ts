@@ -14,7 +14,7 @@ export class ProfileGuard implements CanActivate, CanActivateChild {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {    
 
-    if (localStorage.role == null || localStorage.role === '') {
+    if (sessionStorage.role == null || sessionStorage.role === '') {
         this.router.navigate(['login']);
         return false;
     }

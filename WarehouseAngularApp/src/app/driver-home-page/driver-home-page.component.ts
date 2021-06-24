@@ -35,10 +35,6 @@ export class DriverHomePageComponent implements OnInit {
     this.GetDriversLoad();
     this.getLoads();
 
-    console.log(this.driversLoad,"OVO")
-    console.log(this.vehicle,"ve")
-    console.log(this.driversLoad.Id,"id")
-
     this.minutes =  30 * 1000; // on evry 30 seconds
 
     this.subscription = timer(0, this.minutes)
@@ -108,7 +104,7 @@ export class DriverHomePageComponent implements OnInit {
     if(window.confirm('Are you sure you want to take the load ' + id + '?'))
     {
     var params = new TakeLoadByDriverParams();
-    params.Email = localStorage['email'];
+    params.Email = sessionStorage['email'];
     params.LoadId = id;
     this.loadsService.takeLoadByDriver(params).subscribe(data =>
       {
@@ -121,7 +117,7 @@ export class DriverHomePageComponent implements OnInit {
 
   GetDriversLoad()
   {
-    this.loadsService.getDriversLoad(localStorage['email']).subscribe(data => {
+    this.loadsService.getDriversLoad(sessionStorage['email']).subscribe(data => {
       if(data != null)
       {
         this.driversLoad.Id = data.Id;

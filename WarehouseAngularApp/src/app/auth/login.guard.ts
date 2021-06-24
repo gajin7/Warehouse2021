@@ -14,15 +14,15 @@ export class LoginGuard implements CanActivate, CanActivateChild {
   constructor(private router: Router) { }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {    
-    if (localStorage.role === 'admin') {
+    if (sessionStorage.role === 'admin') {
       this.router.navigate(['manager-home']);
       return false;
     }
-    if (localStorage.role === 'driver') {
+    if (sessionStorage.role === 'driver') {
       this.router.navigate(['driver-home']);
       return false;
     }
-    if (localStorage.role === 'storekeeper') {
+    if (sessionStorage.role === 'storekeeper') {
       this.router.navigate(['storekeeper-home']);
       return false;
     }

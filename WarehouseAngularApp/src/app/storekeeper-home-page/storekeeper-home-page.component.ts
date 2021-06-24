@@ -1,4 +1,3 @@
-import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
 import { Item } from '../Models/Item';
 import { Warehouse } from '../Models/Warehouse';
@@ -12,8 +11,8 @@ import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms'
 import { Result } from '../Models/Result';
 import { ReportsService } from '../services/reports.service';
 import { LoadService } from '../services/load.service';
-import { TakeLoadByDriverParams } from '../Models/TakeLoadByDriverParams';
 import { CompaniesService } from '../services/companies.service';
+
 
 @Component({
   selector: 'app-storekeeper-home-page',
@@ -41,8 +40,8 @@ export class StorekeeperHomePageComponent implements OnInit {
   expandedElement: Item | null | undefined;
   active = 'Shelves';
   date : Date | undefined;
-  role : string = localStorage.role;
-  email : string = localStorage.email;
+  role : string = sessionStorage.role;
+  email : string = sessionStorage.email;
   warehouseNames : Array<string | undefined>;
   curentWarehouse : string | undefined;
   total :number = 0;
@@ -57,11 +56,13 @@ export class StorekeeperHomePageComponent implements OnInit {
   itemTypes : any;
   companies : any;
   shelves: any;
-  reports : any;
+  reports : Array<any>;
   columnsToDisplay = ['date', 'type'];
   loads: any;
   loadTypes = ['Unloaded','Loaded','Loading'];
   currentLoadType : string | undefined = 'Unloaded';
+  orderDate = 'asc';
+  orderType = 'desc';
 
   
  
@@ -130,7 +131,7 @@ export class StorekeeperHomePageComponent implements OnInit {
     var found = false;
     var index = null;
     for(var k = 0; k < this.OrderDataSource.length; k++) {
-    if (this.OrderDataSource[k].Id == item.Id) {
+    if (this.OrderDataSource[k].Id === item.Id) {
         found = true;
         index = k;
         break;
@@ -144,13 +145,12 @@ export class StorekeeperHomePageComponent implements OnInit {
     }
     else
     {
-      item.Quantity = 1;
-      this.OrderDataSource.push(item);
-      var amount : number = item.Amount;
+      var newItem = Object.assign({},item);
+      console.log(newItem,"newItem")
+      newItem.Quantity = 1;
+      this.OrderDataSource.push(newItem);
+      var amount : number = newItem.Amount;
       this.total += amount;
-      this.shelvesService.getShelvesWithItems(this.curentWarehouse).subscribe((data) => {
-        this.dataSource = data;
-      });
     }
 
   }
@@ -388,6 +388,7 @@ export class StorekeeperHomePageComponent implements OnInit {
           (<FormControl>this.NewItem.controls[name]).setValue('');
           this.NewItem.controls[name].setErrors(null);
         }
+        this.getAllItems();
       }
     });
 
@@ -408,37 +409,58 @@ export class StorekeeperHomePageComponent implements OnInit {
   {
     this.reportService.getReports('').subscribe((data) => {
       this.reports = data;
-      console.log(data,"reports");
     });
   }
 
+  
+
   SortByDate()
   {
-    console.log("SortByDate");
+    this.reportService.getReportsSortByDate('',this.orderDate).subscribe((data) => {
+      this.reports = data;
+      if(this.orderDate === 'asc')
+      {
+        this.orderDate = 'desc';
+      }
+      else
+      {
+        this.orderDate = 'asc';
+      }
+    });
   }
 
   SortByType()
   {
-    console.log("SortByType");
+    this.reportService.getReportsSortByType('',this.orderType).subscribe((data) => {
+      this.reports = data;
+      if(this.orderType === 'asc')
+      {
+        this.orderType = 'desc';
+      }
+      else
+      {
+        this.orderType = 'asc';
+      }
+    });
   }
   
   getUnloadedLoads()
   {
-    this.loadService.getUnloadedLoads(this.curentWarehouse).subscribe((data) => {
+    this.loadService.getUnloadedLoads(this.curentWarehouse).subscribe((data: any) => {
       this.loads = data;
     })
   }
 
   getLoadedLoads()
   {
-    this.loadService.getLoadedLoads(this.curentWarehouse).subscribe((data) => {
+    this.loadService.getLoadedLoads(this.curentWarehouse).subscribe((data: any) => {
       this.loads = data;
     })
   }
 
   getLoadingLoads()
   {
-    this.loadService.getLoadingLoads(this.curentWarehouse).subscribe((data) => {
+    this.loadService.getLoadingLoads(this.curentWarehouse).subscribe((data: any) => {
       this.loads = data;
     })
   }
@@ -468,7 +490,7 @@ export class StorekeeperHomePageComponent implements OnInit {
 
   GetReportPdf(reportId : string | undefined): void {
     this.reportService.getReportFile(reportId)
-        .subscribe(x => {
+        .subscribe((x: BlobPart) => {
             // It is necessary to create a new blob object with mime-type explicitly set
             // otherwise only Chrome works like it should
             var newBlob = new Blob([x], { type: "application/pdf" });
@@ -501,7 +523,7 @@ export class StorekeeperHomePageComponent implements OnInit {
 
   GetReceiptPdf(receiptId : string): void {
     this.receiptService.getReceiptFile('08b185c6-fb40-487f-b80a-f868fbdf5498')
-        .subscribe(x => {
+        .subscribe((x: BlobPart) => {
             // It is necessary to create a new blob object with mime-type explicitly set
             // otherwise only Chrome works like it should
             var newBlob = new Blob([x], { type: "application/pdf" });

@@ -53,6 +53,8 @@ export class ManagerHomePageComponent implements OnInit {
   ramps: Array<Ramp>;
   loadKeyWord : string = '';
   allVehicles : Array<Vehicle>;
+  orderDate = 'asc';
+  orderType = 'desc';
 
   NewEmployee = this.fb.group({
     FirstName: ['', Validators.required],
@@ -645,12 +647,32 @@ export class ManagerHomePageComponent implements OnInit {
 
   SortByDate()
   {
-    console.log("SortByDate");
+    this.reportService.getReportsSortByDate('',this.orderDate).subscribe((data) => {
+      this.reports = data;
+      if(this.orderDate === 'asc')
+      {
+        this.orderDate = 'desc';
+      }
+      else
+      {
+        this.orderDate = 'asc';
+      }
+    });
   }
 
   SortByType()
   {
-    console.log("SortByType");
+    this.reportService.getReportsSortByType('',this.orderType).subscribe((data) => {
+      this.reports = data;
+      if(this.orderType === 'asc')
+      {
+        this.orderType = 'desc';
+      }
+      else
+      {
+        this.orderType = 'asc';
+      }
+    });
   }
 
   SaveCompany()

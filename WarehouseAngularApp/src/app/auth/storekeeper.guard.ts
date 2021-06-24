@@ -15,7 +15,7 @@ export class StorekeeperGuard implements CanActivate, CanActivateChild {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {    
 
-    if (localStorage.role === 'storekeeper') {
+    if (sessionStorage.role === 'storekeeper') {
       return true;
     }
     // not logged in so redirect to login page

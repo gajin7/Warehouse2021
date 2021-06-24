@@ -23,7 +23,7 @@ export class MyProfilePageComponent implements OnInit {
   constructor(private fb: FormBuilder,private userService : UserService, private router : Router, private loginService : LoginService) { }
 
   ngOnInit(): void {
-    this.userService.getProfile(localStorage.email).subscribe(data =>
+    this.userService.getProfile(sessionStorage.email).subscribe(data =>
       {
         this.FirstName = data.FirstName;
         this.LastName = data.LastName;

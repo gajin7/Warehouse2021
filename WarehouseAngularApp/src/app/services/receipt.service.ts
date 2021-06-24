@@ -21,7 +21,7 @@ export class ReceiptService {
 
   createReceipt(items: Item[], company : string | undefined, warehouse : string | undefined): Observable<any> {
       console.log(company,"company");
-    const myPostBody = { Items: items, Company: company,  StorekeeperEmail: localStorage.email, WarehouseId : warehouse}
+    const myPostBody = { Items: items, Company: company,  StorekeeperEmail: sessionStorage.email, WarehouseId : warehouse}
     return this.http.post(this.hostInfo.defaultHostAddress + this.hostInfo.apiPrefix + this.hostInfo.receiptController + "/createReceipt", myPostBody,this.hostInfo.httpOptionsJson);
   }
 

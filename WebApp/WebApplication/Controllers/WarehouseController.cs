@@ -24,6 +24,7 @@ namespace WebApplication.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public IEnumerable<WarehouseResult> GetWarehouses()
         {
             var warehouses = _warehouseRepository.GetAllWarehouses();

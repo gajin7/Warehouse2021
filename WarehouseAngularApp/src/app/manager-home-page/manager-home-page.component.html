@@ -11,8 +11,8 @@
             <h1 style="float: left;" class="card-title">Employees</h1>
           </div>
 
-          <div style="flex-direction: row; overflow:hidden;">
-            <div class="card-body">
+          <div  style="flex-direction: row; overflow:hidden;">
+            <div class="card-body cardWrapper">
               <div style="float: left;" id="tableAllEmployees">
                 <div>
                   <button style="margin-bottom: 2%; float: right;" class="btn btn-primary" id="newEmployeeBtn" (click)='ShowNewEmployee()'>Add new
@@ -465,7 +465,7 @@
       </ng-template>
     </li>
     <li ngbNavItem="Load">
-      <a ngbNavLink>Load</a>
+      <a ngbNavLink (click)="getLoad()">Load</a>
       <ng-template ngbNavContent>
         <div class="card" style="margin: 1%;">
           <div class="card-body">

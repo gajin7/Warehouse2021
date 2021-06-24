@@ -15,7 +15,7 @@ export class DriverGuard implements CanActivate, CanActivateChild {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {    
 
-    if (localStorage.role === 'driver') {
+    if (sessionStorage.role === 'driver') {
       return true;
     }
     // not logged in so redirect to login page

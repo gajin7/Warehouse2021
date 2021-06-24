@@ -24,11 +24,11 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   getRole () { 
-    return localStorage.role
+    return sessionStorage.role
   }
 
   getEmail () { 
-    return localStorage.email
+    return sessionStorage.email
   }
 
   getDateAndTime() : void

@@ -172,18 +172,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Items__ShelfId__628FA481">
-    <End Role="Shelfs" Type="Self.Shelfs" Multiplicity="0..1" />
-    <End Role="Items" Type="Self.Items" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Shelfs">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="Items">
-        <PropertyRef Name="ShelfId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK__Items__Type__08B54D69">
     <End Role="ItemTypes" Type="Self.ItemTypes" Multiplicity="0..1" />
     <End Role="Items" Type="Self.Items" Multiplicity="*" />
@@ -340,6 +328,8 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Function Name="NumberOfOrdersAllTime" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+  <Function Name="NumberOfOrdersToday" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
   <EntityContainer Name="WarehouseDBModelStoreContainer">
     <EntitySet Name="Company" EntityType="Self.Company" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Employees" EntityType="Self.Employees" Schema="dbo" store:Type="Tables" />
@@ -367,10 +357,6 @@
     <AssociationSet Name="FK__ItemRepor__Repor__25518C17" Association="Self.FK__ItemRepor__Repor__25518C17">
       <End Role="Reports" EntitySet="Reports" />
       <End Role="ItemReports" EntitySet="ItemReports" />
-    </AssociationSet>
-    <AssociationSet Name="FK__Items__ShelfId__628FA481" Association="Self.FK__Items__ShelfId__628FA481">
-      <End Role="Shelfs" EntitySet="Shelfs" />
-      <End Role="Items" EntitySet="Items" />
     </AssociationSet>
     <AssociationSet Name="FK__Items__Type__08B54D69" Association="Self.FK__Items__Type__08B54D69">
       <End Role="ItemTypes" EntitySet="ItemTypes" />

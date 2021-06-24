@@ -2,6 +2,7 @@ using System.Web.Http;
 using Unity;
 using Unity.Lifetime;
 using Unity.WebApi;
+using WebApplication.Providers;
 using WebApplication.Repositories;
 using WebApplication.Services;
 
@@ -25,6 +26,7 @@ namespace WebApplication
             container.RegisterType<IReportRepository, ReportRepository>(new HierarchicalLifetimeManager());
             container.RegisterType<ILoadRepository, LoadRepository>(new HierarchicalLifetimeManager());
             container.RegisterType<IRampRepository, RampRepository>(new HierarchicalLifetimeManager());
+            container.RegisterType<IScalarFunctionsRepository, ScalarFunctionRepository>(new HierarchicalLifetimeManager());
 
 
             //register services

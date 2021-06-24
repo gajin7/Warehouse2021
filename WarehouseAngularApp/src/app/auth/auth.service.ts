@@ -37,9 +37,9 @@ export class AuthService {
         console.log('decodedJwtData: ' + decodedJwtData)
         console.log('Role ' + this.role)
 
-        localStorage.setItem('jwt', jwt)
-        localStorage.setItem('role', this.role);
-        localStorage.setItem('email', this.email);
+        sessionStorage.setItem('jwt', jwt)
+        sessionStorage.setItem('role', this.role);
+        sessionStorage.setItem('email', this.email);
       }),
 
       catchError(this.handle)
@@ -53,9 +53,9 @@ export class AuthService {
 
   logout(): void {
     this.isLoggedin = false;
-    localStorage.removeItem('jwt');
-    localStorage.removeItem('role');
-    localStorage.removeItem('email');
+    sessionStorage.removeItem('jwt');
+    sessionStorage.removeItem('role');
+    sessionStorage.removeItem('email');
   }
 
   private handle(error: any) {

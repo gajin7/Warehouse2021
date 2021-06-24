@@ -33,7 +33,7 @@
   <div *ngIf="!warehousesTableShow">
     <div>
   </div>
-    <div style="float:right;  margin: 1%;margin-bottom: 5%;" >
+    <div style="float:right;  margin: 1%" >
         <select class="custom-select" (change)="changeWarehouse($event)"  required>
             <option *ngFor="let obj of warehouseNames" [value]="obj"  [selected]="obj === curentWarehouse">{{obj}}</option>
         </select>
@@ -41,7 +41,7 @@
     <div>
         <ul ngbNav #nav="ngbNav"  class="nav-pills" [(activeId)]="active" orientation="horisontal">
           <li ngbNavItem="Shelves">
-            <a ngbNavLink>Shelves</a>
+            <a ngbNavLink (click)="getShelves(curentWarehouse)">Shelves</a>
             <ng-template ngbNavContent>
               <div>
                 <div class="card" style="float: left; margin-top: 3%; width: 50%; height: 40em; margin-bottom: 7%;">
@@ -83,7 +83,7 @@
                   </div>
                 </div>
                 
-                <div class="card" style="float: right; margin: 1%; margin-top: 3%; width: 40%;margin-bottom: 5%;">
+                <div class="card" style="float: right; width: 40%; margin-left: 3%;margin-right: 3%; margin-top: 1%; margin-bottom: 5%;">
                   <div>
                     <b style="font-size: 50px; float: left;">New Order</b>
                     <img style="float: right;" src="https://img.icons8.com/ultraviolet/100/000000/create-order--v1.png"/>
@@ -97,6 +97,7 @@
                   </div>
                    <div id=tableDiv>
                    <table class="table" style="width: 100%; overflow-y:scroll">
+                    <div style="height: 250px; overflow-x: hidden;">
                     <thead>
                         <tr>
                             <td>Name</td>
@@ -118,7 +119,8 @@
                       <td><button style="background-color: transparent; border: transparent; color: black; font-size: large;" (click)="decreseQuantity(el.Id)">-</button></td>
                       <td><button style="background-color: transparent; border: transparent; color: red; font-size: large;" (click)="removeItem(el.Id)">x</button></td>
                     </tr>
-                    </tbody>
+                  </tbody>
+                  </div>
                   </table>
                 </div>
                 <div class="card">
@@ -148,7 +150,7 @@
                     <button class="btn btn-primary" style="width: 20%; margin: 0.5%; float: right;" [disabled]="!(allItemsKeyWord.length >= 3)" (click)="allItemsSearch()">Search</button>
                   </div>
                   </div>
-              <div class="card-body" id="tableAllItems" style="overflow-y:scroll">
+              <div class="card-body" id="tableAllItems">
                 <table class="table" >
                  <thead>
                      <tr>
@@ -232,7 +234,7 @@
             </ng-template>
           </li>
           <li ngbNavItem="Load">
-            <a ngbNavLink>Load</a>
+            <a ngbNavLink (click)="getLoad()">Load</a>
             <ng-template ngbNavContent>
               <div class="card" style="margin: 1%; margin-bottom: 7%;">
                 <div class="card-body">
