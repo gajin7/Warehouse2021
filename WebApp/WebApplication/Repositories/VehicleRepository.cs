@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Ajax.Utilities;
 using WebApplication.Models;
 
 namespace WebApplication.Repositories
@@ -131,6 +132,14 @@ namespace WebApplication.Repositories
 
         public OperationResult AddVehicle(VehicleResult vehicle)
         {
+            if (vehicle.Registration.IsNullOrWhiteSpace())
+            {
+                return new OperationResult()
+                {
+                    Success = false,
+                    Message = "Please add vehicle registration"
+                };
+            }
             using (var accessDb = new AccessDb())
             {
                 try
@@ -199,7 +208,6 @@ namespace WebApplication.Repositories
                         };
                     }
 
-                    vehicleItem.Registration = vehicle.Registration;
                     vehicleItem.Brand = vehicle.Brand;
                     vehicleItem.LoadCapacity = vehicle.LoadCapacity;
                     vehicleItem.ProductionYear = vehicle.ProductionYear;

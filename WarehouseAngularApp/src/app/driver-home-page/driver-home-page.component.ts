@@ -143,7 +143,7 @@ export class DriverHomePageComponent implements OnInit {
   }
 
   GetReceiptPdf(receiptId : string | undefined): void {
-    this.receiptService.getReceiptFile('08b185c6-fb40-487f-b80a-f868fbdf5498')
+    this.receiptService.getReceiptFile(receiptId)
         .subscribe(x => {
             // It is necessary to create a new blob object with mime-type explicitly set
             // otherwise only Chrome works like it should

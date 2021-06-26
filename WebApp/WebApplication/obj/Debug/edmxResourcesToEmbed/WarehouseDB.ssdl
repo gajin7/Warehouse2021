@@ -328,6 +328,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Receipts_Loads">
+    <End Role="Company" Type="Self.Company" Multiplicity="0..1" />
+    <End Role="Receipts" Type="Self.Receipts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Company">
+        <PropertyRef Name="Name" />
+      </Principal>
+      <Dependent Role="Receipts">
+        <PropertyRef Name="Company" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Function Name="NumberOfOrdersAllTime" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
   <Function Name="NumberOfOrdersToday" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
   <EntityContainer Name="WarehouseDBModelStoreContainer">
@@ -409,6 +421,10 @@
     <AssociationSet Name="FK__Warehouse__Manag__68487DD7" Association="Self.FK__Warehouse__Manag__68487DD7">
       <End Role="Employees" EntitySet="Employees" />
       <End Role="Warehouses" EntitySet="Warehouses" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Receipts_Loads" Association="Self.FK_Receipts_Loads">
+      <End Role="Company" EntitySet="Company" />
+      <End Role="Receipts" EntitySet="Receipts" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

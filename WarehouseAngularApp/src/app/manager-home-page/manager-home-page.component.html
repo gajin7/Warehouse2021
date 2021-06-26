@@ -64,8 +64,10 @@
                   <select class="custom-select" formControlName="Type" required>
                     <option *ngFor="let obj of employeeTypes" [value]="obj">{{obj}}</option>
                   </select>
-                    <label for="lname">First time password:</label><br>
+                  <div id="EmployeePassword">
+                    <label  for="lname">First time password:</label><br>
                     <input type="password" class="form-control" formControlName="Password" required><br>
+                  </div>
                   <div style="margin-top: 2%;">
                     <input class="btn btn-outline-secondary" style="float: right; margin-bottom: 1%;" type="button" (click)='HideNewEmployee()' value="Close">
                     <input class="btn btn-outline-primary" style="float: right; margin-bottom: 1%;  margin-right: 2%;" type="submit" (click)="SubmitUser()" title="Save">
@@ -245,9 +247,9 @@
             <div id="newShelfForm">
               <form [formGroup]="NewShelf" (submit)="SaveNewShelf()" class="needs-validation" novalidate>
                 <label for="fname">Warehouse:</label><br>
-                <input class="form-control" id="warehouseId" type="text" class="newItemInput" formControlName="WarehouseId" readonly><br>
+                <input class="form-control" id="warehouseId" type="text"  formControlName="WarehouseId" readonly><br>
                 <label for="fname">Name(Id):</label><br>
-                <input class="form-control" id="shelfId" type="text" class="newItemInput" formControlName="Name" required><br>
+                <input class="form-control" id="shelfId" type="text"  formControlName="Name" required><br>
                 <div style="margin-top: 2%">
                   <input style="float: right; margin-left: 1%;" type="button" class="btn btn-secondary" (click)='HideNewShelfForm()' value="Close">
                   <input style="float: right;" type="submit" class="btn btn-primary" title="Save"> &nbsp;
@@ -433,7 +435,7 @@
                   <td>{{el.Free}}</td>
                   <td>{{el.DriverName}}</td>
                   <td><button style="width:100%; background-color: transparent; border: transparent; color: red; font-size: large;"  (click)="RemoveVehicle(el.Registration)">x</button></td>
-                  <td *ngIf="!el.Free"><button class="btn btn-outline-primary" style="width: 100%;">Free</button></td>
+                  <td *ngIf="!el.Free"><button class="btn btn-outline-primary" style="width: 100%;" (click)="freeVehicle(el.Registration)">Free</button></td>
                 </tr>
               </tbody>
             </table>

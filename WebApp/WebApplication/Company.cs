@@ -14,10 +14,19 @@ namespace WebApplication
     
     public partial class Company
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Company()
+        {
+            this.Receipts = new HashSet<Receipt>();
+        }
+    
         public string Name { get; set; }
         public string PIB { get; set; }
         public string Address { get; set; }
         public string AccountNo { get; set; }
         public Nullable<bool> Deposit { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Receipt> Receipts { get; set; }
     }
 }

@@ -135,7 +135,6 @@ export class ManagerHomePageComponent implements OnInit {
   {
     this.userService.getAllEmployees().subscribe((data)=> {
       this.employees = data;
-      console.log(this.active);
     });
   }
   ShowNewEmployee() {
@@ -217,8 +216,9 @@ export class ManagerHomePageComponent implements OnInit {
       this.userService.change(this.NewEmployee.value).subscribe((data) =>{
         var result = data as Result;
         window.alert(result.Message);
-        this.HideNewEmployee();
         this.GetEmployees();
+        this.HideNewEmployee();
+        
         
     });
     }
@@ -227,8 +227,9 @@ export class ManagerHomePageComponent implements OnInit {
       this.userService.register(this.NewEmployee.value).subscribe((data) =>{
         var result = data as Result;
         window.alert(result.Message);
-        this.HideNewEmployee();
         this.GetEmployees();
+        this.HideNewEmployee();
+        
     });
 
     
@@ -914,7 +915,7 @@ export class ManagerHomePageComponent implements OnInit {
 
   
   GetReceiptPdf(receiptId : string): void {
-    this.receiptService.getReceiptFile('08b185c6-fb40-487f-b80a-f868fbdf5498')
+    this.receiptService.getReceiptFile(receiptId)
         .subscribe(x => {
             // It is necessary to create a new blob object with mime-type explicitly set
             // otherwise only Chrome works like it should
@@ -1033,6 +1034,10 @@ HideNewVehicle() {
   var btn = document.getElementById('newVehicleBtn')!;
   btn.style.visibility = 'visible';
 
+  var email = document.getElementById("registration")!;
+  email.removeAttribute('readonly');
+
+
   const tableid = "tableAllVehicles";
   var table = document.getElementById(tableid)!;
   table.style.width = "100%";
@@ -1100,6 +1105,17 @@ ChangeVehicle(vehicle : Vehicle)
         this.getAllVehicles();
       });
     }
+  }
+
+  freeVehicle(registration: string | undefined)
+  {
+    if(window.confirm("Are you sure want to free " + registration + " vehicle?"))
+    {
+         this.vehicleService.freeVehicle(registration).subscribe((data) => {
+          window.alert(data.Message);
+          this.getAllVehicles();
+         });
+      }
   }
 
 }

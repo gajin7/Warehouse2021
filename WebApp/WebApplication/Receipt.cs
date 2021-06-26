@@ -30,5 +30,6 @@ namespace WebApplication
         public virtual ICollection<Load> Loads { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ReceiptItem> ReceiptItems { get; set; }
+        public virtual Company Company1 { get; set; }
     }
 }
