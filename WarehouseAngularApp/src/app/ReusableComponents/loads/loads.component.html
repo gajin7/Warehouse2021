@@ -1,0 +1,52 @@
+<div class="card" style="margin: 1%; margin-bottom: 7%;">
+    <div class="card-body">
+      <b style="font-size: 50px; float: left;">Loads</b>
+      <img style="float: right;"
+        src="https://img.icons8.com/cotton/100/000000/transport--delivery--logistics--cargo--parcel--box--service-28.png" />
+    </div>
+    <div class="card-body">
+      <p>Load type: </p>
+      <select class="custom-select" (change)="changeLoadType($event)" required>
+        <option *ngFor="let obj of loadTypes" [value]="obj" [selected]="obj === currentLoadType">{{obj}}</option>
+      </select>
+
+      <div style="margin-top: 1%;">
+        <p>Id: </p>
+        <input class="form-control" style="width: 100%;" id="search" [value]="loadKeyWord"
+          (keyup.clear)="clearLoadSearch()" (input)="updateLoadSearch($event)" mdbInput>
+        <button class="btn btn-secondary" style="width: 10%; margin: 0.5%; float: right;"
+          (click)="clearLoadSearch()">Clear</button>
+        <button class="btn btn-primary" style="width: 15%; margin: 0.5%; float: right;"
+          (click)="LoadSearch()">Search</button>
+      </div>
+    </div>
+    <div class="card-body">
+      <div style="overflow-y: auto;">
+        <table class="table" style="table-layout: fixed;
+  word-wrap: nowrap; overflow-y: auto">
+          <thead>
+            <tr>
+              <td><b>Id</b></td>
+              <td><b>Warehouse</b> </td>
+              <td><b>Ramp</b></td>
+              <td><b>Storekeeper</b></td>
+              <td><b>Vehicle</b></td>
+              <td><b>Driver</b></td>
+              <td><b>Receipt (PDF)</b></td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let el of loads">
+              <td>{{el.Id}}</td>
+              <td>{{el.Warehouse}}</td>
+              <td>{{el.Ramp}}</td>
+              <td>{{el.Storekeeper}}</td>
+              <td>{{el.Vehicle}}</td>
+              <td>{{el.Driver}}</td>
+              <td><button class="btn btn-link" (click)="GetReceiptPdf(el.ReceiptId)">Download</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>

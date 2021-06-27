@@ -1,0 +1,66 @@
+<div class="card">
+    <div class="card-body">
+      <b style="font-size: 50px; float: left;">Companies</b>
+      <img style="float: right;" src="https://img.icons8.com/officel/100/000000/new-company.png" />
+    </div>
+    <br>
+    <div>
+      <button class="btn btn-primary"  style="float: right; margin-right: 2%;" id="newCompanyBtn" (click)='ShowNewCompany()'>Add new company</button>
+    </div>
+    <div class="card-body">
+      <div style="float: left; width: 100%;" id="tableAllCompanies">
+        <br>
+        <div style="float: top;">
+          <input class="list-group-item" style="width: 100%;" id="searchCompany"
+            (keyup.enter)="AllCompaniesSearchEnter()" (keyup.clear)="clearAllCompaniesSearch()"
+            [value]="allCompaniesKeyWord" (input)="updateAllCompaniesSearch($event)" mdbInput>
+          <button class="btn btn-secondary" style="float: right;width: 10%; margin-left: 2%; margin-top: 1%; margin-bottom: 2%;"
+            (click)="clearAllCompaniesSearch()">Clear</button>
+          <button class="btn btn-primary" style="float: right;width: 15%; margin-top: 1%; margin-bottom: 2%;"
+            [disabled]="!(allCompaniesKeyWord.length >= 3)" (click)="allCompaniesSearch()">Search</button>
+          <br>
+        </div>
+        <table class="table">
+          <thead>
+            <tr>
+              <td>Name</td>
+              <td>PIB </td>
+              <td>Address</td>
+              <td>AccountNo</td>
+              <td>Deposit</td>
+              <td></td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let el of companies" (dblclick)="ChangeCompany(el)">
+              <td>{{el.Name}}</td>
+              <td>{{el.PIB}}</td>
+              <td>{{el.Address}}</td>
+              <td>{{el.AccountNo}}</td>
+              <td>{{el.Deposit}}</td>
+              <td><button
+                  style="background-color: transparent; border: transparent; color: red; font-size: large;"
+                  (click)="RemoveCompany(el.PIB,el.Name)">x</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div id="newCompanySectionHidden">
+        <h2>Company</h2>
+        <form [formGroup]="Company" (submit)="SaveCompany()" class="needs-validation" novalidate>
+          <label for="fname">PIB:</label><br>
+          <input class="list-group-item" type="text"  formControlName="PIB" required><br>
+          <label for="lname">Name:</label><br>
+          <input class="list-group-item" type="text"  formControlName="Name" required><br>
+          <label for="lname">Address:</label><br>
+          <input class="list-group-item" type="text"  formControlName="Address" required><br>
+          <label for="lname">AccountNo:</label><br>
+          <input class="list-group-item" type="number"  formControlName="AccountNo" required><br>
+          <label for="lname">Deposit:</label><br>
+          <input class="list-group-item" type="checkbox"  formControlName="Deposit" required><br>
+          <input style="margin-top: 2%; margin-right: 2%;" type="button" class="btn btn-secondary" (click)='HideNewCompany()' value="Close">
+          <input style="margin-top: 2%;" type="submit" class="btn btn-primary" title="Save"> &nbsp;
+        </form>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,72 @@
+<div class="card" style="flex-direction: column;">
+    <div class="card-body">
+      <img style="float: right;" src="https://img.icons8.com/officel/100/000000/person-male.png" />
+      <h1 style="float: left;" class="card-title">Employees</h1>
+    </div>
+
+    <div  style="flex-direction: row; overflow:hidden;">
+      <div class="card-body cardWrapper">
+        <div style="float: left;" id="tableAllEmployees">
+          <div>
+            <button style="margin-bottom: 2%; float: right;" class="btn btn-primary" id="newEmployeeBtn" (click)='ShowNewEmployee()'>Add new
+              empoyee</button>
+          </div>
+
+          <div style="float: top;">
+            <input class="form-control" id="search" (keyup.enter)="AllUsersSearchEnter()"
+              (keyup.clear)="clearAllUsersSearch()" [value]="allIUsersKeyWord"
+              (input)="updateAllUsersSearch($event)" mdbInput>
+            <button class="btn btn-secondary" style="width: 15%; margin-top: 0.8%; float: right;"
+              (click)="clearAllUsersSearch()">Clear</button>
+            <button class="btn btn-primary" style="width: 20%; margin: 0.8%; float: right;"
+              [disabled]="!(allIUsersKeyWord.length >= 3)" (click)="allUsersSearch()">Search</button>
+          </div>
+          <table class="table">
+            <thead>
+              <tr>
+                <td>FirstName</td>
+                <td>LastName </td>
+                <td>Type</td>
+                <td>Email</td>
+                <td></td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let el of employees" (dblclick)="ChangeUser(el)">
+                <td>{{el.FirstName}}</td>
+                <td>{{el.LastName}}</td>
+                <td>{{el.Type}}</td>
+                <td>{{el.Email}}</td>
+                <td><button
+                    style="background-color: transparent; border: transparent; color: red; font-size: large;"
+                    (click)="RemoveUser(el.Email)">x</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div id="newEmployeeSectionHidden">
+          <h2>Employee</h2>
+          <form [formGroup]="NewEmployee" class="needs-validation" novalidate>
+            <label for="fname">First Name:</label><br>
+            <input type="text" class="form-control"formControlName="FirstName" required><br>
+            <label for="lname">Last Name:</label><br>
+            <input type="text" class="form-control" formControlName="LastName" required><br>
+            <label for="lname">Email:</label><br>
+            <input id="email" type="text" class="form-control" formControlName="Email" required><br>
+            <label for="lname">Type:</label><br>
+            <select class="custom-select" formControlName="Type" required>
+              <option *ngFor="let obj of employeeTypes" [value]="obj">{{obj}}</option>
+            </select>
+            <div id="EmployeePassword">
+              <label  for="lname">First time password:</label><br>
+              <input type="password" class="form-control" formControlName="Password" required><br>
+            </div>
+            <div style="margin-top: 2%;">
+              <input class="btn btn-outline-secondary" style="float: right; margin-bottom: 1%;" type="button" (click)='HideNewEmployee()' value="Close">
+              <input class="btn btn-outline-primary" style="float: right; margin-bottom: 1%;  margin-right: 2%;" type="submit" (click)="SubmitUser()" title="Save">
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>

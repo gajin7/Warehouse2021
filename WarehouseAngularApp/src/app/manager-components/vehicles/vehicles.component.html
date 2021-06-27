@@ -1,0 +1,63 @@
+<div class="card">
+    <div class="card-body">
+      <b style="font-size: 50px; float: left;">Vehicles</b>
+      <img style="float: right;" src="https://img.icons8.com/fluent/100/000000/automotive.png" />
+    </div>
+    <div style="flex-direction: row;">
+    <div style="float: left;" class="card-body"  id="tableAllVehicles">
+      <button class="btn btn-primary" style="float: right; margin-right: 1%; margin-bottom: 1%;" id="newVehicleBtn" (click)='ShowNewVehicle()'>Add new vehicle</button>
+      <table class="table">
+        <thead>
+          <tr>
+            <td><b>Brand</b></td>
+            <td><b>Type</b> </td>
+            <td><b>Registration</b></td>
+            <td><b>Production Year</b></td>
+            <td><b>Mileage</b></td>
+            <td><b>Load Capacity</b></td>
+            <td><b>Free</b></td>
+            <td><b>Driver</b></td>
+            <td><b>Remove vehicle</b></td>
+            <td><b>Free Vehicle</b></td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let el of allVehicles" (dblclick)="ChangeVehicle(el)">
+            <td>{{el.Brand}}</td>
+            <td>{{el.Type}}</td>
+            <td>{{el.Registration}}</td>
+            <td>{{el.ProductionYear}}</td>
+            <td>{{el.Mileage}} km</td>
+            <td>{{el.LoadCapacity}}</td>
+            <td>{{el.Free}}</td>
+            <td>{{el.DriverName}}</td>
+            <td><button style="width:100%; background-color: transparent; border: transparent; color: red; font-size: large;"  (click)="RemoveVehicle(el.Registration)">x</button></td>
+            <td *ngIf="!el.Free"><button class="btn btn-outline-primary" style="width: 100%;" (click)="freeVehicle(el.Registration)">Free</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div  class="card-body" id="newVehicleSectionHidden">
+      <h2>Vehicle</h2>
+      <form [formGroup]="NewVehicle" (submit)="SaveVehicle()" class="needs-validation" novalidate>
+        <label for="fname">Registration:</label><br>
+        <input type="text" id="registration" class="form-control"formControlName="Registration" required><br>
+        <label for="lname">Brand:</label><br>
+        <input type="text" class="form-control" formControlName="Brand" required><br>
+        <label for="lname">Type:</label><br>
+        <input id="email" type="text" class="form-control" formControlName="Type" required><br>
+        <label for="lname">LoadCapacity:</label><br>
+        <input id="email" type="number" class="form-control" formControlName="LoadCapacity" required><br>
+        <label for="lname">Mileage:</label><br>
+        <input id="email" type="number" class="form-control" formControlName="Mileage" required><br>
+        <label for="lname">Production Year:</label><br>
+        <input id="email" type="number" class="form-control" formControlName="ProductionYear" required><br>
+        
+        <div style="margin-top: 2%;">
+          <input class="btn btn-outline-secondary" style="float: right; margin-bottom: 1%;" type="button" (click)='HideNewVehicle()' value="Close">
+          <input class="btn btn-outline-primary" style="float: right; margin-bottom: 1%;  margin-right: 2%;" type="submit" title="Save">
+        </div>
+      </form>
+    </div>
+  </div>
+  </div>
