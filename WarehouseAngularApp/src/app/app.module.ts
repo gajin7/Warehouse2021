@@ -15,6 +15,14 @@ import { StorekeeperHomePageComponent } from './storekeeper-home-page/storekeepe
 import { ManagerHomePageComponent } from './manager-home-page/manager-home-page.component';
 import { MyProfilePageComponent } from './my-profile-page/my-profile-page.component';
 import { QrCodeModule } from 'ng-qrcode';
+import { ReportsComponent } from './ReusableComponents/reports/reports.component';
+import { LoadsComponent } from './ReusableComponents/loads/loads.component';
+import { ItemsComponent } from './ReusableComponents/items/items.component';
+import { CompaniesComponent } from './manager-components/companies/companies.component';
+import { EmployeesComponent } from './manager-components/employees/employees.component';
+import { RampsComponent } from './manager-components/ramps/ramps.component';
+import { VehiclesComponent } from './manager-components/vehicles/vehicles.component';
+import { WarehouseAndShelvesComponent } from './manager-components/warehouse-and-shelves/warehouse-and-shelves.component';
  
 @NgModule({
   declarations: [
@@ -24,7 +32,15 @@ import { QrCodeModule } from 'ng-qrcode';
     DriverHomePageComponent,
     StorekeeperHomePageComponent,
     ManagerHomePageComponent,
-    MyProfilePageComponent
+    MyProfilePageComponent,
+    ReportsComponent,
+    LoadsComponent,
+    ItemsComponent,
+    CompaniesComponent,
+    EmployeesComponent,
+    RampsComponent,
+    VehiclesComponent,
+    WarehouseAndShelvesComponent
   ],
   imports: [
     BrowserModule,

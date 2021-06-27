@@ -1,0 +1,24 @@
+<div class="card" style="margin: 2%;">
+    <div class="card-body">
+      <b style="font-size: 50px; float: left;">Reports</b>
+      <img style="float: right;" src="https://img.icons8.com/cotton/100/000000/report-file--v2.png" />
+    </div>
+    <div class="card-body" id="tableAllItems">
+      <table class="table">
+        <thead>
+          <tr>
+            <td><b (click)="SortByDate()">Date</b></td>
+            <td><b (click)="SortByType()">Type</b> </td>
+            <td><b>File (PDF)</b></td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let el of reports">
+            <td>{{el.Date}}</td>
+            <td>{{el.Type}}</td>
+            <td><button class="btn btn-link" (click)="GetReportPdf(el.Id)"> Download</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>

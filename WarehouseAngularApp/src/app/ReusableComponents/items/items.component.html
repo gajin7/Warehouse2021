@@ -1,0 +1,72 @@
+<div class="card" style="width: 95%; height: 100%;  margin: 2%; float: left;" id="tableAllItems">
+    <div class="card-body">
+      <b style="font-size: 50px; float: left;">Items</b>
+      <img style="float: right;" src="https://img.icons8.com/ultraviolet/100/000000/ingredients.png" />
+    </div>
+    <div class="card-body" style="float: top;">
+      <div style="float: right; margin: 1%;">
+        <button class="btn btn-primary" id="newItemBtn" (click)='ShowNewItem()'>Add new item</button>
+      </div>
+      <div>
+        <input class="form-control" id="search"
+          (keyup.enter)="AllItemsSearchEnter()" (keyup.clear)="clearAllItemsSearch()" [value]="allItemsKeyWord"
+          (input)="updateAllItemsSearch($event)" mdbInput>
+      </div>
+      <div>
+        <button class="btn btn-secondary" style="width: 15%; margin-top: 0.5%; float: right;"
+          (click)="clearAllItemsSearch()">Clear</button>
+        <button class="btn btn-primary" style="width: 20%; margin: 0.5%; float: right;"
+          [disabled]="!(allItemsKeyWord.length >= 3)" (click)="allItemsSearch()">Search</button>
+      </div>
+    </div>
+    <div class="card-body">
+      <table class="table">
+        <thead>
+          <tr>
+            <td><b>Name</b></td>
+            <td><b>Quantity</b> </td>
+            <td><b>Type</b></td>
+            <td><b>Amount</b></td>
+            <td><b>Warehouse</b></td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let el of allItems" (dblclick)="ChangeItem(el)">
+            <td>{{el.Name}}</td>
+            <td>{{el.Quantity}}</td>
+            <td>{{el.Type}}</td>
+            <td>{{el.Amount}} $</td>
+            <td>{{el.Warehouse}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card-body" id="newItemSectionHidden" style="margin-top: 2%; margin-left: 7%;">
+    <h2>New item</h2>
+    <form [formGroup]="NewItem" (submit)="SaveItem()" class="needs-validation" novalidate>
+      <label for="fname">Name:</label><br>
+      <input  type="text" class="form-control" formControlName="Name" required><br>
+      <label for="lname">Quantity:</label><br>
+      <input  type="number" class="form-control" formControlName="Quantity" required><br>
+      <label for="lname">Amount:</label><br>
+      <input  type="number" class="form-control" formControlName="Amount" required><br>
+      <label for="lname">Type:</label><br>
+      <select class="custom-select" formControlName="Type" required>
+        <option *ngFor="let obj of itemTypes" [value]="obj">{{obj}}</option>
+      </select>
+      <label for="lname">Warehouse:</label><br>
+      <select class="custom-select" formControlName="Warehouse" (change)="getShelvesForNewItem()" required>
+        <option *ngFor="let obj of warehouseNames" [value]="obj">{{obj}}</option>
+      </select>
+      <label for="lname">Shelf:</label><br>
+      <select class="custom-select" formControlName="ShelfId" required>
+        <option *ngFor="let obj of shelves" [value]="obj">{{obj}}</option>
+      </select>
+      <input class="btn btn-secondary" style="float: right; margin-top: 7%;" type="button" (click)='HideNewItem()'
+        value="Close">
+      <input class="btn btn-primary" style="float: right; margin-top: 7%; margin-right: 2%;" type="submit"
+        title="Save"> &nbsp;
+    </form>
+  </div>

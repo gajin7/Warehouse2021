@@ -1,0 +1,96 @@
+<div class="card">
+    <div class="card-body">
+      <img style="float: right;" src="https://img.icons8.com/ultraviolet/100/000000/garage-closed.png"
+        alt="Card image cap">
+      <h1>Warehouses</h1>
+      <h5>Chose warehouse by clicking on it to continue</h5>
+    </div>
+  </div>
+  <div style="overflow-x: auto" class="card">
+    <table style="width: 60%;border-collapse:separate; table-layout: fixed;
+    word-wrap: nowrap; overflow-x: auto;
+    border-spacing:2.5em;">
+      <thead>
+        <tr>
+          <td style="width: 30em;" id="th" scope="col" *ngFor="let col of warehouses; index as i"
+            (dblclick)="ChangeWarehouse(warehouses[i])">
+            <div class="card">
+              <div class="card-body">
+                <img style="float: right;" src="https://img.icons8.com/ultraviolet/100/000000/garage-closed.png"
+                  alt="Card image cap">
+                <h5 style="float: left;" class="card-title">Warehouse</h5>
+              </div>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item">Name: <b style="float: right;">{{warehouses[i].WarehouseId}}</b></li>
+                <li class="list-group-item">Manager <b style="float: right;">{{warehouses[i].StorekeeperName}}</b>
+                </li>
+                <li class="list-group-item">Address: <b style="float: right;">{{warehouses[i].Address}}</b></li>
+              </ul>
+            </div>
+          </td>
+          <td class="card" style="width: 15em;" id=thNewWarehouse (click)="ShowNewWarehouseDrawer()">
+            <div>
+              <p>Add new warehouse</p>
+              <p>+</p>
+            </div>
+          </td>
+        </tr>
+      </thead>
+    </table>
+  </div>
+
+  <div class="card-body" id="newWarehouseSectionHidden">
+    <h2>Warehouse</h2>
+    <form [formGroup]="NewWarehouse" (submit)="SaveWarehouse()" class="needs-validation" novalidate>
+      <label for="fname">Name(Id):</label><br>
+      <input id="warehouseName" type="text" class="form-control" formControlName="WarehouseId" required><br>
+      <label for="fname">Address:</label><br>
+      <input type="text" class="form-control" formControlName="Address" required><br>
+      <label for="lname">Mannager:</label><br>
+      <select id="warehouseField" class="custom-select" formControlName="StorekeeperEmail"required>
+        <option *ngFor="let obj of employees" [value]="obj.Email">{{obj.Email}}</option>
+      </select>
+      <div style="margin-top: 2%;">
+        <input style="float: right; margin-left: 1%;" class="btn btn-secondary" type="button" (click)='HideNewWarehouseDrawer()' value="Close">
+        <input style="float: right;" class="btn btn-primary" type="submit" title="Save"> &nbsp;
+      </div>
+    </form>
+
+    <div class="card-body" id="tableAllItemsShelfs">
+      <table class="table">
+        <thead>
+          <tr>
+            <td>Name</td>
+            <td>Quantity </td>
+            <td>Type</td>
+            <td>Amount</td>
+          </tr>
+        </thead>
+        <tbody *ngFor="let col of dataSource; index as i" id={{dataSource[i].Name}} title={{dataSource[i].Name}}>
+          Shelf: {{dataSource[i].Name}} <button
+            style="background-color: transparent; border: transparent; color: red; font-size: large;"
+            (click)="RemoveShelf(dataSource[i].Name)">x</button>
+          <tr scope="col" *ngFor="let col of dataSource[i].Items; index as j">
+
+            <td>{{dataSource[i].Items[j].Name}}</td>
+            <td> {{dataSource[i].Items[j].Quantity}}</td>
+            <td>{{dataSource[i].Items[j].Type}}</td>
+            <td>{{dataSource[i].Items[j].Amount}} $</td>
+          </tr>
+        </tbody>
+      </table>
+      <button class="btn btn-outline-primary" (click)="ShowNewShelfForm()">Add shelf</button>
+      <div id="newShelfForm">
+        <form [formGroup]="NewShelf" (submit)="SaveNewShelf()" class="needs-validation" novalidate>
+          <label for="fname">Warehouse:</label><br>
+          <input class="form-control" id="warehouseId" type="text"  formControlName="WarehouseId" readonly><br>
+          <label for="fname">Name(Id):</label><br>
+          <input class="form-control" id="shelfId" type="text"  formControlName="Name" required><br>
+          <div style="margin-top: 2%">
+            <input style="float: right; margin-left: 1%;" type="button" class="btn btn-secondary" (click)='HideNewShelfForm()' value="Close">
+            <input style="float: right;" type="submit" class="btn btn-primary" title="Save"> &nbsp;
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>

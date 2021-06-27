@@ -1,0 +1,27 @@
+#newItemSectionHidden
+  {
+    min-height: 40%; 
+    max-height: 40%; 
+    height: 40%;
+    width: 20%;
+    max-width: 20%;
+    min-width: 20%;
+    float:left;
+    visibility: hidden;
+  }
+
+  
+  #allItemsTable
+  {
+    min-height: 100%; 
+    max-height: 100%; 
+    height: 100%;
+    width: 90%;
+    max-width: 90%;
+    min-width: 90%;
+  }
+
+  .newItemInput
+  {
+    width: 100%;
+  }

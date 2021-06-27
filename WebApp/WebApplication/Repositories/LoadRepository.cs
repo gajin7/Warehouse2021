@@ -133,8 +133,8 @@ namespace WebApplication.Repositories
                     {
                         Id = load.Id, Ramp = load.RampId, Warehouse = load.Ramp.WarehouseId, RampFree = load.Ramp.Free,
                         Storekeeper = load.Employee.FirstName + " " + load.Employee.LastName,
-                        Driver = load.Vehicle.Employee.FirstName + " " + load.Vehicle.Employee.LastName,
-                        Vehicle = load.Vehicle.Registration,
+                        Driver = load.Vehicle?.Employee?.FirstName + " " + load.Vehicle?.Employee?.LastName,
+                        Vehicle = load.Vehicle?.Registration,
                         ReportId = load.ReportId,
                         ReceiptId = load.RecepitId
                     }).ToList();
