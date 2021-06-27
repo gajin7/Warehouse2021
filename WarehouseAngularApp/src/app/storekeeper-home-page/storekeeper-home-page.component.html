@@ -132,158 +132,22 @@
              
             </ng-template>
           </li>
-          <li ngbNavItem="Items" (click)="getAllItems()">
+          <li ngbNavItem="Items">
             <a ngbNavLink>Items</a>
-            <!--Items-->
             <ng-template ngbNavContent>
-              <div class="card" style="width: 60%;  margin: 2%; float: left; margin-bottom: 7%;">
-                <div class="card-body">
-                  <b style="font-size: 50px; float: left;">Items</b>
-                  <img style="float: right;"  src="https://img.icons8.com/ultraviolet/100/000000/ingredients.png"/>
-                </div>
-                <div class="card-body" style="float: top;">
-                  <div>
-                    <input class="form-control" style="width: 95%; margin: 2%;" id="search" (keyup.enter)="AllItemsSearchEnter()" (keyup.clear)="clearAllItemsSearch()"  [value]="allItemsKeyWord" (input)="updateAllItemsSearch($event)" mdbInput>
-                  </div>
-                  <div>
-                    <button class="btn btn-secondary" style="width: 15%; margin: 0.5%; float: right;" (click)="clearAllItemsSearch()">Clear</button>
-                    <button class="btn btn-primary" style="width: 20%; margin: 0.5%; float: right;" [disabled]="!(allItemsKeyWord.length >= 3)" (click)="allItemsSearch()">Search</button>
-                  </div>
-                  </div>
-              <div class="card-body" id="tableAllItems">
-                <table class="table" >
-                 <thead>
-                     <tr>
-                         <td><b>Name</b></td>
-                         <td><b>Quantity</b> </td>
-                         <td><b>Type</b></td>
-                         <td><b>Amount</b></td>
-                         <td><b>Warehouse</b></td>
-                     </tr>
-                 </thead>
-                 <tbody>
-                 <tr *ngFor="let el of allItems" >
-                   <td>{{el.Name}}</td>
-                   <td>{{el.Quantity}}</td>
-                   <td>{{el.Type}}</td>
-                   <td>{{el.Amount}} $</td>
-                   <td>{{el.Warehouse}}</td>
-                 </tr>
-                 </tbody>
-               </table>
-              </div>
-            </div>
-            <div style="float: right; margin: 1%;">
-              <button class="btn btn-primary" id="newItemBtn"  (click)='ShowNewItem()'>Add new item</button>
-            </div>
-            
-            <div class="card" id="newItemSectionHidden" style="margin-bottom: 7%;">
-              <b style="font-size: large;">New item</b>
-              <form [formGroup]="NewItem" (submit)="SaveItem()" class="needs-validation" novalidate>
-                <label  for="fname">Name:</label><br>
-                <input class="list-group-item"  type="text" class="newItemInput" formControlName="Name" required><br>
-                <label  for="lname">Quantity:</label><br>
-                <input class="list-group-item" type="number" class="newItemInput" formControlName="Quantity" required><br>
-                <label  for="lname">Amount:</label><br>
-                <input class="list-group-item" type="number" class="newItemInput" formControlName="Amount" required><br>
-                <label  for="lname">Type:</label><br>
-                <select class="custom-select" formControlName="Type"  required>
-                  <option *ngFor="let obj of itemTypes" [value]="obj">{{obj}}</option>
-              </select>
-                <label  for="lname">Warehouse:</label><br>
-                <select class="custom-select" formControlName="Warehouse"  (change)="getShelvesForNewItem()" required>
-                  <option *ngFor="let obj of warehouseNames" [value]="obj"  >{{obj}}</option>
-                </select>
-                <label for="lname">Shelf:</label><br>
-                <select class="custom-select" formControlName="ShelfId"  required>
-                  <option *ngFor="let obj of shelves" [value]="obj">{{obj}}</option>
-                </select>
-                  <input class="btn btn-secondary" style="float: right; margin-top: 2%;" type="button" (click)='HideNewItem()'  value="Close">
-                  <input class="btn btn-primary" style="float: right; margin-top: 2%; margin-right: 2%;"  type="submit" title="Save"> &nbsp;
-              </form>
-            </div>
+              <app-items></app-items>
             </ng-template>
           </li>
-          <li ngbNavItem="Reports" (click)="getReports()">
+          <li ngbNavItem="Reports">
             <a ngbNavLink>Reports</a>
             <ng-template ngbNavContent>
-              <div class="card" style="margin: 2%; margin-bottom: 7%;">
-                <div class="card-body">
-                  <b style="font-size: 50px; float: left;">Reports</b>
-                  <img style="float: right;" src="https://img.icons8.com/cotton/100/000000/report-file--v2.png"/>
-                </div>
-              <div class="card-body" id="tableAllItems">
-                <table class="table">
-                 <thead>
-                     <tr>
-                         <td><b (click)="SortByDate()">Date</b></td>
-                         <td><b (click)="SortByType()">Type</b> </td>
-                         <td><b>File (PDF)</b></td>
-                     </tr>
-                 </thead>
-                 <tbody>
-                 <tr *ngFor="let el of reports">
-                   <td>{{el.Date}}</td>
-                   <td>{{el.Type}}</td>
-                   <td><button class="btn btn-link" (click)="GetReportPdf(el.Id)"> Download</button></td>
-                 </tr>
-                 </tbody>
-               </table>
-              </div>
-              </div>
+              <app-reports></app-reports>
             </ng-template>
           </li>
           <li ngbNavItem="Load">
-            <a ngbNavLink (click)="getLoad()">Load</a>
+            <a ngbNavLink>Load</a>
             <ng-template ngbNavContent>
-              <div class="card" style="margin: 1%; margin-bottom: 7%;">
-                <div class="card-body">
-                  <b style="font-size: 50px; float: left;">Loads</b>
-                  <img style="float: right;" src="https://img.icons8.com/cotton/100/000000/transport--delivery--logistics--cargo--parcel--box--service-28.png"/>
-                </div>
-              <div class="card-body">
-                <p>Load type: </p>
-                <select class="custom-select" (change)="changeLoadType($event)"  required>
-                    <option *ngFor="let obj of loadTypes" [value]="obj"  [selected]="obj === currentLoadType">{{obj}}</option>
-                </select>
-                
-                <div style="margin-top: 1%;">
-                  <p>Id: </p>
-                    <input class="form-control" style="width: 100%;" id="search"  [value]="allItemsKeyWord" (keyup.clear)="clearLoadSearch()" (input)="updateLoadSearch($event)" mdbInput>
-                    <button class="btn btn-secondary" style="width: 10%; margin: 0.5%; float: right;" (click)="clearLoadSearch()">Clear</button>
-                    <button class="btn btn-primary" style="width: 15%; margin: 0.5%; float: right;" (click)="LoadSearch()">Search</button>
-                  </div>
-              </div>
-              <div class="card-body" >
-                <div style="overflow-y: auto;">
-                <table class="table" style="table-layout: fixed;
-                word-wrap: nowrap; overflow-y: auto" >
-                 <thead>
-                     <tr>
-                         <td><b>Id</b></td>
-                         <td><b>Warehouse</b> </td>
-                         <td><b>Ramp</b></td>
-                         <td><b>Storekeeper</b></td>
-                         <td><b>Vehicle</b></td>
-                         <td><b>Driver</b></td>
-                         <td><b>Receipt (PDF)</b></td>
-                     </tr>
-                 </thead>
-                 <tbody>
-                 <tr *ngFor="let el of loads" >
-                   <td>{{el.Id}}</td>
-                   <td>{{el.Warehouse}}</td>
-                   <td>{{el.Ramp}}</td>
-                   <td>{{el.Storekeeper}}</td>
-                   <td>{{el.Vehicle}}</td>
-                   <td>{{el.Driver}}</td>
-                   <td><button class="btn btn-link" (click)="GetReceiptPdf(el.ReceiptId)">Download</button></td>
-                 </tr>
-                 </tbody>
-               </table>
-                </div>
-              </div>
-            </div>
+              <app-loads></app-loads>
             </ng-template>
           </li>
         </ul>

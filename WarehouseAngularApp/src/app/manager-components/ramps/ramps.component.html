@@ -1,0 +1,61 @@
+<div class="card">
+    <div class="card-body">
+      <b style="font-size: 50px; float: left;">Ramps</b>
+      <img style="float: right;" src="https://img.icons8.com/ultraviolet/100/000000/scan-stock.png" />
+    </div>
+    <div style="flex-direction: row;">
+    <div class="card-body" id="tableAllRamps">
+    <div>
+      <button class="btn btn-primary" style="float: right; margin-right: 1%;" id="newRampBtn" (click)='ShowNewRamp()'>Add new ramp</button>
+    </div>
+    <div style="margin: 1%;">
+      <p>Warehouse:</p>
+      <select class="custom-select" (change)="changeRampWarehouse($event)" required>
+        <option *ngFor="let obj of warehouseNames" [value]="obj" [selected]="obj === rampWarehouse">{{obj}}
+        </option>
+      </select>
+    </div>
+    <div style="float: left; width: 100%;" >
+    <table style="margin-left: 1%; margin-right: 15%;" class="table">
+      <thead>
+        <tr>
+          <td>Id</td>
+          <td>Free </td>
+          <td>Load</td>
+          <td>Warehouse</td>
+          <td></td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let el of ramps" (dblclick)="ChangeRamp(el)">
+          <td>{{el.Id}}</td>
+          <td>{{el.Free}}</td>
+          <td>{{el.Load}}</td>
+          <td>{{el.WarehouseId}}</td>
+          <td><button style="background-color: transparent; border: transparent; color: red; font-size: large;"
+              (click)="RemoveRamp(el.Id)">x</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+    <div style="margin-right: 10%; margin-bottom: 5%;" id="newRampSectionHidden">
+      <b style="font-size: large;">Ramp</b>
+      <form [formGroup]="Ramp" (submit)="SaveRamp()" class="needs-validation" novalidate>
+        <label for="fname">Warehouse:</label><br>
+        <input class="form-control" type="text" formControlName="WarehouseId" required readonly><br>
+        <label for="fname">Id:</label><br>
+        <input class="form-control" id="rampId" type="text"  formControlName="Id" required><br>
+        <div style="flex-direction: row;">
+          <label style="float: left" for="lname">Free:</label>
+          <input style="float: right" class="form-control" type="checkbox" class="newItemInput" formControlName="Free" required>
+        </div>
+        <br>
+        <div style="margin-top: 15%;">
+          <input class="btn btn-secondary" style="float: right; margin-left: 1%;" type="button" (click)='HideNewRamp()' value="Close">
+          <input class="btn btn-primary" style="float: right;" type="submit" title="Save"> &nbsp;
+        </div>
+      </form>
+    </div>
+    </div>
+</div>
