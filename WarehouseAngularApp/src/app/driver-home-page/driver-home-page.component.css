@@ -3,3 +3,8 @@ body
   padding-top: 5%;
   padding-bottom: 5%;
 }
+
+tr:hover
+{
+  background-color:rgba(1, 100, 248, 0.562);
+}
