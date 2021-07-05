@@ -1,0 +1,6 @@
+C:\Users\JGajin\Documents\GitHub\Warehouse2021\WebApp\Warehouse.Web.Model\bin\Debug\Warehouse.Web.Model.dll
+C:\Users\JGajin\Documents\GitHub\Warehouse2021\WebApp\Warehouse.Web.Model\bin\Debug\Warehouse.Web.Model.pdb
+C:\Users\JGajin\Documents\GitHub\Warehouse2021\WebApp\Warehouse.Web.Model\obj\Debug\Warehouse.Web.Model.csprojAssemblyReference.cache
+C:\Users\JGajin\Documents\GitHub\Warehouse2021\WebApp\Warehouse.Web.Model\obj\Debug\Warehouse.Web.Model.csproj.CoreCompileInputs.cache
+C:\Users\JGajin\Documents\GitHub\Warehouse2021\WebApp\Warehouse.Web.Model\obj\Debug\Warehouse.Web.Model.dll
+C:\Users\JGajin\Documents\GitHub\Warehouse2021\WebApp\Warehouse.Web.Model\obj\Debug\Warehouse.Web.Model.pdb

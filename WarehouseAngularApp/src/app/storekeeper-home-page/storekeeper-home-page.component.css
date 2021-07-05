@@ -26,8 +26,14 @@ body
     width: 100%;
   }
 
+  th:hover
+  {
+    background-color:red;
+  }
+
   tr:hover
   {
     background-color:rgba(1, 100, 248, 0.562);
   }
+
 

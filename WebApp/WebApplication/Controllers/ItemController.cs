@@ -2,9 +2,11 @@
 using System.Linq;
 using System.Web.Http;
 using Microsoft.Ajax.Utilities;
-using WebApplication.Models;
-using WebApplication.Repositories;
-using WebApplication.Services;
+using Warehouse.Model;
+using Warehouse.Repository.Abstractions;
+using Warehouse.Service.Abstractions;
+using Warehouse.Web.Model.Response;
+
 
 namespace WebApplication.Controllers
 {
@@ -13,17 +15,14 @@ namespace WebApplication.Controllers
     {
         private readonly IItemRepository _itemRepository;
         private readonly IItemTypesRepository _itemTypesRepository;
-        private readonly ICompaniesRepository _companiesRepository;
         private readonly ISearchService _searchService;
         private readonly IReportRepository _reportRepository;
         public ItemController(IItemRepository itemRepository, ISearchService searchService,
-            IItemTypesRepository itemTypesRepository, ICompaniesRepository companiesRepository,
-            IReportRepository reportRepository)
+            IItemTypesRepository itemTypesRepository, IReportRepository reportRepository)
         {
             _itemRepository = itemRepository;
             _searchService = searchService;
             _itemTypesRepository = itemTypesRepository;
-            _companiesRepository = companiesRepository;
             _reportRepository = reportRepository;
         }
 

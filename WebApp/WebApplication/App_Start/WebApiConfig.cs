@@ -1,8 +1,4 @@
 ﻿using System.Web.Http;
-using Unity;
-using Unity.WebApi;
-using Unity.Lifetime;
-using WebApplication.Repositories;
 
 namespace WebApplication
 {

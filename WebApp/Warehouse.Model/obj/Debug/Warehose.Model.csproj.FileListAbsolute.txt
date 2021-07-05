@@ -1,0 +1,12 @@
+C:\Users\JGajin\Documents\GitHub\Warehouse2021\WebApp\Warehose.Model\bin\Debug\Warehose.Model.dll.config
+C:\Users\JGajin\Documents\GitHub\Warehouse2021\WebApp\Warehose.Model\bin\Debug\Warehose.Model.dll
+C:\Users\JGajin\Documents\GitHub\Warehouse2021\WebApp\Warehose.Model\bin\Debug\Warehose.Model.pdb
+C:\Users\JGajin\Documents\GitHub\Warehouse2021\WebApp\Warehose.Model\bin\Debug\EntityFramework.dll
+C:\Users\JGajin\Documents\GitHub\Warehouse2021\WebApp\Warehose.Model\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\JGajin\Documents\GitHub\Warehouse2021\WebApp\Warehose.Model\bin\Debug\EntityFramework.xml
+C:\Users\JGajin\Documents\GitHub\Warehouse2021\WebApp\Warehose.Model\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\JGajin\Documents\GitHub\Warehouse2021\WebApp\Warehose.Model\obj\Debug\Warehose.Model.csprojAssemblyReference.cache
+C:\Users\JGajin\Documents\GitHub\Warehouse2021\WebApp\Warehose.Model\obj\Debug\Warehose.Model.csproj.CoreCompileInputs.cache
+C:\Users\JGajin\Documents\GitHub\Warehouse2021\WebApp\Warehose.Model\obj\Debug\Warehose.Model.csproj.CopyComplete
+C:\Users\JGajin\Documents\GitHub\Warehouse2021\WebApp\Warehose.Model\obj\Debug\Warehose.Model.dll
+C:\Users\JGajin\Documents\GitHub\Warehouse2021\WebApp\Warehose.Model\obj\Debug\Warehose.Model.pdb

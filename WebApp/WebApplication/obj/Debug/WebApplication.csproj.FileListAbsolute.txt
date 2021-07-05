@@ -124,3 +124,14 @@ C:\Users\JGajin\Documents\GitHub\Warehouse2021\WebApp\WebApplication\bin\Syncfus
 C:\Users\JGajin\Documents\GitHub\Warehouse2021\WebApp\WebApplication\bin\Syncfusion.Pdf.Base.dll
 C:\Users\JGajin\Documents\GitHub\Warehouse2021\WebApp\WebApplication\bin\Syncfusion.Compression.Base.xml
 C:\Users\JGajin\Documents\GitHub\Warehouse2021\WebApp\WebApplication\bin\Syncfusion.Pdf.Base.xml
+C:\Users\JGajin\Documents\GitHub\Warehouse2021\WebApp\WebApplication\bin\Warehouse.Model.dll
+C:\Users\JGajin\Documents\GitHub\Warehouse2021\WebApp\WebApplication\bin\Warehouse.Repository.dll
+C:\Users\JGajin\Documents\GitHub\Warehouse2021\WebApp\WebApplication\bin\Warehouse.Service.dll
+C:\Users\JGajin\Documents\GitHub\Warehouse2021\WebApp\WebApplication\bin\Warehouse.Web.Model.dll
+C:\Users\JGajin\Documents\GitHub\Warehouse2021\WebApp\WebApplication\bin\Warehouse.Model.pdb
+C:\Users\JGajin\Documents\GitHub\Warehouse2021\WebApp\WebApplication\bin\Warehouse.Model.dll.config
+C:\Users\JGajin\Documents\GitHub\Warehouse2021\WebApp\WebApplication\bin\Warehouse.Repository.pdb
+C:\Users\JGajin\Documents\GitHub\Warehouse2021\WebApp\WebApplication\bin\Warehouse.Repository.dll.config
+C:\Users\JGajin\Documents\GitHub\Warehouse2021\WebApp\WebApplication\bin\Warehouse.Service.pdb
+C:\Users\JGajin\Documents\GitHub\Warehouse2021\WebApp\WebApplication\bin\Warehouse.Service.dll.config
+C:\Users\JGajin\Documents\GitHub\Warehouse2021\WebApp\WebApplication\bin\Warehouse.Web.Model.pdb

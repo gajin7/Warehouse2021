@@ -2,9 +2,11 @@ using System.Web.Http;
 using Unity;
 using Unity.Lifetime;
 using Unity.WebApi;
-using WebApplication.Providers;
-using WebApplication.Repositories;
-using WebApplication.Services;
+using Warehouse.Repository;
+using Warehouse.Repository.Abstractions;
+using Warehouse.Service;
+using Warehouse.Service.Abstractions;
+
 
 namespace WebApplication
 {

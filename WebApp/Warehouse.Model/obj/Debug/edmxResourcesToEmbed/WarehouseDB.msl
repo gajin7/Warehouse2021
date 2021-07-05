@@ -1,0 +1,152 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="WarehouseDBModelStoreContainer" CdmEntityContainer="WarehouseDBEntities">
+    <EntitySetMapping Name="Companies">
+      <EntityTypeMapping TypeName="WarehouseDBModel.Company">
+        <MappingFragment StoreEntitySet="Company">
+          <ScalarProperty Name="Deposit" ColumnName="Deposit" />
+          <ScalarProperty Name="AccountNo" ColumnName="AccountNo" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="PIB" ColumnName="PIB" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Employees">
+      <EntityTypeMapping TypeName="WarehouseDBModel.Employee">
+        <MappingFragment StoreEntitySet="Employees">
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="EmployeeTypes">
+      <EntityTypeMapping TypeName="WarehouseDBModel.EmployeeType">
+        <MappingFragment StoreEntitySet="EmployeeTypes">
+          <ScalarProperty Name="name" ColumnName="name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ItemTypes">
+      <EntityTypeMapping TypeName="WarehouseDBModel.ItemType">
+        <MappingFragment StoreEntitySet="ItemTypes">
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Loads">
+      <EntityTypeMapping TypeName="WarehouseDBModel.Load">
+        <MappingFragment StoreEntitySet="Load">
+          <ScalarProperty Name="ReportId" ColumnName="ReportId" />
+          <ScalarProperty Name="Loaded" ColumnName="Loaded" />
+          <ScalarProperty Name="StorekeeperId" ColumnName="StorekeeperId" />
+          <ScalarProperty Name="VehicleId" ColumnName="VehicleId" />
+          <ScalarProperty Name="RampId" ColumnName="RampId" />
+          <ScalarProperty Name="RecepitId" ColumnName="RecepitId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Ramps">
+      <EntityTypeMapping TypeName="WarehouseDBModel.Ramp">
+        <MappingFragment StoreEntitySet="Ramps">
+          <ScalarProperty Name="WarehouseId" ColumnName="WarehouseId" />
+          <ScalarProperty Name="Free" ColumnName="Free" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Shelfs">
+      <EntityTypeMapping TypeName="WarehouseDBModel.Shelf">
+        <MappingFragment StoreEntitySet="Shelfs">
+          <ScalarProperty Name="WarehouseId" ColumnName="WarehouseId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Vehicles">
+      <EntityTypeMapping TypeName="WarehouseDBModel.Vehicle">
+        <MappingFragment StoreEntitySet="Vehicles">
+          <ScalarProperty Name="DriverId" ColumnName="DriverId" />
+          <ScalarProperty Name="Brand" ColumnName="Brand" />
+          <ScalarProperty Name="ProductionYear" ColumnName="ProductionYear" />
+          <ScalarProperty Name="Mileage" ColumnName="Mileage" />
+          <ScalarProperty Name="LoadCapacity" ColumnName="LoadCapacity" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="Registration" ColumnName="Registration" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Warehouses">
+      <EntityTypeMapping TypeName="WarehouseDBModel.Warehouse">
+        <MappingFragment StoreEntitySet="Warehouses">
+          <ScalarProperty Name="ManagerId" ColumnName="ManagerId" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Items">
+      <EntityTypeMapping TypeName="WarehouseDBModel.Item">
+        <MappingFragment StoreEntitySet="Items">
+          <ScalarProperty Name="Amount" ColumnName="Amount" />
+          <ScalarProperty Name="ShelfId" ColumnName="ShelfId" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Receipts">
+      <EntityTypeMapping TypeName="WarehouseDBModel.Receipt">
+        <MappingFragment StoreEntitySet="Receipts">
+          <ScalarProperty Name="Company" ColumnName="Company" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="Amount" ColumnName="Amount" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ReceiptItems">
+      <EntityTypeMapping TypeName="WarehouseDBModel.ReceiptItem">
+        <MappingFragment StoreEntitySet="ReceiptItems">
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="ReceiptId" ColumnName="ReceiptId" />
+          <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Reports">
+      <EntityTypeMapping TypeName="WarehouseDBModel.Report">
+        <MappingFragment StoreEntitySet="Reports">
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="Reviewed" ColumnName="Reviewed" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="Note" ColumnName="Note" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ReportTypes">
+      <EntityTypeMapping TypeName="WarehouseDBModel.ReportType">
+        <MappingFragment StoreEntitySet="ReportTypes">
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ItemReports">
+      <EntityTypeMapping TypeName="WarehouseDBModel.ItemReport">
+        <MappingFragment StoreEntitySet="ItemReports">
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="ReportId" ColumnName="ReportId" />
+          <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

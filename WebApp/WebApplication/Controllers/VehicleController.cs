@@ -2,8 +2,8 @@
 using System.Linq;
 using System.Web.Http;
 using Microsoft.Ajax.Utilities;
-using WebApplication.Models;
-using WebApplication.Repositories;
+using Warehouse.Repository.Abstractions;
+using Warehouse.Web.Model.Response;
 
 namespace WebApplication.Controllers
 {

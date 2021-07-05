@@ -2,7 +2,8 @@
 using System.Threading.Tasks;
 using System.Web.Http;
 using Microsoft.Owin.Security.OAuth;
-using WebApplication.Repositories;
+using Warehouse.Repository;
+using Warehouse.Repository.Abstractions;
 
 namespace WebApplication.Providers
 {

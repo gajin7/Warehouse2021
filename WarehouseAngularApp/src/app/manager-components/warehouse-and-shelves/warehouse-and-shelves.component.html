@@ -70,7 +70,7 @@
           Shelf: {{dataSource[i].Name}} <button
             style="background-color: transparent; border: transparent; color: red; font-size: large;"
             (click)="RemoveShelf(dataSource[i].Name)">x</button>
-          <tr scope="col" *ngFor="let col of dataSource[i].Items; index as j">
+          <tr id="whouseTr" scope="col" *ngFor="let col of dataSource[i].Items; index as j">
 
             <td>{{dataSource[i].Items[j].Name}}</td>
             <td> {{dataSource[i].Items[j].Quantity}}</td>

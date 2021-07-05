@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Web.Http;
 using Microsoft.Ajax.Utilities;
-using WebApplication.Controllers.Parameters;
-using WebApplication.Models;
-using WebApplication.Repositories;
-using WebApplication.Services;
+using Warehouse.Model;
+using Warehouse.Repository.Abstractions;
+using Warehouse.Service.Abstractions;
+using Warehouse.Web.Model.Request;
+using Warehouse.Web.Model.Response;
+
 
 namespace WebApplication.Controllers
 {

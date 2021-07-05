@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Web.Http;
-using WebApplication.Models;
-using WebApplication.Repositories;
+using Warehouse.Repository.Abstractions;
+using Warehouse.Web.Model.Response;
 
 namespace WebApplication.Controllers
 {

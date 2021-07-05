@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
-using WebApplication.Controllers.Parameters;
-using WebApplication.Models;
-using WebApplication.Repositories;
+using Warehouse.Repository.Abstractions;
+using Warehouse.Web.Model.Request;
+using Warehouse.Web.Model.Response;
+
 
 namespace WebApplication.Controllers
 {

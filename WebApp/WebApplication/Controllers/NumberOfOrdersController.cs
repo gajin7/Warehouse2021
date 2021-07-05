@@ -1,5 +1,5 @@
 ﻿using System.Web.Http;
-using WebApplication.Repositories;
+using Warehouse.Repository.Abstractions;
 
 namespace WebApplication.Controllers
 {

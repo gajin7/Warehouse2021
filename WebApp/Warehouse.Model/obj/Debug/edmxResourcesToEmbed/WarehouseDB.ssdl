@@ -1,0 +1,430 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="WarehouseDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Company">
+    <Key>
+      <PropertyRef Name="Name" />
+    </Key>
+    <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="PIB" Type="varchar" MaxLength="50" />
+    <Property Name="Address" Type="varchar" MaxLength="50" />
+    <Property Name="AccountNo" Type="varchar" MaxLength="50" />
+    <Property Name="Deposit" Type="bit" />
+  </EntityType>
+  <EntityType Name="Employees">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="FirstName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="LastName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Password" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="Type" Type="varchar" MaxLength="20" Nullable="false" />
+  </EntityType>
+  <EntityType Name="EmployeeTypes">
+    <Key>
+      <PropertyRef Name="name" />
+    </Key>
+    <Property Name="name" Type="varchar" MaxLength="20" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ItemReports">
+    <Key>
+      <PropertyRef Name="ItemId" />
+      <PropertyRef Name="ReportId" />
+    </Key>
+    <Property Name="ItemId" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="ReportId" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Quantity" Type="int" />
+  </EntityType>
+  <EntityType Name="Items">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="50" />
+    <Property Name="Quantity" Type="int" />
+    <Property Name="Type" Type="varchar" MaxLength="50" />
+    <Property Name="ShelfId" Type="varchar" MaxLength="50" />
+    <Property Name="Amount" Type="float" />
+    <Property Name="ReceiptId" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="ItemTypes">
+    <Key>
+      <PropertyRef Name="Name" />
+    </Key>
+    <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Load">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="RecepitId" Type="varchar" MaxLength="50" />
+    <Property Name="RampId" Type="varchar" MaxLength="50" />
+    <Property Name="VehicleId" Type="varchar" MaxLength="50" />
+    <Property Name="StorekeeperId" Type="varchar" MaxLength="200" />
+    <Property Name="Loaded" Type="bit" Nullable="false" />
+    <Property Name="ReportId" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Ramps">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Free" Type="bit" Nullable="false" />
+    <Property Name="WarehouseId" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ReceiptItems">
+    <Key>
+      <PropertyRef Name="ItemId" />
+      <PropertyRef Name="ReceiptId" />
+    </Key>
+    <Property Name="ItemId" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="ReceiptId" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Quantity" Type="int" />
+  </EntityType>
+  <EntityType Name="Receipts">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Amount" Type="float" />
+    <Property Name="Date" Type="varchar" MaxLength="50" />
+    <Property Name="Company" Type="varchar" MaxLength="50" />
+    <Property Name="ItemId" Type="varchar" MaxLength="200" />
+  </EntityType>
+  <EntityType Name="Reports">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Note" Type="varchar" MaxLength="200" />
+    <Property Name="Date" Type="varchar" MaxLength="50" />
+    <Property Name="Reviewed" Type="bit" Nullable="false" />
+    <Property Name="Type" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="ReportTypes">
+    <Key>
+      <PropertyRef Name="Name" />
+    </Key>
+    <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Shelfs">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="WarehouseId" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Vehicles">
+    <Key>
+      <PropertyRef Name="Registration" />
+    </Key>
+    <Property Name="Registration" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Type" Type="varchar" MaxLength="50" />
+    <Property Name="LoadCapacity" Type="int" />
+    <Property Name="Mileage" Type="varchar" MaxLength="50" />
+    <Property Name="ProductionYear" Type="int" />
+    <Property Name="Brand" Type="varchar" MaxLength="50" />
+    <Property Name="DriverId" Type="varchar" MaxLength="200" />
+  </EntityType>
+  <EntityType Name="Warehouses">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Address" Type="varchar" MaxLength="200" />
+    <Property Name="ManagerId" Type="varchar" MaxLength="200" />
+  </EntityType>
+  <Association Name="EmployeeType">
+    <End Role="EmployeeTypes" Type="Self.EmployeeTypes" Multiplicity="1" />
+    <End Role="Employees" Type="Self.Employees" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EmployeeTypes">
+        <PropertyRef Name="name" />
+      </Principal>
+      <Dependent Role="Employees">
+        <PropertyRef Name="Type" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ItemRepor__ItemI__245D67DE">
+    <End Role="Items" Type="Self.Items" Multiplicity="1" />
+    <End Role="ItemReports" Type="Self.ItemReports" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Items">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ItemReports">
+        <PropertyRef Name="ItemId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ItemRepor__Repor__25518C17">
+    <End Role="Reports" Type="Self.Reports" Multiplicity="1" />
+    <End Role="ItemReports" Type="Self.ItemReports" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Reports">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ItemReports">
+        <PropertyRef Name="ReportId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Items__Type__08B54D69">
+    <End Role="ItemTypes" Type="Self.ItemTypes" Multiplicity="0..1" />
+    <End Role="Items" Type="Self.Items" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ItemTypes">
+        <PropertyRef Name="Name" />
+      </Principal>
+      <Dependent Role="Items">
+        <PropertyRef Name="Type" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Load__RampId__7E37BEF6">
+    <End Role="Ramps" Type="Self.Ramps" Multiplicity="0..1" />
+    <End Role="Load" Type="Self.Load" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Ramps">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Load">
+        <PropertyRef Name="RampId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Load__RecepitId__7D439ABD">
+    <End Role="Receipts" Type="Self.Receipts" Multiplicity="0..1" />
+    <End Role="Load" Type="Self.Load" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Receipts">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Load">
+        <PropertyRef Name="RecepitId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Load__ReportId__02FC7413">
+    <End Role="Reports" Type="Self.Reports" Multiplicity="0..1" />
+    <End Role="Load" Type="Self.Load" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Reports">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Load">
+        <PropertyRef Name="ReportId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Load__Storekeepe__03F0984C">
+    <End Role="Employees" Type="Self.Employees" Multiplicity="0..1" />
+    <End Role="Load" Type="Self.Load" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employees">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Load">
+        <PropertyRef Name="StorekeeperId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Load__VehicleId__00200768">
+    <End Role="Vehicles" Type="Self.Vehicles" Multiplicity="0..1" />
+    <End Role="Load" Type="Self.Load" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Vehicles">
+        <PropertyRef Name="Registration" />
+      </Principal>
+      <Dependent Role="Load">
+        <PropertyRef Name="VehicleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Ramps__Warehouse__66603565">
+    <End Role="Warehouses" Type="Self.Warehouses" Multiplicity="1" />
+    <End Role="Ramps" Type="Self.Ramps" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Warehouses">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Ramps">
+        <PropertyRef Name="WarehouseId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ReceiptIt__ItemI__1F98B2C1">
+    <End Role="Items" Type="Self.Items" Multiplicity="1" />
+    <End Role="ReceiptItems" Type="Self.ReceiptItems" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Items">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ReceiptItems">
+        <PropertyRef Name="ItemId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ReceiptIt__Recei__208CD6FA">
+    <End Role="Receipts" Type="Self.Receipts" Multiplicity="1" />
+    <End Role="ReceiptItems" Type="Self.ReceiptItems" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Receipts">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ReceiptItems">
+        <PropertyRef Name="ReceiptId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Reports__Type__10566F31">
+    <End Role="ReportTypes" Type="Self.ReportTypes" Multiplicity="0..1" />
+    <End Role="Reports" Type="Self.Reports" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ReportTypes">
+        <PropertyRef Name="Name" />
+      </Principal>
+      <Dependent Role="Reports">
+        <PropertyRef Name="Type" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Shelfs__Warehous__5CD6CB2B">
+    <End Role="Warehouses" Type="Self.Warehouses" Multiplicity="1" />
+    <End Role="Shelfs" Type="Self.Shelfs" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Warehouses">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Shelfs">
+        <PropertyRef Name="WarehouseId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Vehicles__Driver__7A672E12">
+    <End Role="Employees" Type="Self.Employees" Multiplicity="0..1" />
+    <End Role="Vehicles" Type="Self.Vehicles" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employees">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Vehicles">
+        <PropertyRef Name="DriverId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Warehouse__Manag__68487DD7">
+    <End Role="Employees" Type="Self.Employees" Multiplicity="0..1" />
+    <End Role="Warehouses" Type="Self.Warehouses" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employees">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Warehouses">
+        <PropertyRef Name="ManagerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Receipts_Loads">
+    <End Role="Company" Type="Self.Company" Multiplicity="0..1" />
+    <End Role="Receipts" Type="Self.Receipts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Company">
+        <PropertyRef Name="Name" />
+      </Principal>
+      <Dependent Role="Receipts">
+        <PropertyRef Name="Company" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="NumberOfOrdersAllTime" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+  <Function Name="NumberOfOrdersToday" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+  <EntityContainer Name="WarehouseDBModelStoreContainer">
+    <EntitySet Name="Company" EntityType="Self.Company" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Employees" EntityType="Self.Employees" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="EmployeeTypes" EntityType="Self.EmployeeTypes" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ItemReports" EntityType="Self.ItemReports" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Items" EntityType="Self.Items" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ItemTypes" EntityType="Self.ItemTypes" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Load" EntityType="Self.Load" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Ramps" EntityType="Self.Ramps" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ReceiptItems" EntityType="Self.ReceiptItems" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Receipts" EntityType="Self.Receipts" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Reports" EntityType="Self.Reports" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ReportTypes" EntityType="Self.ReportTypes" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Shelfs" EntityType="Self.Shelfs" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Vehicles" EntityType="Self.Vehicles" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Warehouses" EntityType="Self.Warehouses" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="EmployeeType" Association="Self.EmployeeType">
+      <End Role="EmployeeTypes" EntitySet="EmployeeTypes" />
+      <End Role="Employees" EntitySet="Employees" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ItemRepor__ItemI__245D67DE" Association="Self.FK__ItemRepor__ItemI__245D67DE">
+      <End Role="Items" EntitySet="Items" />
+      <End Role="ItemReports" EntitySet="ItemReports" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ItemRepor__Repor__25518C17" Association="Self.FK__ItemRepor__Repor__25518C17">
+      <End Role="Reports" EntitySet="Reports" />
+      <End Role="ItemReports" EntitySet="ItemReports" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Items__Type__08B54D69" Association="Self.FK__Items__Type__08B54D69">
+      <End Role="ItemTypes" EntitySet="ItemTypes" />
+      <End Role="Items" EntitySet="Items" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Load__RampId__7E37BEF6" Association="Self.FK__Load__RampId__7E37BEF6">
+      <End Role="Ramps" EntitySet="Ramps" />
+      <End Role="Load" EntitySet="Load" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Load__RecepitId__7D439ABD" Association="Self.FK__Load__RecepitId__7D439ABD">
+      <End Role="Receipts" EntitySet="Receipts" />
+      <End Role="Load" EntitySet="Load" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Load__ReportId__02FC7413" Association="Self.FK__Load__ReportId__02FC7413">
+      <End Role="Reports" EntitySet="Reports" />
+      <End Role="Load" EntitySet="Load" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Load__Storekeepe__03F0984C" Association="Self.FK__Load__Storekeepe__03F0984C">
+      <End Role="Employees" EntitySet="Employees" />
+      <End Role="Load" EntitySet="Load" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Load__VehicleId__00200768" Association="Self.FK__Load__VehicleId__00200768">
+      <End Role="Vehicles" EntitySet="Vehicles" />
+      <End Role="Load" EntitySet="Load" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Ramps__Warehouse__66603565" Association="Self.FK__Ramps__Warehouse__66603565">
+      <End Role="Warehouses" EntitySet="Warehouses" />
+      <End Role="Ramps" EntitySet="Ramps" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ReceiptIt__ItemI__1F98B2C1" Association="Self.FK__ReceiptIt__ItemI__1F98B2C1">
+      <End Role="Items" EntitySet="Items" />
+      <End Role="ReceiptItems" EntitySet="ReceiptItems" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ReceiptIt__Recei__208CD6FA" Association="Self.FK__ReceiptIt__Recei__208CD6FA">
+      <End Role="Receipts" EntitySet="Receipts" />
+      <End Role="ReceiptItems" EntitySet="ReceiptItems" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Reports__Type__10566F31" Association="Self.FK__Reports__Type__10566F31">
+      <End Role="ReportTypes" EntitySet="ReportTypes" />
+      <End Role="Reports" EntitySet="Reports" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Shelfs__Warehous__5CD6CB2B" Association="Self.FK__Shelfs__Warehous__5CD6CB2B">
+      <End Role="Warehouses" EntitySet="Warehouses" />
+      <End Role="Shelfs" EntitySet="Shelfs" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Vehicles__Driver__7A672E12" Association="Self.FK__Vehicles__Driver__7A672E12">
+      <End Role="Employees" EntitySet="Employees" />
+      <End Role="Vehicles" EntitySet="Vehicles" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Warehouse__Manag__68487DD7" Association="Self.FK__Warehouse__Manag__68487DD7">
+      <End Role="Employees" EntitySet="Employees" />
+      <End Role="Warehouses" EntitySet="Warehouses" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Receipts_Loads" Association="Self.FK_Receipts_Loads">
+      <End Role="Company" EntitySet="Company" />
+      <End Role="Receipts" EntitySet="Receipts" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
