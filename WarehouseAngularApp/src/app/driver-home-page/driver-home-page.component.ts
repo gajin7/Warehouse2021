@@ -54,7 +54,6 @@ export class DriverHomePageComponent implements OnInit {
   {
     this.vehicleService.getDriversVehicle().subscribe((data)=> {
       this.vehicle = data;
-      console.log(this.vehicle,"vehicle");
     })
   }
 
@@ -62,7 +61,6 @@ export class DriverHomePageComponent implements OnInit {
   {
     this.vehicleService.getFreeVehicles().subscribe((data) => {
       this.vehicles = data;
-      console.log(this.vehicles,"vehicles");
     })
   }
 

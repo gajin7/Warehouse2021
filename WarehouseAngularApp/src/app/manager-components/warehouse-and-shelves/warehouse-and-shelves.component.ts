@@ -121,7 +121,6 @@ export class WarehouseAndShelvesComponent implements OnInit {
   {
     this.NewWarehouse.setValue(item);
     this.NewWarehouse.value["StorekeeperEmail"] = item.StorekeeperEmail;
-    console.log( this.NewWarehouse.value);
     this.WarehouseSubmitType = "change";
     this.ShowNewWarehouseDrawer();
     this.getShelves(item.WarehouseId);

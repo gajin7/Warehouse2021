@@ -22,7 +22,6 @@ export class LoginService {
         if(res.Message === "Success")
         {
           this.isLoggedin = true;
-          console.log('role: ' + res.Role)
      
         sessionStorage.setItem('role', res.Role)
         }

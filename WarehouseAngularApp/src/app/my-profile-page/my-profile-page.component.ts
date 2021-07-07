@@ -75,7 +75,6 @@ export class MyProfilePageComponent implements OnInit {
     if(this.ChangePasswordVisibility)
     {
       this.ChangePasswordVisibility = false;
-      console.log(this.ChangePasswordVisibility,"change");
     }
     else
     {

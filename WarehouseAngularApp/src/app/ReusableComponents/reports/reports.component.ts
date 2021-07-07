@@ -22,7 +22,6 @@ export class ReportsComponent implements OnInit {
   {
     this.reportService.getReports('').subscribe((data) => {
       this.reports = data;
-      console.log(data,"reports");
     });
   }
 

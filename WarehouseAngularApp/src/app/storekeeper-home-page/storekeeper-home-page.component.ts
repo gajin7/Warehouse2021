@@ -115,7 +115,6 @@ export class StorekeeperHomePageComponent implements OnInit {
     else
     {
       var newItem = Object.assign({},item);
-      console.log(newItem,"newItem")
       newItem.Quantity = 1;
       this.OrderDataSource.push(newItem);
       var amount : number = newItem.Amount;
@@ -134,11 +133,8 @@ export class StorekeeperHomePageComponent implements OnInit {
          this.itemsService.getQuantityById(id).subscribe((data) => {
           that.quantity = data.quantity;
 
-          console.log( that.quantity);
-
          if(that.quantity >= (that.OrderDataSource[index].Quantity +1))
          {
-           console.log("ovde");
             that.OrderDataSource[index].Quantity +=1;
             var amount : number = that.OrderDataSource[index].Amount;
             that.total += amount;

@@ -32,11 +32,6 @@ export class AuthService {
         this.role = decodedJwtData.role
         this.email = decodedJwtData.email
 
-        console.log('jwtData: ' + jwtData)
-        console.log('decodedJwtJsonData: ' + decodedJwtJsonData)
-        console.log('decodedJwtData: ' + decodedJwtData)
-        console.log('Role ' + this.role)
-
         sessionStorage.setItem('jwt', jwt)
         sessionStorage.setItem('role', this.role);
         sessionStorage.setItem('email', this.email);
