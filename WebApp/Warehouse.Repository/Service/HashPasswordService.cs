@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Security.Cryptography;
 using Warehouse.Service.Abstractions;
 
-namespace Warehouse.Service
+namespace Warehouse.Repository.Service
 {
     public class HashPasswordService : IHashPasswordService
     {

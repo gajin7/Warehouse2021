@@ -4,6 +4,7 @@ using Unity.Lifetime;
 using Unity.WebApi;
 using Warehouse.Repository;
 using Warehouse.Repository.Abstractions;
+using Warehouse.Repository.Service;
 using Warehouse.Service;
 using Warehouse.Service.Abstractions;
 
