@@ -5,6 +5,7 @@ using Microsoft.Ajax.Utilities;
 using Warehouse.Model;
 using Warehouse.Repository.Abstractions;
 using Warehouse.Service.Abstractions;
+using Warehouse.Web.Model.Request;
 using Warehouse.Web.Model.Response;
 
 
@@ -29,7 +30,7 @@ namespace WebApplication.Controllers
         [HttpPost]
         [Route("addItem")]
         [Authorize(Roles = "admin,storekeeper")]
-        public OperationResult AddItem([FromBody]Item item)
+        public OperationResult AddItem([FromBody]ItemRequest item)
         {
             if (item == null || item.Name.IsNullOrWhiteSpace() || !item.Amount.HasValue || item.ShelfId.IsNullOrWhiteSpace() || !item.Quantity.HasValue)
             {
@@ -105,7 +106,7 @@ namespace WebApplication.Controllers
         [HttpPost]
         [Authorize(Roles = "admin")]
         [Route("changeItem")]
-        public OperationResult ChangeItem([FromBody]Item item)
+        public OperationResult ChangeItem([FromBody]ItemRequest item)
         {
             return _itemRepository.ChangeItem(item);
         }

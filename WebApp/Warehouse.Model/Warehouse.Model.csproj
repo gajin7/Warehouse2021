@@ -72,6 +72,9 @@
     <Compile Include="Load.cs">
       <DependentUpon>WarehouseDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Pricelist.cs">
+      <DependentUpon>WarehouseDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Ramp.cs">
       <DependentUpon>WarehouseDB.tt</DependentUpon>

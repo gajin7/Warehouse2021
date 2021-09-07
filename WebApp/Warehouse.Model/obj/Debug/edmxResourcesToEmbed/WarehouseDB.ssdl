@@ -45,8 +45,8 @@
     <Property Name="Quantity" Type="int" />
     <Property Name="Type" Type="varchar" MaxLength="50" />
     <Property Name="ShelfId" Type="varchar" MaxLength="50" />
-    <Property Name="Amount" Type="float" />
     <Property Name="ReceiptId" Type="varchar" MaxLength="50" />
+    <Property Name="PricelistId" Type="varchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="ItemTypes">
     <Key>
@@ -65,6 +65,16 @@
     <Property Name="StorekeeperId" Type="varchar" MaxLength="200" />
     <Property Name="Loaded" Type="bit" Nullable="false" />
     <Property Name="ReportId" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Pricelist">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="ItemId" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="Value" Type="float" Nullable="false" />
+    <Property Name="ValidFrom" Type="date" Nullable="false" />
+    <Property Name="ValidTo" Type="date" />
   </EntityType>
   <EntityType Name="Ramps">
     <Key>
@@ -172,7 +182,19 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Items__Type__08B54D69">
+  <Association Name="FK__Items__Pricelist__58D1301D">
+    <End Role="Pricelist" Type="Self.Pricelist" Multiplicity="0..1" />
+    <End Role="Items" Type="Self.Items" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Pricelist">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Items">
+        <PropertyRef Name="PricelistId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Items__Type__540C7B00">
     <End Role="ItemTypes" Type="Self.ItemTypes" Multiplicity="0..1" />
     <End Role="Items" Type="Self.Items" Multiplicity="*" />
     <ReferentialConstraint>
@@ -350,6 +372,7 @@
     <EntitySet Name="Items" EntityType="Self.Items" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ItemTypes" EntityType="Self.ItemTypes" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Load" EntityType="Self.Load" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Pricelist" EntityType="Self.Pricelist" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Ramps" EntityType="Self.Ramps" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ReceiptItems" EntityType="Self.ReceiptItems" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Receipts" EntityType="Self.Receipts" Schema="dbo" store:Type="Tables" />
@@ -370,7 +393,11 @@
       <End Role="Reports" EntitySet="Reports" />
       <End Role="ItemReports" EntitySet="ItemReports" />
     </AssociationSet>
-    <AssociationSet Name="FK__Items__Type__08B54D69" Association="Self.FK__Items__Type__08B54D69">
+    <AssociationSet Name="FK__Items__Pricelist__58D1301D" Association="Self.FK__Items__Pricelist__58D1301D">
+      <End Role="Pricelist" EntitySet="Pricelist" />
+      <End Role="Items" EntitySet="Items" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Items__Type__540C7B00" Association="Self.FK__Items__Type__540C7B00">
       <End Role="ItemTypes" EntitySet="ItemTypes" />
       <End Role="Items" EntitySet="Items" />
     </AssociationSet>

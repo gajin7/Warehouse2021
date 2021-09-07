@@ -15,9 +15,11 @@ namespace Warehouse.Service
     public class DocumentCreatorService : IDocumentCreatorService
     {
         private readonly IItemRepository _itemRepository;
-        public DocumentCreatorService(IItemRepository itemRepository)
+        private readonly IPricelistRepository _pricelistRepository;
+        public DocumentCreatorService(IItemRepository itemRepository, IPricelistRepository pricelistRepository)
         {
             _itemRepository = itemRepository;
+            _pricelistRepository = pricelistRepository;
         }
         public OperationResult CreateReceiptPdf(Receipt receipt,IEnumerable<ReceiptItem> receiptItems)
         {
@@ -72,10 +74,11 @@ namespace Warehouse.Service
                 {
 
                     var itemValue = _itemRepository.GetItem(item.ItemId);
+                    var amount = _pricelistRepository.GetPriceForItem(itemValue.Id);
                     dataTable.Rows.Add(new object[]
                     {
-                        itemValue?.Name, item.Quantity, itemValue?.Type, itemValue?.Amount + "$",
-                        itemValue?.Amount * item.Quantity  + "$"
+                        itemValue?.Name, item.Quantity, itemValue?.Type, amount + "$",
+                        amount * item.Quantity  + "$"
                     });
                 }
 
@@ -165,10 +168,11 @@ namespace Warehouse.Service
                 {
 
                     var itemValue = _itemRepository.GetItem(item.ItemId);
+                    var amount = _pricelistRepository.GetPriceForItem(itemValue.Id, DateTime.Parse(report.Date));
                     dataTable.Rows.Add(new object[]
                     {
-                        itemValue?.Name, item.Quantity, itemValue?.Type, itemValue?.Amount + "$",
-                        itemValue?.Amount * item.Quantity  + "$"
+                        itemValue?.Name, item.Quantity, itemValue?.Type, amount + "$",
+                        amount * item.Quantity  + "$" 
                     });
                 }
 

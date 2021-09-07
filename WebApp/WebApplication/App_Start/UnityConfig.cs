@@ -30,6 +30,7 @@ namespace WebApplication
             container.RegisterType<ILoadRepository, LoadRepository>(new HierarchicalLifetimeManager());
             container.RegisterType<IRampRepository, RampRepository>(new HierarchicalLifetimeManager());
             container.RegisterType<IScalarFunctionsRepository, ScalarFunctionRepository>(new HierarchicalLifetimeManager());
+            container.RegisterType<IPricelistRepository, PricelistRepository>(new HierarchicalLifetimeManager());
 
 
             //register services

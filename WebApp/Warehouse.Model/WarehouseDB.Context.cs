@@ -40,5 +40,6 @@ namespace Warehouse.Model
         public virtual DbSet<Report> Reports { get; set; }
         public virtual DbSet<ReportType> ReportTypes { get; set; }
         public virtual DbSet<ItemReport> ItemReports { get; set; }
+        public virtual DbSet<Pricelist> Pricelists { get; set; }
     }
 }

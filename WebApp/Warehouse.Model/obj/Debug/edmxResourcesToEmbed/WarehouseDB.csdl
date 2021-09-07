@@ -88,6 +88,11 @@
       <End Role="Company" EntitySet="Companies" />
       <End Role="Receipt" EntitySet="Receipts" />
     </AssociationSet>
+    <EntitySet Name="Pricelists" EntityType="WarehouseDBModel.Pricelist" />
+    <AssociationSet Name="FK__Items__Pricelist__58D1301D" Association="WarehouseDBModel.FK__Items__Pricelist__58D1301D">
+      <End Role="Pricelist" EntitySet="Pricelists" />
+      <End Role="Item" EntitySet="Items" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="Company">
     <Key>
@@ -295,11 +300,12 @@
     <Property Name="Quantity" Type="Int32" />
     <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="ShelfId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="Amount" Type="Double" />
     <NavigationProperty Name="Shelf" Relationship="WarehouseDBModel.FK__Items__ShelfId__628FA481" FromRole="Item" ToRole="Shelf" />
     <NavigationProperty Name="ItemType" Relationship="WarehouseDBModel.FK__Items__Type__08B54D69" FromRole="Item" ToRole="ItemType" />
     <NavigationProperty Name="ReceiptItems" Relationship="WarehouseDBModel.FK__ReceiptIt__ItemI__1F98B2C1" FromRole="Item" ToRole="ReceiptItem" />
     <NavigationProperty Name="ItemReports" Relationship="WarehouseDBModel.FK__ItemRepor__ItemI__245D67DE" FromRole="Item" ToRole="ItemReport" />
+    <Property Name="PricelistId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Pricelist" Relationship="WarehouseDBModel.FK__Items__Pricelist__58D1301D" FromRole="Item" ToRole="Pricelist" />
   </EntityType>
   <EntityType Name="Receipt">
     <Key>
@@ -472,6 +478,29 @@
       </Principal>
       <Dependent Role="Receipt">
         <PropertyRef Name="Company" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Pricelist">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ItemId" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Value" Type="Double" Nullable="false" />
+    <Property Name="ValidFrom" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="ValidTo" Type="DateTime" Precision="0" />
+    <NavigationProperty Name="Items" Relationship="WarehouseDBModel.FK__Items__Pricelist__58D1301D" FromRole="Pricelist" ToRole="Item" />
+  </EntityType>
+  <Association Name="FK__Items__Pricelist__58D1301D">
+    <End Type="WarehouseDBModel.Pricelist" Role="Pricelist" Multiplicity="0..1" />
+    <End Type="WarehouseDBModel.Item" Role="Item" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Pricelist">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Item">
+        <PropertyRef Name="PricelistId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

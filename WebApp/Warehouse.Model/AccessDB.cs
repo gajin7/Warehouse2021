@@ -21,6 +21,7 @@ namespace Warehouse.Model
         public DbSet<Ramp> Ramps { get; set; }
         public DbSet<ItemReport> ItemReports { get; set; }
         public DbSet<ReceiptItem> ReceiptItems { get; set; }
+        public DbSet<Pricelist> Pricelists { get; set; }
 
     }
 }

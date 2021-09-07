@@ -26,7 +26,7 @@ namespace Warehouse.Model
         public Nullable<int> Quantity { get; set; }
         public string Type { get; set; }
         public string ShelfId { get; set; }
-        public Nullable<double> Amount { get; set; }
+        public string PricelistId { get; set; }
     
         public virtual Shelf Shelf { get; set; }
         public virtual ItemType ItemType { get; set; }
@@ -34,5 +34,6 @@ namespace Warehouse.Model
         public virtual ICollection<ReceiptItem> ReceiptItems { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ItemReport> ItemReports { get; set; }
+        public virtual Pricelist Pricelist { get; set; }
     }
 }

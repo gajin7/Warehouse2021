@@ -4,6 +4,7 @@ using System.Linq;
 using Microsoft.Ajax.Utilities;
 using Warehouse.Model;
 using Warehouse.Repository.Abstractions;
+using Warehouse.Web.Model.Request;
 using Warehouse.Web.Model.Response;
 
 namespace Warehouse.Repository
@@ -11,7 +12,7 @@ namespace Warehouse.Repository
     public class ItemRepository : IItemRepository
     {
 
-        public OperationResult AddItem(Item item)
+        public OperationResult AddItem(ItemRequest item)
         {
             using (var accessDb = new AccessDb())
             {
@@ -25,7 +26,24 @@ namespace Warehouse.Repository
                 {
                     if (!accessDb.Items.Any(e => e.Id.Equals(item.Id)))
                     {
-                        accessDb.Items.Add(item);
+                        var price = new Pricelist
+                        {
+                            Id = Guid.NewGuid().ToString(),
+                            ItemId = item.Id,
+                            Value = item.Amount ?? -1
+                        };
+                        accessDb.Pricelists.Add(price);
+                        
+                        accessDb.Items.Add(new Item
+                        {
+                            Id = item.Id,
+                            Name = item.Name,
+                            Type = item.Type,
+                            Quantity = item.Quantity,
+                            ShelfId =  item.ShelfId,
+                            PricelistId = price.Id
+
+                        });
                         var dbResult = accessDb.SaveChanges();
                         if (dbResult > 0)
                         {
@@ -135,7 +153,7 @@ namespace Warehouse.Repository
 
                return items.Select(item => new ItemResult()
                     {
-                        Amount = item.Amount,
+                        Amount = accessDb.Pricelists.FirstOrDefault(i => i.ItemId.Equals(item.Id) && (i.ValidTo == null || i.ValidTo >= DateTime.Now))?.Value,
                         Id = item.Id,
                         Name = item.Name,
                         Quantity = item.Quantity,
@@ -172,7 +190,7 @@ namespace Warehouse.Repository
             }
         }
 
-        public OperationResult ChangeItem(Item item)
+        public OperationResult ChangeItem(ItemRequest item)
         {
             using (var accessDb = new AccessDb())
             {
@@ -190,9 +208,22 @@ namespace Warehouse.Repository
 
                     oldItem.Quantity = item.Quantity;
                     oldItem.Type = item.Type;
-                    oldItem.Amount = item.Amount;
                     oldItem.Name = item.Name;
                     oldItem.ShelfId = item.ShelfId;
+
+                    var priceItem = accessDb.Pricelists.FirstOrDefault(i => i.ItemId.Equals(item.Id) && i.ValidTo == null);
+                    if (priceItem != null) priceItem.ValidTo = DateTime.Now;
+
+                    var newPriceItem = new Pricelist
+                    {
+                        ValidFrom = DateTime.Now,
+                        ValidTo = null,
+                        Id = Guid.NewGuid().ToString(),
+                        ItemId = oldItem.Id,
+                        Value = item.Amount ?? -1
+                    };
+                    accessDb.Pricelists.Add(newPriceItem);
+                    oldItem.PricelistId = newPriceItem.Id;
                     var dbResult = accessDb.SaveChanges();
                     if (dbResult > 0)
                     {

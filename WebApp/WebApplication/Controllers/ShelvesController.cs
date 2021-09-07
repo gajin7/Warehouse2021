@@ -12,15 +12,17 @@ namespace WebApplication.Controllers
     {
         private readonly IShelfRepository _shelfRepository;
         private readonly ISearchService _searchService;
+        private readonly IPricelistRepository _pricelistRepository;
 
         public ShelvesController()
         {
 
         }
-        public ShelvesController(IShelfRepository shelfRepository, ISearchService searchService)
+        public ShelvesController(IShelfRepository shelfRepository, ISearchService searchService, IPricelistRepository pricelistRepository)
         {
             _shelfRepository = shelfRepository;
             _searchService = searchService;
+            _pricelistRepository = pricelistRepository;
         }
 
         [Route("getShelvesInWarehouse")]
@@ -30,7 +32,7 @@ namespace WebApplication.Controllers
         {
             var shelves = _shelfRepository.GetShelvesInWarehouse(warehouseId).ToList();
             return (from shelf in shelves let items = shelf.Items.Select(item => new ItemResult()
-                { Id = item.Id, Name = item.Name, Quantity = item.Quantity, Type = item.Type, Amount = item.Amount}).ToList()
+                { Id = item.Id, Name = item.Name, Quantity = item.Quantity, Type = item.Type, Amount = _pricelistRepository.GetPriceForItem(item.Id)}).ToList()
                 select new ShelfItemsResult()
                     { Name = shelf.Id, Items = items}).ToList();
         }
@@ -53,7 +55,7 @@ namespace WebApplication.Controllers
             
             var shelfItems = (from shelf in shelves
                          let items = shelf.Items.Select(item => new ItemResult()
-                    { Id = item.Id, Name = item.Name, Quantity = item.Quantity, Type = item.Type, Amount = item.Amount }).ToList()
+                    { Id = item.Id, Name = item.Name, Quantity = item.Quantity, Type = item.Type, Amount = _pricelistRepository.GetPriceForItem(item.Id) }).ToList()
                 select new ShelfItemsResult()
                     { Name = shelf.Id, Items = items }).ToList();
 

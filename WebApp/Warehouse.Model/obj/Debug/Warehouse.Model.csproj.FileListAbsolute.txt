@@ -5,8 +5,8 @@ C:\Users\JGajin\Documents\GitHub\Warehouse2021\WebApp\Warehouse.Model\bin\Debug\
 C:\Users\JGajin\Documents\GitHub\Warehouse2021\WebApp\Warehouse.Model\bin\Debug\EntityFramework.SqlServer.dll
 C:\Users\JGajin\Documents\GitHub\Warehouse2021\WebApp\Warehouse.Model\bin\Debug\EntityFramework.xml
 C:\Users\JGajin\Documents\GitHub\Warehouse2021\WebApp\Warehouse.Model\bin\Debug\EntityFramework.SqlServer.xml
-C:\Users\JGajin\Documents\GitHub\Warehouse2021\WebApp\Warehouse.Model\obj\Debug\Warehouse.Model.csprojAssemblyReference.cache
 C:\Users\JGajin\Documents\GitHub\Warehouse2021\WebApp\Warehouse.Model\obj\Debug\Warehouse.Model.csproj.CoreCompileInputs.cache
 C:\Users\JGajin\Documents\GitHub\Warehouse2021\WebApp\Warehouse.Model\obj\Debug\Warehouse.Model.csproj.CopyComplete
 C:\Users\JGajin\Documents\GitHub\Warehouse2021\WebApp\Warehouse.Model\obj\Debug\Warehouse.Model.dll
 C:\Users\JGajin\Documents\GitHub\Warehouse2021\WebApp\Warehouse.Model\obj\Debug\Warehouse.Model.pdb
+C:\Users\JGajin\Documents\GitHub\Warehouse2021\WebApp\Warehouse.Model\obj\Debug\Warehouse.Model.csprojAssemblyReference.cache

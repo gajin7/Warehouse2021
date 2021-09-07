@@ -4,13 +4,14 @@ using System.Linq;
 using Microsoft.Ajax.Utilities;
 using Warehouse.Model;
 using Warehouse.Repository.Abstractions;
+using Warehouse.Web.Model.Request;
 using Warehouse.Web.Model.Response;
 
 namespace Warehouse.Repository
 {
     public class ReportRepository : IReportRepository
     {
-        public OperationResult CreateInReport(Item item)
+        public OperationResult CreateInReport(ItemRequest item)
         {
             using (var accessDb = new AccessDb())
             {
