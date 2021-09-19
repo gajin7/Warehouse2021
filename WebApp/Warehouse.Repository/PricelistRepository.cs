@@ -17,12 +17,12 @@ namespace Warehouse.Repository
                 if (date == null)
                 {
                     return accessDb.Pricelists.FirstOrDefault(i =>
-                        i.Id.Equals(itemId) && (i.ValidTo == null || i.ValidTo >= DateTime.Now))?.Value;
+                        i.ItemId.Equals(itemId) && (i.ValidTo == null || i.ValidTo >= DateTime.Now))?.Value;
                 }
                 else
                 {
                     return accessDb.Pricelists.FirstOrDefault(i =>
-                        i.Id.Equals(itemId) && (i.ValidFrom <= date && i.ValidTo >= date))?.Value;
+                        i.ItemId.Equals(itemId) && (i.ValidFrom <= date && i.ValidTo >= date))?.Value;
                 }
             }
         }

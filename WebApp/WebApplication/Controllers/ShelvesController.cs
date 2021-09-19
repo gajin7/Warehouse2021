@@ -31,10 +31,12 @@ namespace WebApplication.Controllers
         public IEnumerable<ShelfItemsResult> GetShelvesInWarehouse([FromUri]string warehouseId)
         {
             var shelves = _shelfRepository.GetShelvesInWarehouse(warehouseId).ToList();
-            return (from shelf in shelves let items = shelf.Items.Select(item => new ItemResult()
+            var retVal = (from shelf in shelves let items = shelf.Items.Select(item => new ItemResult()
                 { Id = item.Id, Name = item.Name, Quantity = item.Quantity, Type = item.Type, Amount = _pricelistRepository.GetPriceForItem(item.Id)}).ToList()
                 select new ShelfItemsResult()
                     { Name = shelf.Id, Items = items}).ToList();
+
+            return retVal;
         }
 
         [Route("getShelves")]

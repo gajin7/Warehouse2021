@@ -37,7 +37,7 @@ namespace Warehouse.Service
             {
                 client.Send(mail);
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return false;
             }

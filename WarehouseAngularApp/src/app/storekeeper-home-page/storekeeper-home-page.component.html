@@ -6,13 +6,13 @@
   </div>
 </div>
 
-<div style="overflow-x: auto" class="card" *ngIf="warehousesTableShow">
+<div class="card" *ngIf="warehousesTableShow">
     <table style="width: 60%;border-collapse:separate; table-layout: fixed;
-    word-wrap: nowrap; overflow-x: auto;
+    word-wrap: nowrap; overflow-y: auto;
     border-spacing:2.5em;">
         <thead>
           <tr>
-            <th style="width: 30em;"  (click)="openWarehouse(colArray[i].WarehouseId)" id="th" scope="col" *ngFor="let col of colArray; index as i">
+            <th style="width: 35em;"  (click)="openWarehouse(colArray[i].WarehouseId)" id="th" scope="col" *ngFor="let col of colArray; index as i">
               <div class="card">
                 <div class="card-body">
                   <img style="float: right;"  src="https://img.icons8.com/ultraviolet/100/000000/garage-closed.png" alt="Card image cap">
